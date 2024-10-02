@@ -1,0 +1,24 @@
+app:
+  services:
+    - name: user
+      options:
+        frontend_options:
+          default_icon: TeamOutlined
+      
+      types:
+        
+      methods:
+
+      # Entities
+      entities:
+        - name: User
+          fields:
+            - Name: $.type[PersonName] do_not_expand
+            - Email: email
+            - Addresses: $.type[Address] repeated,optional
+            - Team: $.service[user].entity[Team]
+            - PastTeam: $.service[user].entity[Team] repeated,optional
+
+        - name: Team
+          fields:
+          - Name: string

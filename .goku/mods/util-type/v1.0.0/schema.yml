@@ -1,0 +1,43 @@
+app:
+
+  # Types
+  types:
+    - name: PersonName
+      fields:
+        - FirstName: string
+        - MiddleInitial: string optional
+        - LastName: string
+    
+    - name: PhoneNumber
+      fields:
+        - CountryCode: number
+        - Number: string
+        - Extension: string optional
+        
+    - name: Address
+      fields:
+        - Line1: string
+        - Line2: string optional
+        - City: string
+        - State: string
+        - PostalCode: string
+        - Country: $.enum[Country]
+      
+    - name: Contact
+      fields:
+        - Name: $.type[PersonName]
+        - Email: email
+        - Address: $.type[Address]
+
+  # Enums
+  enums:
+    - name: Gender
+      values:
+        - Male: 1
+        - Female: 2
+        - Other: 3
+    - name: Country
+      values:
+        - USA: 1
+        - Canada: 2
+        - Mexico: 3

@@ -1,0 +1,32 @@
+table tb_team:
+    check_constraints:
+        chk_team__name__empty_str:
+            columns:
+                - name
+            expression: (name <> ''::TEXT)
+
+    columns:
+        - id:
+              not_null: true
+              type: UUID
+
+        - name:
+              not_null: true
+              type: TEXT
+
+        - created_at:
+              not_null: true
+              type: TIMESTAMP
+
+        - updated_at:
+              not_null: true
+              type: TIMESTAMP
+
+        - deleted_at:
+              not_null: false
+              type: TIMESTAMP
+
+    primary_key:
+        pk_team_id:
+            columns:
+                - id

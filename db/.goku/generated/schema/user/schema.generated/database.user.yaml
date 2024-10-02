@@ -1,0 +1,6 @@
+schema public:
+    schema: schema.public.yaml
+    table team: schema.public/tables.team.generated.yaml
+    table user: schema.public/tables.user.generated.yaml
+    table user_name: schema.public/tables.user.generated.yaml
+    table user_addresses: schema.public/tables.user.generated.yaml

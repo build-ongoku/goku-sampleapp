@@ -1,0 +1,3 @@
+schema public:
+    schema: schema.public.yaml
+    table file: schema.public/tables.file.generated.yaml

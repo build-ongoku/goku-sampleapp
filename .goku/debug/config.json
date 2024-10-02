@@ -1,0 +1,49 @@
+{
+ "AppRootFromCurrDirPath": "sampleapp",
+ "AppName": "Sampleapp",
+ "GoModuleName": "sampleapp/backend",
+ "GokuVersionAtCreate": "v2024.10.02.152112",
+ "SchemaDirFromAppRootPath": "./goku_schema",
+ "Mods": [
+  {
+   "Name": "User",
+   "Version": "v1.0.0"
+  },
+  {
+   "Name": "Auth",
+   "Version": "v1.0.0"
+  },
+  {
+   "Name": "File",
+   "Version": "v1.0.0"
+  }
+ ],
+ "PrintDebugFiles": true,
+ "Components": [
+  "backend",
+  "database",
+  "frontend"
+ ],
+ "GokuVersionAtGenerate": "",
+ "GokuUtilModuleName": "github.com/teejays/gokutil",
+ "ComponentsLookup": {
+  "backend": true,
+  "database": true,
+  "frontend": true
+ },
+ "AppRootPath": {
+  "FromApp": ".",
+  "FromCurrDir": "sampleapp",
+  "Full": "/Users/teejays/Development/goku-workspace/src/example/sampleapp"
+ },
+ "SchemaPath": {
+  "FromApp": "goku_schema",
+  "FromCurrDir": "sampleapp/goku_schema",
+  "Full": "/Users/teejays/Development/goku-workspace/src/example/sampleapp/goku_schema"
+ },
+ "GoModulePath": {
+  "FromApp": "backend",
+  "FromCurrDir": "sampleapp/backend",
+  "Full": "/Users/teejays/Development/goku-workspace/src/example/sampleapp/backend"
+ }
+}
