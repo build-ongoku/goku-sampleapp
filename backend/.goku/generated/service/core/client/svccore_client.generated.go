@@ -8,6 +8,7 @@ import (
 
 	svccore_entfile_client "sampleapp/backend/.goku/generated/service/core/entity/file/client"
 	svccore_entfile_typ "sampleapp/backend/.goku/generated/service/core/entity/file/typ"
+	svccore_entjobapplicant_client "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/client"
 )
 
 var llog = log.GetLogger().WithHeading("Client").WithHeading("svccore")
@@ -24,6 +25,7 @@ type Client interface {
 // EntitiesClient provides access to the clients of entities in this service.
 type EntitiesClient interface {
 	File() svccore_entfile_client.Client
+	JobApplicant() svccore_entjobapplicant_client.Client
 }
 
 // CustomClient provides access to all custom methods for this service.

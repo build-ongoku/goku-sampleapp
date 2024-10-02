@@ -8,6 +8,7 @@ import (
 
 	svccore_client "sampleapp/backend/.goku/generated/service/core/client"
 	svccore_entfile_httproute "sampleapp/backend/.goku/generated/service/core/entity/file/httproute"
+	svccore_entjobapplicant_httproute "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/httproute"
 )
 
 var llog = log.GetLogger().WithHeading("HTTP Handler")
@@ -31,6 +32,7 @@ func GetRoutes(ctx context.Context, c svccore_client.Client) []gopi.Route {
 
 	// Routes under this namespace
 	routes = append(routes, svccore_entfile_httproute.GetRoutes(ctx, c.File())...)
+	routes = append(routes, svccore_entjobapplicant_httproute.GetRoutes(ctx, c.JobApplicant())...)
 
 	return routes
 }

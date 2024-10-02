@@ -9,6 +9,7 @@ import (
 	svcauth_entsecret_typ "sampleapp/backend/.goku/generated/service/auth/entity/secret/typ"
 	svcauth_typ "sampleapp/backend/.goku/generated/service/auth/typ"
 	svccore_entfile_typ "sampleapp/backend/.goku/generated/service/core/entity/file/typ"
+	svccore_entjobapplicant_typ "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/typ"
 	svcuser_entteam_typ "sampleapp/backend/.goku/generated/service/user/entity/team/typ"
 	svcuser_entuser_typ "sampleapp/backend/.goku/generated/service/user/entity/user/typ"
 	app_typ "sampleapp/backend/.goku/generated/typ"
@@ -182,6 +183,37 @@ type GenderConditionResolver struct {
 	app_typ.GenderCondition
 }
 
+type Core_JobApplicantResolver struct {
+	svccore_entjobapplicant_typ.JobApplicant
+}
+
+type Core_JobApplicant_JobApplicantInputResolver struct {
+	svccore_entjobapplicant_typ.JobApplicantInput
+}
+
+type Core_JobApplicant_JobApplicantFieldConditionResolver struct {
+	svccore_entjobapplicant_typ.JobApplicantFieldCondition
+}
+
+type Core_JobApplicant_JobApplicantFilterResolver struct {
+	svccore_entjobapplicant_typ.JobApplicantFilter
+}
+
+func (r *Core_JobApplicant_JobApplicantFilterResolver) And() []*Core_JobApplicant_JobApplicantFilterResolver {
+	var ret []*Core_JobApplicant_JobApplicantFilterResolver
+	for _, elem := range r.JobApplicantFilter.And {
+		ret = append(ret, &Core_JobApplicant_JobApplicantFilterResolver{JobApplicantFilter: elem})
+	}
+	return ret
+}
+func (r *Core_JobApplicant_JobApplicantFilterResolver) Or() []*Core_JobApplicant_JobApplicantFilterResolver {
+	var ret []*Core_JobApplicant_JobApplicantFilterResolver
+	for _, elem := range r.JobApplicantFilter.Or {
+		ret = append(ret, &Core_JobApplicant_JobApplicantFilterResolver{JobApplicantFilter: elem})
+	}
+	return ret
+}
+
 type Auth_LoginRequestResolver struct {
 	svcauth_typ.LoginRequest
 }
@@ -331,12 +363,8 @@ func (r *Auth_Secret_SecretFilterResolver) Or() []*Auth_Secret_SecretFilterResol
 	return ret
 }
 
-type Core_File_StandardEntityRequestResolver struct {
-	svccore_entfile_typ.StandardEntityRequest
-}
-
-type Auth_Secret_StandardEntityRequestResolver struct {
-	svcauth_entsecret_typ.StandardEntityRequest
+type Core_JobApplicant_StandardEntityRequestResolver struct {
+	svccore_entjobapplicant_typ.StandardEntityRequest
 }
 
 type User_Team_StandardEntityRequestResolver struct {
@@ -347,12 +375,12 @@ type User_User_StandardEntityRequestResolver struct {
 	svcuser_entuser_typ.StandardEntityRequest
 }
 
-type User_User_StandardEntityResponseResolver struct {
-	svcuser_entuser_typ.StandardEntityResponse
+type Auth_Secret_StandardEntityRequestResolver struct {
+	svcauth_entsecret_typ.StandardEntityRequest
 }
 
-func (r *User_User_StandardEntityResponseResolver) Object() *User_UserResolver {
-	return &User_UserResolver{User: r.StandardEntityResponse.Object}
+type Core_File_StandardEntityRequestResolver struct {
+	svccore_entfile_typ.StandardEntityRequest
 }
 
 type User_Team_StandardEntityResponseResolver struct {
@@ -363,12 +391,12 @@ func (r *User_Team_StandardEntityResponseResolver) Object() *User_TeamResolver {
 	return &User_TeamResolver{Team: r.StandardEntityResponse.Object}
 }
 
-type Core_File_StandardEntityResponseResolver struct {
-	svccore_entfile_typ.StandardEntityResponse
+type User_User_StandardEntityResponseResolver struct {
+	svcuser_entuser_typ.StandardEntityResponse
 }
 
-func (r *Core_File_StandardEntityResponseResolver) Object() *Core_FileResolver {
-	return &Core_FileResolver{File: r.StandardEntityResponse.Object}
+func (r *User_User_StandardEntityResponseResolver) Object() *User_UserResolver {
+	return &User_UserResolver{User: r.StandardEntityResponse.Object}
 }
 
 type Auth_Secret_StandardEntityResponseResolver struct {
@@ -377,6 +405,22 @@ type Auth_Secret_StandardEntityResponseResolver struct {
 
 func (r *Auth_Secret_StandardEntityResponseResolver) Object() *Auth_SecretResolver {
 	return &Auth_SecretResolver{Secret: r.StandardEntityResponse.Object}
+}
+
+type Core_File_StandardEntityResponseResolver struct {
+	svccore_entfile_typ.StandardEntityResponse
+}
+
+func (r *Core_File_StandardEntityResponseResolver) Object() *Core_FileResolver {
+	return &Core_FileResolver{File: r.StandardEntityResponse.Object}
+}
+
+type Core_JobApplicant_StandardEntityResponseResolver struct {
+	svccore_entjobapplicant_typ.StandardEntityResponse
+}
+
+func (r *Core_JobApplicant_StandardEntityResponseResolver) Object() *Core_JobApplicantResolver {
+	return &Core_JobApplicantResolver{JobApplicant: r.StandardEntityResponse.Object}
 }
 
 type Core_File_StorageClientConditionResolver struct {
@@ -530,6 +574,61 @@ func (r *Core_File_ListResponseResolver) Count() int32 {
 
 type Core_File_QueryByTextRequestResolver struct {
 	svccore_entfile_typ.QueryByTextRequest
+}
+
+type Core_JobApplicant_AddRequestResolver struct {
+	svccore_entjobapplicant_typ.AddRequest
+}
+
+func (r *Core_JobApplicant_AddRequestResolver) Object() *Core_JobApplicant_JobApplicantInputResolver {
+	return &Core_JobApplicant_JobApplicantInputResolver{JobApplicantInput: r.AddRequest.Object}
+}
+
+type Core_JobApplicant_UpdateRequestResolver struct {
+	svccore_entjobapplicant_typ.UpdateRequest
+}
+
+func (r *Core_JobApplicant_UpdateRequestResolver) Object() *Core_JobApplicantResolver {
+	return &Core_JobApplicantResolver{JobApplicant: r.UpdateRequest.Object}
+}
+
+type Core_JobApplicant_UpdateResponseResolver struct {
+	svccore_entjobapplicant_typ.UpdateResponse
+}
+
+func (r *Core_JobApplicant_UpdateResponseResolver) Object() *Core_JobApplicantResolver {
+	return &Core_JobApplicantResolver{JobApplicant: r.UpdateResponse.Object}
+}
+
+type Core_JobApplicant_GetRequestResolver struct {
+	svccore_entjobapplicant_typ.GetRequest
+}
+
+type Core_JobApplicant_ListRequestResolver struct {
+	svccore_entjobapplicant_typ.ListRequest
+}
+
+func (r *Core_JobApplicant_ListRequestResolver) Filter() *Core_JobApplicant_JobApplicantFilterResolver {
+	return &Core_JobApplicant_JobApplicantFilterResolver{JobApplicantFilter: r.ListRequest.Filter}
+}
+
+type Core_JobApplicant_ListResponseResolver struct {
+	svccore_entjobapplicant_typ.ListResponse
+}
+
+func (r *Core_JobApplicant_ListResponseResolver) Items() []*Core_JobApplicantResolver {
+	var ret []*Core_JobApplicantResolver
+	for _, elem := range r.ListResponse.Items {
+		ret = append(ret, &Core_JobApplicantResolver{JobApplicant: elem})
+	}
+	return ret
+}
+func (r *Core_JobApplicant_ListResponseResolver) Count() int32 {
+	return int32(r.ListResponse.Count)
+}
+
+type Core_JobApplicant_QueryByTextRequestResolver struct {
+	svccore_entjobapplicant_typ.QueryByTextRequest
 }
 
 type Auth_Secret_AddRequestResolver struct {
@@ -827,6 +926,75 @@ func (r *QueryResolver) Core_File_QueryByText(ctx context.Context, args Core_Fil
 	return &ret, nil
 }
 
+type Core_JobApplicant_GetRequestArgs struct {
+	Req *Core_JobApplicant_GetRequestResolver
+}
+
+func (r *QueryResolver) Core_JobApplicant_Get(ctx context.Context, args Core_JobApplicant_GetRequestArgs) (*Core_JobApplicantResolver, error) {
+	var ret Core_JobApplicantResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Get...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().JobApplicant().Get(ctx, args.Req.GetRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.JobApplicant = resp
+
+	return &ret, nil
+}
+
+type Core_JobApplicant_ListRequestArgs struct {
+	Req *Core_JobApplicant_ListRequestResolver
+}
+
+func (r *QueryResolver) Core_JobApplicant_List(ctx context.Context, args Core_JobApplicant_ListRequestArgs) (*Core_JobApplicant_ListResponseResolver, error) {
+	var ret Core_JobApplicant_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for List...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().JobApplicant().List(ctx, args.Req.ListRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
+type Core_JobApplicant_QueryByTextRequestArgs struct {
+	Req *Core_JobApplicant_QueryByTextRequestResolver
+}
+
+func (r *QueryResolver) Core_JobApplicant_QueryByText(ctx context.Context, args Core_JobApplicant_QueryByTextRequestArgs) (*Core_JobApplicant_ListResponseResolver, error) {
+	var ret Core_JobApplicant_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for QueryByText...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().JobApplicant().QueryByText(ctx, args.Req.QueryByTextRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
 type Auth_Secret_GetRequestArgs struct {
 	Req *Auth_Secret_GetRequestResolver
 }
@@ -1098,6 +1266,52 @@ func (r *MutationResolver) Core_File_Update(ctx context.Context, args Core_File_
 	c := r.getClientFn(ctx)
 
 	resp, err := c.Core().File().Update(ctx, args.Req.UpdateRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.UpdateResponse = resp
+
+	return &ret, nil
+}
+
+type Core_JobApplicant_AddRequestArgs struct {
+	Req *Core_JobApplicant_AddRequestResolver
+}
+
+func (r *MutationResolver) Core_JobApplicant_Add(ctx context.Context, args Core_JobApplicant_AddRequestArgs) (*Core_JobApplicantResolver, error) {
+	var ret Core_JobApplicantResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Add...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().JobApplicant().Add(ctx, args.Req.AddRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.JobApplicant = resp
+
+	return &ret, nil
+}
+
+type Core_JobApplicant_UpdateRequestArgs struct {
+	Req *Core_JobApplicant_UpdateRequestResolver
+}
+
+func (r *MutationResolver) Core_JobApplicant_Update(ctx context.Context, args Core_JobApplicant_UpdateRequestArgs) (*Core_JobApplicant_UpdateResponseResolver, error) {
+	var ret Core_JobApplicant_UpdateResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Update...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().JobApplicant().Update(ctx, args.Req.UpdateRequest)
 	if err != nil {
 		return nil, err
 	}

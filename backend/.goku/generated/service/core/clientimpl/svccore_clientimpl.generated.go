@@ -7,6 +7,7 @@ import (
 
 	svccore_client "sampleapp/backend/.goku/generated/service/core/client"
 	svccore_entfile_client "sampleapp/backend/.goku/generated/service/core/entity/file/client"
+	svccore_entjobapplicant_client "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/client"
 )
 
 var llog = log.GetLogger().WithHeading("Client").WithHeading("svccore")
@@ -35,21 +36,27 @@ func NewClient(ctx context.Context, req NewClientRequest) (svccore_client.Client
 // Service Entities Client
 // entitiesClient is a collection of all entity clients under the service.
 type entitiesClient struct {
-	fileClient svccore_entfile_client.Client
+	fileClient         svccore_entfile_client.Client
+	jobApplicantClient svccore_entjobapplicant_client.Client
 }
 
 func (c entitiesClient) File() svccore_entfile_client.Client {
 	return c.fileClient
 }
+func (c entitiesClient) JobApplicant() svccore_entjobapplicant_client.Client {
+	return c.jobApplicantClient
+}
 
 // NewEntitiesClientRequest is the request type for a new client.
 type NewEntitiesClientRequest struct {
-	FileClient svccore_entfile_client.Client
+	FileClient         svccore_entfile_client.Client
+	JobApplicantClient svccore_entjobapplicant_client.Client
 }
 
 func NewEntitiesClient(ctx context.Context, req NewEntitiesClientRequest) (svccore_client.EntitiesClient, error) {
 	cl := entitiesClient{
-		fileClient: req.FileClient,
+		fileClient:         req.FileClient,
+		jobApplicantClient: req.JobApplicantClient,
 	}
 	return cl, nil
 }

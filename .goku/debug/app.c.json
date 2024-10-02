@@ -56,6 +56,18 @@
    "Associations": null
   },
   {
+   "Name": "JobApplicant",
+   "Description": "",
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant"
+   },
+   "Options": {},
+   "Actions": null,
+   "Associations": null
+  },
+  {
    "Name": "Secret",
    "Description": "",
    "Namespace": {
@@ -2053,6 +2065,588 @@
    }
   },
   {
+   "Name": "JobApplicant",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_ID",
+      "Name": "ID",
+      "FilterConditionName": "IDCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": true,
+      "is_meta_field": true,
+      "Is_immutable": true,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": true,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_String",
+      "Name": "String",
+      "FilterConditionName": "StringCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "UserID",
+     "description": "",
+     "data_type": {
+      "Kind": "Wrapper_ID_ForeignEntity",
+      "Name": "Core_User",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "User"
+      },
+      "IsUnknown": false
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "ResumeID",
+     "description": "",
+     "data_type": {
+      "Kind": "Wrapper_ID_ForeignEntity",
+      "Name": "File",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "File"
+      },
+      "IsUnknown": false,
+      "AllowedMimeTypes": []
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_Timestamp",
+      "Name": "Timestamp",
+      "FilterConditionName": "TimestampCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": true,
+      "Is_immutable": true,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": true,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_Timestamp",
+      "Name": "Timestamp",
+      "FilterConditionName": "TimestampCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": true,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_Timestamp",
+      "Name": "Timestamp",
+      "FilterConditionName": "TimestampCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": true,
+      "is_primary_key": false,
+      "is_meta_field": true,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "JobApplicant"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "Base",
+    "Siblings": {
+     "AddRequest": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "AddRequest"
+      ],
+      "enum": "",
+      "method": ""
+     },
+     "Filter": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "JobApplicantFilter"
+      ],
+      "enum": "",
+      "method": ""
+     },
+     "GetRequest": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "GetRequest"
+      ],
+      "enum": "",
+      "method": ""
+     },
+     "ListRequest": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "ListRequest"
+      ],
+      "enum": "",
+      "method": ""
+     },
+     "ListResponse": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "ListResponse"
+      ],
+      "enum": "",
+      "method": ""
+     },
+     "QueryByTextRequest": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "QueryByTextRequest"
+      ],
+      "enum": "",
+      "method": ""
+     },
+     "UpdateRequest": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "UpdateRequest"
+      ],
+      "enum": "",
+      "method": ""
+     },
+     "UpdateResponse": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "UpdateResponse"
+      ],
+      "enum": "",
+      "method": ""
+     }
+    },
+    "BaseVariantKind": "Meta",
+    "BaseTypeName": "",
+    "IsAddedByGoku": false
+   }
+  },
+  {
+   "Name": "JobApplicantFieldCondition",
+   "Description": "",
+   "Fields": null,
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "JobApplicantFieldCondition"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "FilterCondition",
+    "Siblings": null,
+    "BaseVariantKind": "",
+    "BaseTypeName": "",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "JobApplicantFilter",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_FilterCondition",
+      "Name": "IDCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": true,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_FilterCondition",
+      "Name": "StringCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": true,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "UserID",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_FilterCondition",
+      "Name": "IDCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": true,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "ResumeID",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_FilterCondition",
+      "Name": "IDCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": true,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_FilterCondition",
+      "Name": "TimestampCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": true,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_FilterCondition",
+      "Name": "TimestampCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": true,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_FilterCondition",
+      "Name": "TimestampCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": true,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": {
+      "Kind": "Nested",
+      "Name": "Core_JobApplicant_JobApplicantFilter",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "JobApplicant",
+       "types": [
+        "JobApplicantFilter"
+       ],
+       "enum": "",
+       "method": ""
+      },
+      "MetaFields": false,
+      "InputVariant": false
+     },
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": {
+      "Kind": "Nested",
+      "Name": "Core_JobApplicant_JobApplicantFilter",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "JobApplicant",
+       "types": [
+        "JobApplicantFilter"
+       ],
+       "enum": "",
+       "method": ""
+      },
+      "MetaFields": false,
+      "InputVariant": false
+     },
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "JobApplicantFilter"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "Filter",
+    "Siblings": {
+     "Base": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "JobApplicant"
+      ],
+      "enum": "",
+      "method": ""
+     }
+    },
+    "BaseVariantKind": "",
+    "BaseTypeName": "JobApplicant",
+    "IsAddedByGoku": true
+   }
+  },
+  {
    "Name": "LoginRequest",
    "Description": "",
    "Fields": [
@@ -3777,11 +4371,11 @@
      "description": "",
      "data_type": {
       "Kind": "Wrapper_ID_ForeignEntity",
-      "Name": "Core_File",
+      "Name": "Core_JobApplicant",
       "Namespace": {
        "App": "Sampleapp",
        "service": "Core",
-       "entity": "File"
+       "entity": "JobApplicant"
       },
       "IsUnknown": false
      },
@@ -3805,7 +4399,7 @@
    "Namespace": {
     "App": "Sampleapp",
     "service": "Core",
-    "entity": "File",
+    "entity": "JobApplicant",
     "types": [
      "StandardEntityRequest"
     ],
@@ -3816,59 +4410,7 @@
     "Kind": "StandardRequest",
     "Siblings": null,
     "BaseVariantKind": "Input",
-    "BaseTypeName": "File",
-    "IsAddedByGoku": true
-   }
-  },
-  {
-   "Name": "StandardEntityRequest",
-   "Description": "",
-   "Fields": [
-    {
-     "name": "ID",
-     "description": "",
-     "data_type": {
-      "Kind": "Wrapper_ID_ForeignEntity",
-      "Name": "Auth_Secret",
-      "Namespace": {
-       "App": "Sampleapp",
-       "service": "Auth",
-       "entity": "Secret"
-      },
-      "IsUnknown": false
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": false,
-      "default_database_value": null,
-      "golang_tags": {},
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    }
-   ],
-   "Namespace": {
-    "App": "Sampleapp",
-    "service": "Auth",
-    "entity": "Secret",
-    "types": [
-     "StandardEntityRequest"
-    ],
-    "enum": "",
-    "method": ""
-   },
-   "Options": {
-    "Kind": "StandardRequest",
-    "Siblings": null,
-    "BaseVariantKind": "Input",
-    "BaseTypeName": "Secret",
+    "BaseTypeName": "JobApplicant",
     "IsAddedByGoku": true
    }
   },
@@ -3977,27 +4519,21 @@
    }
   },
   {
-   "Name": "StandardEntityResponse",
+   "Name": "StandardEntityRequest",
    "Description": "",
    "Fields": [
     {
-     "name": "Object",
+     "name": "ID",
      "description": "",
      "data_type": {
-      "Kind": "Nested",
-      "Name": "User_User",
+      "Kind": "Wrapper_ID_ForeignEntity",
+      "Name": "Auth_Secret",
       "Namespace": {
        "App": "Sampleapp",
-       "service": "User",
-       "entity": "User",
-       "types": [
-        "User"
-       ],
-       "enum": "",
-       "method": ""
+       "service": "Auth",
+       "entity": "Secret"
       },
-      "MetaFields": false,
-      "InputVariant": false
+      "IsUnknown": false
      },
      "is_repeated": false,
      "options": {
@@ -4008,7 +4544,7 @@
       "is_set_internally_by_dal": false,
       "is_set_internally": false,
       "default_database_value": null,
-      "golang_tags": null,
+      "golang_tags": {},
       "nested_options": {
        "expand_fields": false,
        "use_separate_database_table": false
@@ -4018,19 +4554,71 @@
    ],
    "Namespace": {
     "App": "Sampleapp",
-    "service": "User",
-    "entity": "User",
+    "service": "Auth",
+    "entity": "Secret",
     "types": [
-     "StandardEntityResponse"
+     "StandardEntityRequest"
     ],
     "enum": "",
     "method": ""
    },
    "Options": {
-    "Kind": "StandardResponse",
+    "Kind": "StandardRequest",
     "Siblings": null,
-    "BaseVariantKind": "",
-    "BaseTypeName": "User",
+    "BaseVariantKind": "Input",
+    "BaseTypeName": "Secret",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "StandardEntityRequest",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": {
+      "Kind": "Wrapper_ID_ForeignEntity",
+      "Name": "Core_File",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "File"
+      },
+      "IsUnknown": false
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {},
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "File",
+    "types": [
+     "StandardEntityRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "StandardRequest",
+    "Siblings": null,
+    "BaseVariantKind": "Input",
+    "BaseTypeName": "File",
     "IsAddedByGoku": true
    }
   },
@@ -4101,13 +4689,13 @@
      "description": "",
      "data_type": {
       "Kind": "Nested",
-      "Name": "Core_File",
+      "Name": "User_User",
       "Namespace": {
        "App": "Sampleapp",
-       "service": "Core",
-       "entity": "File",
+       "service": "User",
+       "entity": "User",
        "types": [
-        "File"
+        "User"
        ],
        "enum": "",
        "method": ""
@@ -4134,8 +4722,8 @@
    ],
    "Namespace": {
     "App": "Sampleapp",
-    "service": "Core",
-    "entity": "File",
+    "service": "User",
+    "entity": "User",
     "types": [
      "StandardEntityResponse"
     ],
@@ -4146,7 +4734,7 @@
     "Kind": "StandardResponse",
     "Siblings": null,
     "BaseVariantKind": "",
-    "BaseTypeName": "File",
+    "BaseTypeName": "User",
     "IsAddedByGoku": true
    }
   },
@@ -4205,6 +4793,122 @@
     "Siblings": null,
     "BaseVariantKind": "",
     "BaseTypeName": "Secret",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "StandardEntityResponse",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": {
+      "Kind": "Nested",
+      "Name": "Core_File",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "File",
+       "types": [
+        "File"
+       ],
+       "enum": "",
+       "method": ""
+      },
+      "MetaFields": false,
+      "InputVariant": false
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "File",
+    "types": [
+     "StandardEntityResponse"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "StandardResponse",
+    "Siblings": null,
+    "BaseVariantKind": "",
+    "BaseTypeName": "File",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "StandardEntityResponse",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": {
+      "Kind": "Nested",
+      "Name": "Core_JobApplicant",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "JobApplicant",
+       "types": [
+        "JobApplicant"
+       ],
+       "enum": "",
+       "method": ""
+      },
+      "MetaFields": false,
+      "InputVariant": false
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "StandardEntityResponse"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "StandardResponse",
+    "Siblings": null,
+    "BaseVariantKind": "",
+    "BaseTypeName": "JobApplicant",
     "IsAddedByGoku": true
    }
   },
@@ -5986,6 +6690,553 @@
     },
     "BaseVariantKind": "",
     "BaseTypeName": "File",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "AddRequest",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": {
+      "Kind": "Nested",
+      "Name": "Core_JobApplicant",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "JobApplicant",
+       "types": [
+        "JobApplicant"
+       ],
+       "enum": "",
+       "method": ""
+      },
+      "MetaFields": false,
+      "InputVariant": true
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "AddRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "AddRequest",
+    "Siblings": {
+     "Base": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "JobApplicant"
+      ],
+      "enum": "",
+      "method": ""
+     }
+    },
+    "BaseVariantKind": "",
+    "BaseTypeName": "JobApplicant",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "UpdateRequest",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": {
+      "Kind": "Nested",
+      "Name": "Core_JobApplicant",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "JobApplicant",
+       "types": [
+        "JobApplicant"
+       ],
+       "enum": "",
+       "method": ""
+      },
+      "MetaFields": false,
+      "InputVariant": false
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "Fields",
+     "description": "",
+     "data_type": {
+      "Kind": "Enum",
+      "Name": "Core_JobApplicant_JobApplicantField",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "JobApplicant",
+       "types": [],
+       "enum": "JobApplicantField",
+       "method": ""
+      }
+     },
+     "is_repeated": true,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "ExcludeFields",
+     "description": "",
+     "data_type": {
+      "Kind": "Enum",
+      "Name": "Core_JobApplicant_JobApplicantField",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "JobApplicant",
+       "types": [],
+       "enum": "JobApplicantField",
+       "method": ""
+      }
+     },
+     "is_repeated": true,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "UpdateRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "UpdateRequest",
+    "Siblings": {
+     "Base": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "JobApplicant"
+      ],
+      "enum": "",
+      "method": ""
+     }
+    },
+    "BaseVariantKind": "",
+    "BaseTypeName": "JobApplicant",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "UpdateResponse",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": {
+      "Kind": "Nested",
+      "Name": "Core_JobApplicant",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "JobApplicant",
+       "types": [
+        "JobApplicant"
+       ],
+       "enum": "",
+       "method": ""
+      },
+      "MetaFields": false,
+      "InputVariant": false
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "UpdateResponse"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "UpdateResponse",
+    "Siblings": {
+     "Base": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "JobApplicant"
+      ],
+      "enum": "",
+      "method": ""
+     }
+    },
+    "BaseVariantKind": "",
+    "BaseTypeName": "JobApplicant",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "GetRequest",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_ID",
+      "Name": "ID",
+      "FilterConditionName": "IDCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "GetRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "GetRequest",
+    "Siblings": {
+     "Base": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "JobApplicant"
+      ],
+      "enum": "",
+      "method": ""
+     }
+    },
+    "BaseVariantKind": "",
+    "BaseTypeName": "JobApplicant",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "ListRequest",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "Filter",
+     "description": "",
+     "data_type": {
+      "Kind": "Nested",
+      "Name": "Core_JobApplicant_JobApplicantFilter",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "JobApplicant",
+       "types": [
+        "JobApplicantFilter"
+       ],
+       "enum": "",
+       "method": ""
+      },
+      "MetaFields": false,
+      "InputVariant": false
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "ListRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "ListRequest",
+    "Siblings": {
+     "Base": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "JobApplicant"
+      ],
+      "enum": "",
+      "method": ""
+     }
+    },
+    "BaseVariantKind": "",
+    "BaseTypeName": "JobApplicant",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "ListResponse",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "Items",
+     "description": "",
+     "data_type": {
+      "Kind": "Nested",
+      "Name": "Core_JobApplicant",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "JobApplicant",
+       "types": [
+        "JobApplicant"
+       ],
+       "enum": "",
+       "method": ""
+      },
+      "MetaFields": false,
+      "InputVariant": false
+     },
+     "is_repeated": true,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "Count",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_Number",
+      "Name": "Number",
+      "FilterConditionName": "NumberCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "ListResponse"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "ListResponse",
+    "Siblings": {
+     "Base": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "JobApplicant"
+      ],
+      "enum": "",
+      "method": ""
+     }
+    },
+    "BaseVariantKind": "",
+    "BaseTypeName": "JobApplicant",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "QueryByTextRequest",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "QueryText",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_String",
+      "Name": "String",
+      "FilterConditionName": "StringCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "QueryByTextRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "QueryByTextRequest",
+    "Siblings": {
+     "Base": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "JobApplicant"
+      ],
+      "enum": "",
+      "method": ""
+     }
+    },
+    "BaseVariantKind": "",
+    "BaseTypeName": "JobApplicant",
     "IsAddedByGoku": true
    }
   },
@@ -7973,6 +9224,55 @@
    }
   },
   {
+   "name": "JobApplicantField",
+   "values": [
+    {
+     "name": "ID",
+     "description": "",
+     "id": 1
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "id": 2
+    },
+    {
+     "name": "UserID",
+     "description": "",
+     "id": 3
+    },
+    {
+     "name": "ResumeID",
+     "description": "",
+     "id": 4
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 5
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 6
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 7
+    }
+   ],
+   "options": {},
+   "namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [],
+    "enum": "JobApplicantField",
+    "method": ""
+   }
+  },
+  {
    "name": "PersonNameField",
    "values": [
     {
@@ -8895,6 +10195,296 @@
       "App": "Sampleapp",
       "service": "Core",
       "entity": "File",
+      "types": null,
+      "enum": "",
+      "method": "QueryByText"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Add",
+   "description": "Adds a new JobApplicant entity",
+   "namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": null,
+    "enum": "",
+    "method": "Add"
+   },
+   "argument_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "AddRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "return_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "JobApplicant"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "options": {
+    "type": "Mutation",
+    "is_generated_dal": true,
+    "is_static": false,
+    "is_direct_http_request_handler": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     },
+     "Namespace": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": null,
+      "enum": "",
+      "method": "Add"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Update",
+   "description": "Adds a new JobApplicant entity",
+   "namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": null,
+    "enum": "",
+    "method": "Update"
+   },
+   "argument_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "UpdateRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "return_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "UpdateResponse"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "options": {
+    "type": "Mutation",
+    "is_generated_dal": true,
+    "is_static": false,
+    "is_direct_http_request_handler": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "PUT",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     },
+     "Namespace": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": null,
+      "enum": "",
+      "method": "Update"
+     }
+    }
+   ]
+  },
+  {
+   "name": "Get",
+   "description": "Get a JobApplicant entity",
+   "namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": null,
+    "enum": "",
+    "method": "Get"
+   },
+   "argument_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "GetRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "return_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "JobApplicant"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "options": {
+    "type": "Query",
+    "is_generated_dal": true,
+    "is_static": false,
+    "is_direct_http_request_handler": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     },
+     "Namespace": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": null,
+      "enum": "",
+      "method": "Get"
+     }
+    }
+   ]
+  },
+  {
+   "name": "List",
+   "description": "List JobApplicant entities",
+   "namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": null,
+    "enum": "",
+    "method": "List"
+   },
+   "argument_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "ListRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "return_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "ListResponse"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "options": {
+    "type": "Query",
+    "is_generated_dal": true,
+    "is_static": false,
+    "is_direct_http_request_handler": false
+   },
+   "apis": [
+    {
+     "path": "/list",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 200,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     },
+     "Namespace": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": null,
+      "enum": "",
+      "method": "List"
+     }
+    }
+   ]
+  },
+  {
+   "name": "QueryByText",
+   "description": "List JobApplicants entities by free text search",
+   "namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": null,
+    "enum": "",
+    "method": "QueryByText"
+   },
+   "argument_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "QueryByTextRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "return_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "ListResponse"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "options": {
+    "type": "Query",
+    "is_generated_dal": true,
+    "is_static": false,
+    "is_direct_http_request_handler": false
+   },
+   "apis": [
+    {
+     "path": "/query_by_text",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     },
+     "Namespace": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
       "types": null,
       "enum": "",
       "method": "QueryByText"

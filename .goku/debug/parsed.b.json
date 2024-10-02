@@ -584,6 +584,133 @@
    },
    "Entities": [
     {
+     "Name": "JobApplicant",
+     "Description": "",
+     "Fields": [
+      {
+       "name": "Name",
+       "description": "",
+       "data_type": {
+        "Kind": "Primitive_String",
+        "Name": "String",
+        "FilterConditionName": "StringCondition"
+       },
+       "is_repeated": false,
+       "options": {
+        "is_optional": false,
+        "is_primary_key": false,
+        "is_meta_field": false,
+        "Is_immutable": false,
+        "is_set_internally_by_dal": false,
+        "is_set_internally": false,
+        "default_database_value": null,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {
+         "expand_fields": false,
+         "use_separate_database_table": false
+        }
+       }
+      },
+      {
+       "name": "UserID",
+       "description": "",
+       "data_type": {
+        "Kind": "Wrapper_ID_ForeignEntity",
+        "Name": "Core_User",
+        "Namespace": {
+         "App": "Sampleapp",
+         "service": "Core",
+         "entity": "User"
+        },
+        "IsUnknown": false
+       },
+       "is_repeated": false,
+       "options": {
+        "is_optional": false,
+        "is_primary_key": false,
+        "is_meta_field": false,
+        "Is_immutable": false,
+        "is_set_internally_by_dal": false,
+        "is_set_internally": false,
+        "default_database_value": null,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {
+         "expand_fields": false,
+         "use_separate_database_table": false
+        }
+       }
+      },
+      {
+       "name": "ResumeID",
+       "description": "",
+       "data_type": {
+        "Kind": "Wrapper_ID_ForeignEntity",
+        "Name": "File",
+        "Namespace": {
+         "App": "Sampleapp",
+         "service": "Core",
+         "entity": "File"
+        },
+        "IsUnknown": false,
+        "AllowedMimeTypes": []
+       },
+       "is_repeated": false,
+       "options": {
+        "is_optional": false,
+        "is_primary_key": false,
+        "is_meta_field": false,
+        "Is_immutable": false,
+        "is_set_internally_by_dal": false,
+        "is_set_internally": false,
+        "default_database_value": null,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {
+         "expand_fields": false,
+         "use_separate_database_table": false
+        }
+       }
+      }
+     ],
+     "Namespace": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant",
+      "types": [
+       "JobApplicant"
+      ],
+      "enum": "",
+      "method": ""
+     },
+     "Options": {
+      "Kind": "Base",
+      "Siblings": null,
+      "BaseVariantKind": "",
+      "BaseTypeName": "",
+      "IsAddedByGoku": false
+     },
+     "PrimaryNamespace": {
+      "App": "Sampleapp",
+      "service": "Core",
+      "entity": "JobApplicant"
+     },
+     "entity_options": {},
+     "Methods": null,
+     "actions": null,
+     "associations": null
+    },
+    {
      "Name": "File",
      "Description": "",
      "Fields": [
@@ -849,275 +976,6 @@
      ]
     }
    ],
-   "Enums": null,
-   "Types": null
-  },
-  {
-   "Name": "User",
-   "Options": {
-    "frontend_options": {
-     "default_icon": ""
-    }
-   },
-   "Entities": [
-    {
-     "Name": "User",
-     "Description": "",
-     "Fields": [
-      {
-       "name": "Name",
-       "description": "",
-       "data_type": {
-        "Kind": "Nested",
-        "Name": "PersonName",
-        "Namespace": {
-         "App": "Sampleapp",
-         "service": "",
-         "entity": "",
-         "types": [
-          "PersonName"
-         ],
-         "enum": "",
-         "method": ""
-        },
-        "MetaFields": false,
-        "InputVariant": false
-       },
-       "is_repeated": false,
-       "options": {
-        "is_optional": false,
-        "is_primary_key": false,
-        "is_meta_field": false,
-        "Is_immutable": false,
-        "is_set_internally_by_dal": false,
-        "is_set_internally": false,
-        "default_database_value": null,
-        "golang_tags": {
-         "validate": [
-          "required"
-         ]
-        },
-        "nested_options": {
-         "expand_fields": false,
-         "use_separate_database_table": false
-        }
-       }
-      },
-      {
-       "name": "Email",
-       "description": "",
-       "data_type": {
-        "Kind": "Primitive_Email",
-        "Name": "Email",
-        "FilterConditionName": "EmailCondition"
-       },
-       "is_repeated": false,
-       "options": {
-        "is_optional": false,
-        "is_primary_key": false,
-        "is_meta_field": false,
-        "Is_immutable": false,
-        "is_set_internally_by_dal": false,
-        "is_set_internally": false,
-        "default_database_value": null,
-        "golang_tags": {
-         "validate": [
-          "required"
-         ]
-        },
-        "nested_options": {
-         "expand_fields": false,
-         "use_separate_database_table": false
-        }
-       }
-      },
-      {
-       "name": "Addresses",
-       "description": "",
-       "data_type": {
-        "Kind": "Nested",
-        "Name": "Address",
-        "Namespace": {
-         "App": "Sampleapp",
-         "service": "",
-         "entity": "",
-         "types": [
-          "Address"
-         ],
-         "enum": "",
-         "method": ""
-        },
-        "MetaFields": false,
-        "InputVariant": false
-       },
-       "is_repeated": true,
-       "options": {
-        "is_optional": true,
-        "is_primary_key": false,
-        "is_meta_field": false,
-        "Is_immutable": false,
-        "is_set_internally_by_dal": false,
-        "is_set_internally": false,
-        "default_database_value": null,
-        "golang_tags": {},
-        "nested_options": {
-         "expand_fields": false,
-         "use_separate_database_table": false
-        }
-       }
-      },
-      {
-       "name": "TeamID",
-       "description": "",
-       "data_type": {
-        "Kind": "Wrapper_ID_ForeignEntity",
-        "Name": "User_Team",
-        "Namespace": {
-         "App": "Sampleapp",
-         "service": "User",
-         "entity": "Team"
-        },
-        "IsUnknown": false
-       },
-       "is_repeated": false,
-       "options": {
-        "is_optional": false,
-        "is_primary_key": false,
-        "is_meta_field": false,
-        "Is_immutable": false,
-        "is_set_internally_by_dal": false,
-        "is_set_internally": false,
-        "default_database_value": null,
-        "golang_tags": {
-         "validate": [
-          "required"
-         ]
-        },
-        "nested_options": {
-         "expand_fields": false,
-         "use_separate_database_table": false
-        }
-       }
-      },
-      {
-       "name": "PastTeamIDs",
-       "description": "",
-       "data_type": {
-        "Kind": "Wrapper_ID_ForeignEntity",
-        "Name": "User_Team",
-        "Namespace": {
-         "App": "Sampleapp",
-         "service": "User",
-         "entity": "Team"
-        },
-        "IsUnknown": false
-       },
-       "is_repeated": true,
-       "options": {
-        "is_optional": true,
-        "is_primary_key": false,
-        "is_meta_field": false,
-        "Is_immutable": false,
-        "is_set_internally_by_dal": false,
-        "is_set_internally": false,
-        "default_database_value": null,
-        "golang_tags": {},
-        "nested_options": {
-         "expand_fields": false,
-         "use_separate_database_table": false
-        }
-       }
-      }
-     ],
-     "Namespace": {
-      "App": "Sampleapp",
-      "service": "User",
-      "entity": "User",
-      "types": [
-       "User"
-      ],
-      "enum": "",
-      "method": ""
-     },
-     "Options": {
-      "Kind": "Base",
-      "Siblings": null,
-      "BaseVariantKind": "",
-      "BaseTypeName": "",
-      "IsAddedByGoku": false
-     },
-     "PrimaryNamespace": {
-      "App": "Sampleapp",
-      "service": "User",
-      "entity": "User"
-     },
-     "entity_options": {},
-     "Methods": null,
-     "actions": null,
-     "associations": null
-    },
-    {
-     "Name": "Team",
-     "Description": "",
-     "Fields": [
-      {
-       "name": "Name",
-       "description": "",
-       "data_type": {
-        "Kind": "Primitive_String",
-        "Name": "String",
-        "FilterConditionName": "StringCondition"
-       },
-       "is_repeated": false,
-       "options": {
-        "is_optional": false,
-        "is_primary_key": false,
-        "is_meta_field": false,
-        "Is_immutable": false,
-        "is_set_internally_by_dal": false,
-        "is_set_internally": false,
-        "default_database_value": null,
-        "golang_tags": {
-         "validate": [
-          "required"
-         ]
-        },
-        "nested_options": {
-         "expand_fields": false,
-         "use_separate_database_table": false
-        }
-       }
-      }
-     ],
-     "Namespace": {
-      "App": "Sampleapp",
-      "service": "User",
-      "entity": "Team",
-      "types": [
-       "Team"
-      ],
-      "enum": "",
-      "method": ""
-     },
-     "Options": {
-      "Kind": "Base",
-      "Siblings": null,
-      "BaseVariantKind": "",
-      "BaseTypeName": "",
-      "IsAddedByGoku": false
-     },
-     "PrimaryNamespace": {
-      "App": "Sampleapp",
-      "service": "User",
-      "entity": "Team"
-     },
-     "entity_options": {},
-     "Methods": null,
-     "actions": null,
-     "associations": null
-    }
-   ],
-   "Methods": null,
    "Enums": null,
    "Types": null
   },
@@ -1789,6 +1647,275 @@
      }
     }
    ]
+  },
+  {
+   "Name": "User",
+   "Options": {
+    "frontend_options": {
+     "default_icon": ""
+    }
+   },
+   "Entities": [
+    {
+     "Name": "User",
+     "Description": "",
+     "Fields": [
+      {
+       "name": "Name",
+       "description": "",
+       "data_type": {
+        "Kind": "Nested",
+        "Name": "PersonName",
+        "Namespace": {
+         "App": "Sampleapp",
+         "service": "",
+         "entity": "",
+         "types": [
+          "PersonName"
+         ],
+         "enum": "",
+         "method": ""
+        },
+        "MetaFields": false,
+        "InputVariant": false
+       },
+       "is_repeated": false,
+       "options": {
+        "is_optional": false,
+        "is_primary_key": false,
+        "is_meta_field": false,
+        "Is_immutable": false,
+        "is_set_internally_by_dal": false,
+        "is_set_internally": false,
+        "default_database_value": null,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {
+         "expand_fields": false,
+         "use_separate_database_table": false
+        }
+       }
+      },
+      {
+       "name": "Email",
+       "description": "",
+       "data_type": {
+        "Kind": "Primitive_Email",
+        "Name": "Email",
+        "FilterConditionName": "EmailCondition"
+       },
+       "is_repeated": false,
+       "options": {
+        "is_optional": false,
+        "is_primary_key": false,
+        "is_meta_field": false,
+        "Is_immutable": false,
+        "is_set_internally_by_dal": false,
+        "is_set_internally": false,
+        "default_database_value": null,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {
+         "expand_fields": false,
+         "use_separate_database_table": false
+        }
+       }
+      },
+      {
+       "name": "Addresses",
+       "description": "",
+       "data_type": {
+        "Kind": "Nested",
+        "Name": "Address",
+        "Namespace": {
+         "App": "Sampleapp",
+         "service": "",
+         "entity": "",
+         "types": [
+          "Address"
+         ],
+         "enum": "",
+         "method": ""
+        },
+        "MetaFields": false,
+        "InputVariant": false
+       },
+       "is_repeated": true,
+       "options": {
+        "is_optional": true,
+        "is_primary_key": false,
+        "is_meta_field": false,
+        "Is_immutable": false,
+        "is_set_internally_by_dal": false,
+        "is_set_internally": false,
+        "default_database_value": null,
+        "golang_tags": {},
+        "nested_options": {
+         "expand_fields": false,
+         "use_separate_database_table": false
+        }
+       }
+      },
+      {
+       "name": "TeamID",
+       "description": "",
+       "data_type": {
+        "Kind": "Wrapper_ID_ForeignEntity",
+        "Name": "User_Team",
+        "Namespace": {
+         "App": "Sampleapp",
+         "service": "User",
+         "entity": "Team"
+        },
+        "IsUnknown": false
+       },
+       "is_repeated": false,
+       "options": {
+        "is_optional": false,
+        "is_primary_key": false,
+        "is_meta_field": false,
+        "Is_immutable": false,
+        "is_set_internally_by_dal": false,
+        "is_set_internally": false,
+        "default_database_value": null,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {
+         "expand_fields": false,
+         "use_separate_database_table": false
+        }
+       }
+      },
+      {
+       "name": "PastTeamIDs",
+       "description": "",
+       "data_type": {
+        "Kind": "Wrapper_ID_ForeignEntity",
+        "Name": "User_Team",
+        "Namespace": {
+         "App": "Sampleapp",
+         "service": "User",
+         "entity": "Team"
+        },
+        "IsUnknown": false
+       },
+       "is_repeated": true,
+       "options": {
+        "is_optional": true,
+        "is_primary_key": false,
+        "is_meta_field": false,
+        "Is_immutable": false,
+        "is_set_internally_by_dal": false,
+        "is_set_internally": false,
+        "default_database_value": null,
+        "golang_tags": {},
+        "nested_options": {
+         "expand_fields": false,
+         "use_separate_database_table": false
+        }
+       }
+      }
+     ],
+     "Namespace": {
+      "App": "Sampleapp",
+      "service": "User",
+      "entity": "User",
+      "types": [
+       "User"
+      ],
+      "enum": "",
+      "method": ""
+     },
+     "Options": {
+      "Kind": "Base",
+      "Siblings": null,
+      "BaseVariantKind": "",
+      "BaseTypeName": "",
+      "IsAddedByGoku": false
+     },
+     "PrimaryNamespace": {
+      "App": "Sampleapp",
+      "service": "User",
+      "entity": "User"
+     },
+     "entity_options": {},
+     "Methods": null,
+     "actions": null,
+     "associations": null
+    },
+    {
+     "Name": "Team",
+     "Description": "",
+     "Fields": [
+      {
+       "name": "Name",
+       "description": "",
+       "data_type": {
+        "Kind": "Primitive_String",
+        "Name": "String",
+        "FilterConditionName": "StringCondition"
+       },
+       "is_repeated": false,
+       "options": {
+        "is_optional": false,
+        "is_primary_key": false,
+        "is_meta_field": false,
+        "Is_immutable": false,
+        "is_set_internally_by_dal": false,
+        "is_set_internally": false,
+        "default_database_value": null,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {
+         "expand_fields": false,
+         "use_separate_database_table": false
+        }
+       }
+      }
+     ],
+     "Namespace": {
+      "App": "Sampleapp",
+      "service": "User",
+      "entity": "Team",
+      "types": [
+       "Team"
+      ],
+      "enum": "",
+      "method": ""
+     },
+     "Options": {
+      "Kind": "Base",
+      "Siblings": null,
+      "BaseVariantKind": "",
+      "BaseTypeName": "",
+      "IsAddedByGoku": false
+     },
+     "PrimaryNamespace": {
+      "App": "Sampleapp",
+      "service": "User",
+      "entity": "Team"
+     },
+     "entity_options": {},
+     "Methods": null,
+     "actions": null,
+     "associations": null
+    }
+   ],
+   "Methods": null,
+   "Enums": null,
+   "Types": null
   }
  ]
 }

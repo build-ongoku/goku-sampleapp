@@ -65,6 +65,9 @@ type Query {
     core_file_get(req: Core_File_GetRequest!): Core_File!
     core_file_list(req: Core_File_ListRequest!): Core_File_ListResponse!
     core_file_queryByText(req: Core_File_QueryByTextRequest!): Core_File_ListResponse!
+    core_jobApplicant_get(req: Core_JobApplicant_GetRequest!): Core_JobApplicant!
+    core_jobApplicant_list(req: Core_JobApplicant_ListRequest!): Core_JobApplicant_ListResponse!
+    core_jobApplicant_queryByText(req: Core_JobApplicant_QueryByTextRequest!): Core_JobApplicant_ListResponse!
     auth_secret_get(req: Auth_Secret_GetRequest!): Auth_Secret!
     auth_secret_list(req: Auth_Secret_ListRequest!): Auth_Secret_ListResponse!
     auth_secret_queryByText(req: Auth_Secret_QueryByTextRequest!): Auth_Secret_ListResponse!
@@ -80,6 +83,8 @@ type Mutation {
     auth_registerUser(req: Auth_RegisterUserRequest!): Auth_AuthenticateResponse!
     core_file_add(req: Core_File_AddRequest!): Core_File!
     core_file_update(req: Core_File_UpdateRequest!): Core_File_UpdateResponse!
+    core_jobApplicant_add(req: Core_JobApplicant_AddRequest!): Core_JobApplicant!
+    core_jobApplicant_update(req: Core_JobApplicant_UpdateRequest!): Core_JobApplicant_UpdateResponse!
     auth_secret_add(req: Auth_Secret_AddRequest!): Auth_Secret!
     auth_secret_update(req: Auth_Secret_UpdateRequest!): Auth_Secret_UpdateResponse!
     user_team_add(req: User_Team_AddRequest!): User_Team!
@@ -159,6 +164,24 @@ input Core_File_FileFilter {
     Or: [Core_File_FileFilter!]!
 }
 
+input Core_JobApplicant_JobApplicantInput {
+    Name: String!
+    UserID: ID!
+    ResumeID: ID!
+}
+
+input Core_JobApplicant_JobApplicantFilter {
+    ID: IDCondition
+    Name: StringCondition
+    UserID: IDCondition
+    ResumeID: IDCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [Core_JobApplicant_JobApplicantFilter!]!
+    Or: [Core_JobApplicant_JobApplicantFilter!]!
+}
+
 input Auth_LoginRequest {
     Email: Email!
     Password: String!
@@ -229,11 +252,7 @@ input Auth_Secret_SecretFilter {
     Or: [Auth_Secret_SecretFilter!]!
 }
 
-input Core_File_StandardEntityRequest {
-    ID: ID!
-}
-
-input Auth_Secret_StandardEntityRequest {
+input Core_JobApplicant_StandardEntityRequest {
     ID: ID!
 }
 
@@ -242,6 +261,14 @@ input User_Team_StandardEntityRequest {
 }
 
 input User_User_StandardEntityRequest {
+    ID: ID!
+}
+
+input Auth_Secret_StandardEntityRequest {
+    ID: ID!
+}
+
+input Core_File_StandardEntityRequest {
     ID: ID!
 }
 
@@ -300,6 +327,28 @@ input Core_File_ListRequest {
 }
 
 input Core_File_QueryByTextRequest {
+    QueryText: String!
+}
+
+input Core_JobApplicant_AddRequest {
+    Object: Core_JobApplicant_JobApplicantInput!
+}
+
+input Core_JobApplicant_UpdateRequest {
+    Object: Core_JobApplicant_JobApplicantInput!
+    Fields: [Core_JobApplicant_JobApplicantField!]!
+    ExcludeFields: [Core_JobApplicant_JobApplicantField!]!
+}
+
+input Core_JobApplicant_GetRequest {
+    ID: ID!
+}
+
+input Core_JobApplicant_ListRequest {
+    Filter: Core_JobApplicant_JobApplicantFilter!
+}
+
+input Core_JobApplicant_QueryByTextRequest {
     QueryText: String!
 }
 
@@ -428,6 +477,16 @@ type Core_File {
     DeletedAt: Timestamp
 }
 
+type Core_JobApplicant {
+    ID: ID!
+    Name: String!
+    UserID: ID!
+    ResumeID: ID!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
 type PersonName {
     FirstName: String!
     MiddleInitial: String
@@ -473,20 +532,24 @@ type Auth_Secret {
     DeletedAt: Timestamp
 }
 
+type User_Team_StandardEntityResponse {
+    Object: User_Team!
+}
+
 type User_User_StandardEntityResponse {
     Object: User_User!
 }
 
-type User_Team_StandardEntityResponse {
-    Object: User_Team!
+type Auth_Secret_StandardEntityResponse {
+    Object: Auth_Secret!
 }
 
 type Core_File_StandardEntityResponse {
     Object: Core_File!
 }
 
-type Auth_Secret_StandardEntityResponse {
-    Object: Auth_Secret!
+type Core_JobApplicant_StandardEntityResponse {
+    Object: Core_JobApplicant!
 }
 
 type User_Team {
@@ -515,6 +578,15 @@ type Core_File_UpdateResponse {
 
 type Core_File_ListResponse {
     Items: [Core_File!]!
+    Count: Int!
+}
+
+type Core_JobApplicant_UpdateResponse {
+    Object: Core_JobApplicant!
+}
+
+type Core_JobApplicant_ListResponse {
+    Items: [Core_JobApplicant!]!
     Count: Int!
 }
 
@@ -638,6 +710,21 @@ enum Gender {
 input GenderCondition {
     Op: FilterOperator!
     Values: [Gender!]!
+}
+
+enum Core_JobApplicant_JobApplicantField {
+    ID
+    NAME
+    USER_ID
+    RESUME_ID
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input Core_JobApplicant_JobApplicantFieldCondition {
+    Op: FilterOperator!
+    Values: [Core_JobApplicant_JobApplicantField!]!
 }
 
 enum PersonNameField {

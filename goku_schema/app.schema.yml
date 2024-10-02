@@ -1,1 +1,10 @@
 app:
+
+  services:
+    - name: core
+      entities:
+        - name: JobApplicant
+          fields:
+            - name: string
+            - User: $.service[core].entity[User]
+            - Resume: File

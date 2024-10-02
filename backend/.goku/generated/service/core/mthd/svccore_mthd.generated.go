@@ -12,6 +12,7 @@ import (
 	svccore_clientimpl "sampleapp/backend/.goku/generated/service/core/clientimpl"
 	svccore_entfile_mthd "sampleapp/backend/.goku/generated/service/core/entity/file/mthd"
 	svccore_entfile_typ "sampleapp/backend/.goku/generated/service/core/entity/file/typ"
+	svccore_entjobapplicant_mthd "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/mthd"
 	sttc_svccore_mthd "sampleapp/backend/.goku/static/service/core/mthd"
 )
 
@@ -27,6 +28,13 @@ func NewClient(ctx context.Context, getClientFn app_client.ClientGetterFn) (svcc
 			return nil, fmt.Errorf("Creating new method client for entity [File]: %w", err)
 		}
 		newEntitiesClientReq.FileClient = entClient
+	}
+	{
+		entClient, err := svccore_entjobapplicant_mthd.NewClient(ctx, getClientFn)
+		if err != nil {
+			return nil, fmt.Errorf("Creating new method client for entity [JobApplicant]: %w", err)
+		}
+		newEntitiesClientReq.JobApplicantClient = entClient
 	}
 	entitiesClient, err := svccore_clientimpl.NewEntitiesClient(ctx, newEntitiesClientReq)
 	if err != nil {

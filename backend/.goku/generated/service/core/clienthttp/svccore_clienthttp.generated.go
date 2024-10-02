@@ -9,6 +9,7 @@ import (
 	svccore_client "sampleapp/backend/.goku/generated/service/core/client"
 	svccore_clientimpl "sampleapp/backend/.goku/generated/service/core/clientimpl"
 	svccore_entfile_clienthttp "sampleapp/backend/.goku/generated/service/core/entity/file/clienthttp"
+	svccore_entjobapplicant_clienthttp "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/clienthttp"
 )
 
 var llog = log.GetLogger().WithHeading("Client HTTP").WithHeading("svccore")
@@ -23,6 +24,13 @@ func NewClient(ctx context.Context, baseURL string) (svccore_client.Client, erro
 			return nil, fmt.Errorf("Create client for entity [File] : %w", err)
 		}
 		entitiesClientReq.FileClient = entityClient
+	}
+	{
+		entityClient, err := svccore_entjobapplicant_clienthttp.NewClient(ctx, baseURL)
+		if err != nil {
+			return nil, fmt.Errorf("Create client for entity [JobApplicant] : %w", err)
+		}
+		entitiesClientReq.JobApplicantClient = entityClient
 	}
 	entitiesClient, err := svccore_clientimpl.NewEntitiesClient(ctx, entitiesClientReq)
 	if err != nil {

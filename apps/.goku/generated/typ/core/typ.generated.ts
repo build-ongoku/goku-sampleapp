@@ -8,6 +8,7 @@ import { GenericCondition, StringCondition, NumberCondition, FloatCondition, Boo
 
 import * as app_typ from '@sampleapp/goku-generated/typ/typ.generated'
 import * as svccore_entfile_typ from '@sampleapp/goku-generated/typ/core/file/typ.generated'
+import * as svccore_entjobapplicant_typ from '@sampleapp/goku-generated/typ/core/job_applicant/typ.generated'
 
 /*eslint-disable */
 
