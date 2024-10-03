@@ -59,7 +59,7 @@ func (c Client) AddBatch(ctx context.Context, reqs ...svcuser_entteam_typ.AddReq
 	llog.Debug(ctx, "AddTeams: Adding entities...", "request", reqs)
 
 	// Meta info
-	meta := svcuser_entteam_meta.GetEntityTeamDALMeta()
+	meta := svcuser_entteam_meta.GetEntityDALMeta()
 
 	params := db.InsertTypeParams{
 		TableName: meta.DbTableName.FormatSQL(),
@@ -150,7 +150,7 @@ func (c Client) List(ctx context.Context, req svcuser_entteam_typ.ListRequest) (
 	var resp svcuser_entteam_typ.ListResponse
 
 	// Meta info
-	meta := svcuser_entteam_meta.GetEntityTeamDALMeta()
+	meta := svcuser_entteam_meta.GetEntityDALMeta()
 
 	// Begin a Transaction
 	err := c.conn.Begin(ctx)
@@ -292,7 +292,7 @@ func (c Client) Update(ctx context.Context, req svcuser_entteam_typ.UpdateReques
 	}
 
 	// Meta info
-	meta := svcuser_entteam_meta.GetEntityTeamDALMeta()
+	meta := svcuser_entteam_meta.GetEntityDALMeta()
 
 	subReq := dalutil.UpdateTypeRequest[svcuser_entteam_typ.Team, svcuser_entteam_typ.TeamField]{
 		TableName:     meta.DbTableName.FormatSQLTable(),

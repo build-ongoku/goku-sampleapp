@@ -3,10 +3,10 @@
  "options": {},
  "services": [
   {
-   "name": "Core",
+   "name": "Auth",
    "namespace": {
     "App": "Sampleapp",
-    "service": "Core",
+    "service": "Auth",
     "entity": ""
    },
    "options": {
@@ -16,10 +16,10 @@
    }
   },
   {
-   "name": "Auth",
+   "name": "Core",
    "namespace": {
     "App": "Sampleapp",
-    "service": "Auth",
+    "service": "Core",
     "entity": ""
    },
    "options": {
@@ -44,6 +44,19 @@
  ],
  "entities": [
   {
+   "Name": "Secret",
+   "Description": "",
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Auth",
+    "entity": "Secret"
+   },
+   "Options": {},
+   "Actions": null,
+   "Associations": null,
+   "Hooks": null
+  },
+  {
    "Name": "JobApplicant",
    "Description": "",
    "Namespace": {
@@ -53,7 +66,8 @@
    },
    "Options": {},
    "Actions": null,
-   "Associations": null
+   "Associations": null,
+   "Hooks": null
   },
   {
    "Name": "File",
@@ -65,19 +79,8 @@
    },
    "Options": {},
    "Actions": null,
-   "Associations": null
-  },
-  {
-   "Name": "Secret",
-   "Description": "",
-   "Namespace": {
-    "App": "Sampleapp",
-    "service": "Auth",
-    "entity": "Secret"
-   },
-   "Options": {},
-   "Actions": null,
-   "Associations": null
+   "Associations": null,
+   "Hooks": null
   },
   {
    "Name": "User",
@@ -89,7 +92,8 @@
    },
    "Options": {},
    "Actions": null,
-   "Associations": null
+   "Associations": null,
+   "Hooks": null
   },
   {
    "Name": "Team",
@@ -101,7 +105,8 @@
    },
    "Options": {},
    "Actions": null,
-   "Associations": null
+   "Associations": null,
+   "Hooks": null
   }
  ],
  "types": [
@@ -635,322 +640,6 @@
    }
   },
   {
-   "Name": "JobApplicant",
-   "Description": "",
-   "Fields": [
-    {
-     "name": "Name",
-     "description": "",
-     "data_type": {
-      "Kind": "Primitive_String",
-      "Name": "String",
-      "FilterConditionName": "StringCondition"
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": false,
-      "default_database_value": null,
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    },
-    {
-     "name": "UserID",
-     "description": "",
-     "data_type": {
-      "Kind": "Wrapper_ID_ForeignEntity",
-      "Name": "Core_User",
-      "Namespace": {
-       "App": "Sampleapp",
-       "service": "Core",
-       "entity": "User"
-      },
-      "IsUnknown": false
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": false,
-      "default_database_value": null,
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    },
-    {
-     "name": "ResumeID",
-     "description": "",
-     "data_type": {
-      "Kind": "Wrapper_ID_ForeignEntity",
-      "Name": "File",
-      "Namespace": {
-       "App": "Sampleapp",
-       "service": "Core",
-       "entity": "File"
-      },
-      "IsUnknown": false,
-      "AllowedMimeTypes": []
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": false,
-      "default_database_value": null,
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    }
-   ],
-   "Namespace": {
-    "App": "Sampleapp",
-    "service": "Core",
-    "entity": "JobApplicant",
-    "types": [
-     "JobApplicant"
-    ],
-    "enum": "",
-    "method": ""
-   },
-   "Options": {
-    "Kind": "Base",
-    "Siblings": null,
-    "BaseVariantKind": "",
-    "BaseTypeName": "",
-    "IsAddedByGoku": false
-   }
-  },
-  {
-   "Name": "File",
-   "Description": "",
-   "Fields": [
-    {
-     "name": "FileName",
-     "description": "",
-     "data_type": {
-      "Kind": "Primitive_String",
-      "Name": "String",
-      "FilterConditionName": "StringCondition"
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": false,
-      "default_database_value": null,
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    },
-    {
-     "name": "StorageClient",
-     "description": "",
-     "data_type": {
-      "Kind": "Enum",
-      "Name": "Core_File_StorageClient",
-      "Namespace": {
-       "App": "Sampleapp",
-       "service": "Core",
-       "entity": "File",
-       "types": null,
-       "enum": "StorageClient",
-       "method": ""
-      }
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": false,
-      "default_database_value": null,
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    },
-    {
-     "name": "StorageClientIdentifier",
-     "description": "",
-     "data_type": {
-      "Kind": "Primitive_String",
-      "Name": "String",
-      "FilterConditionName": "StringCondition"
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": false,
-      "default_database_value": null,
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    },
-    {
-     "name": "SizeBytes",
-     "description": "",
-     "data_type": {
-      "Kind": "Primitive_Number",
-      "Name": "Number",
-      "FilterConditionName": "NumberCondition"
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": true,
-      "default_database_value": null,
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    },
-    {
-     "name": "MimeType",
-     "description": "",
-     "data_type": {
-      "Kind": "Primitive_String",
-      "Name": "String",
-      "FilterConditionName": "StringCondition"
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": true,
-      "default_database_value": null,
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    },
-    {
-     "name": "FileHash",
-     "description": "",
-     "data_type": {
-      "Kind": "Primitive_String",
-      "Name": "String",
-      "FilterConditionName": "StringCondition"
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": true,
-      "default_database_value": null,
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    }
-   ],
-   "Namespace": {
-    "App": "Sampleapp",
-    "service": "Core",
-    "entity": "File",
-    "types": [
-     "File"
-    ],
-    "enum": "",
-    "method": ""
-   },
-   "Options": {
-    "Kind": "Base",
-    "Siblings": null,
-    "BaseVariantKind": "",
-    "BaseTypeName": "",
-    "IsAddedByGoku": false
-   }
-  },
-  {
    "Name": "RegisterUserRequest",
    "Description": "",
    "Fields": [
@@ -1422,6 +1111,322 @@
    }
   },
   {
+   "Name": "JobApplicant",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_String",
+      "Name": "String",
+      "FilterConditionName": "StringCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "UserID",
+     "description": "",
+     "data_type": {
+      "Kind": "Wrapper_ID_ForeignEntity",
+      "Name": "Core_User",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "User"
+      },
+      "IsUnknown": false
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "ResumeID",
+     "description": "",
+     "data_type": {
+      "Kind": "Wrapper_ID_ForeignEntity",
+      "Name": "File",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "File"
+      },
+      "IsUnknown": false,
+      "AllowedMimeTypes": []
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "JobApplicant"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "Base",
+    "Siblings": null,
+    "BaseVariantKind": "",
+    "BaseTypeName": "",
+    "IsAddedByGoku": false
+   }
+  },
+  {
+   "Name": "File",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "FileName",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_String",
+      "Name": "String",
+      "FilterConditionName": "StringCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "StorageClient",
+     "description": "",
+     "data_type": {
+      "Kind": "Enum",
+      "Name": "Core_File_StorageClient",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "File",
+       "types": null,
+       "enum": "StorageClient",
+       "method": ""
+      }
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "StorageClientIdentifier",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_String",
+      "Name": "String",
+      "FilterConditionName": "StringCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "SizeBytes",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_Number",
+      "Name": "Number",
+      "FilterConditionName": "NumberCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": true,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "MimeType",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_String",
+      "Name": "String",
+      "FilterConditionName": "StringCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": true,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    },
+    {
+     "name": "FileHash",
+     "description": "",
+     "data_type": {
+      "Kind": "Primitive_String",
+      "Name": "String",
+      "FilterConditionName": "StringCondition"
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": true,
+      "default_database_value": null,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "File",
+    "types": [
+     "File"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "Base",
+    "Siblings": null,
+    "BaseVariantKind": "",
+    "BaseTypeName": "",
+    "IsAddedByGoku": false
+   }
+  },
+  {
    "Name": "User",
    "Description": "",
    "Fields": [
@@ -1720,6 +1725,30 @@
    }
   },
   {
+   "name": "Type",
+   "values": [
+    {
+     "name": "Password",
+     "description": "",
+     "id": 1
+    },
+    {
+     "name": "GithubToken",
+     "description": "",
+     "id": 2
+    }
+   ],
+   "options": {},
+   "namespace": {
+    "App": "Sampleapp",
+    "service": "Auth",
+    "entity": "Secret",
+    "types": [],
+    "enum": "Type",
+    "method": ""
+   }
+  },
+  {
    "name": "StorageClient",
    "values": [
     {
@@ -1747,89 +1776,9 @@
     "enum": "StorageClient",
     "method": ""
    }
-  },
-  {
-   "name": "Type",
-   "values": [
-    {
-     "name": "Password",
-     "description": "",
-     "id": 1
-    },
-    {
-     "name": "GithubToken",
-     "description": "",
-     "id": 2
-    }
-   ],
-   "options": {},
-   "namespace": {
-    "App": "Sampleapp",
-    "service": "Auth",
-    "entity": "Secret",
-    "types": [],
-    "enum": "Type",
-    "method": ""
-   }
   }
  ],
  "methods": [
-  {
-   "name": "FileUpload",
-   "description": "Create a new file",
-   "namespace": {
-    "App": "Sampleapp",
-    "service": "Core",
-    "entity": "",
-    "types": null,
-    "enum": "",
-    "method": "FileUpload"
-   },
-   "argument_type": {
-    "App": "Sampleapp",
-    "service": "",
-    "entity": "",
-    "types": null,
-    "enum": "",
-    "method": ""
-   },
-   "return_type": {
-    "App": "Sampleapp",
-    "service": "Core",
-    "entity": "File",
-    "types": [
-     "File"
-    ],
-    "enum": "",
-    "method": ""
-   },
-   "options": {
-    "type": "Mutation",
-    "is_generated_dal": false,
-    "is_static": true,
-    "is_direct_http_request_handler": true
-   },
-   "apis": [
-    {
-     "path": "file/upload",
-     "http_method": "POST",
-     "is_public": false,
-     "options": {
-      "success_status": 0,
-      "use_body_for_request": true,
-      "use_url_params_for_request": false
-     },
-     "Namespace": {
-      "App": "Sampleapp",
-      "service": "Core",
-      "entity": "",
-      "types": null,
-      "enum": "",
-      "method": ""
-     }
-    }
-   ]
-  },
   {
    "name": "LoginUser",
    "description": "Logs in a user",
@@ -1996,6 +1945,62 @@
      "Namespace": {
       "App": "Sampleapp",
       "service": "Auth",
+      "entity": "",
+      "types": null,
+      "enum": "",
+      "method": ""
+     }
+    }
+   ]
+  },
+  {
+   "name": "FileUpload",
+   "description": "Create a new file",
+   "namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "",
+    "types": null,
+    "enum": "",
+    "method": "FileUpload"
+   },
+   "argument_type": {
+    "App": "Sampleapp",
+    "service": "",
+    "entity": "",
+    "types": null,
+    "enum": "",
+    "method": ""
+   },
+   "return_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "File",
+    "types": [
+     "File"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "options": {
+    "type": "Mutation",
+    "is_generated_dal": false,
+    "is_static": true,
+    "is_direct_http_request_handler": true
+   },
+   "apis": [
+    {
+     "path": "file/upload",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     },
+     "Namespace": {
+      "App": "Sampleapp",
+      "service": "Core",
       "entity": "",
       "types": null,
       "enum": "",

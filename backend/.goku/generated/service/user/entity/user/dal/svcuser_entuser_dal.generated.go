@@ -60,7 +60,7 @@ func (c Client) AddBatch(ctx context.Context, reqs ...svcuser_entuser_typ.AddReq
 	llog.Debug(ctx, "AddUsers: Adding entities...", "request", reqs)
 
 	// Meta info
-	meta := svcuser_entuser_meta.GetEntityUserDALMeta()
+	meta := svcuser_entuser_meta.GetEntityDALMeta()
 
 	params := db.InsertTypeParams{
 		TableName: meta.DbTableName.FormatSQL(),
@@ -151,7 +151,7 @@ func (c Client) List(ctx context.Context, req svcuser_entuser_typ.ListRequest) (
 	var resp svcuser_entuser_typ.ListResponse
 
 	// Meta info
-	meta := svcuser_entuser_meta.GetEntityUserDALMeta()
+	meta := svcuser_entuser_meta.GetEntityDALMeta()
 
 	// Begin a Transaction
 	err := c.conn.Begin(ctx)
@@ -293,7 +293,7 @@ func (c Client) Update(ctx context.Context, req svcuser_entuser_typ.UpdateReques
 	}
 
 	// Meta info
-	meta := svcuser_entuser_meta.GetEntityUserDALMeta()
+	meta := svcuser_entuser_meta.GetEntityDALMeta()
 
 	subReq := dalutil.UpdateTypeRequest[svcuser_entuser_typ.User, svcuser_entuser_typ.UserField]{
 		TableName:     meta.DbTableName.FormatSQLTable(),

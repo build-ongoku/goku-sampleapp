@@ -18,20 +18,20 @@ import (
 
 var llog = log.GetLogger().WithHeading("DAL Meta")
 
-type EntitySecretDALMeta struct {
+type EntityDALMeta struct {
 	dalutil.EntityCommonDALMeta[svcauth_entsecret_typ.Secret, svcauth_entsecret_typ.SecretField]
 }
 
-// _EntitySecretDALMeta implements the singleton pattern.
-var _EntitySecretDALMeta = EntitySecretDALMeta{
+// _EntityDALMeta implements the singleton pattern.
+var _EntityDALMeta = EntityDALMeta{
 	dalutil.EntityCommonDALMeta[svcauth_entsecret_typ.Secret, svcauth_entsecret_typ.SecretField]{
 		DbTableName: naam.New("tb_secret"),
 		TypeDALMeta: GetTypeSecretDALMeta(),
 	},
 }
 
-func GetEntitySecretDALMeta() *EntitySecretDALMeta {
-	return &_EntitySecretDALMeta
+func GetEntityDALMeta() *EntityDALMeta {
+	return &_EntityDALMeta
 }
 
 type TypeSecretMeta struct {

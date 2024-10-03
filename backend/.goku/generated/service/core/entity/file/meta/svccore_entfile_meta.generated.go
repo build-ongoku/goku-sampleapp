@@ -18,20 +18,20 @@ import (
 
 var llog = log.GetLogger().WithHeading("DAL Meta")
 
-type EntityFileDALMeta struct {
+type EntityDALMeta struct {
 	dalutil.EntityCommonDALMeta[svccore_entfile_typ.File, svccore_entfile_typ.FileField]
 }
 
-// _EntityFileDALMeta implements the singleton pattern.
-var _EntityFileDALMeta = EntityFileDALMeta{
+// _EntityDALMeta implements the singleton pattern.
+var _EntityDALMeta = EntityDALMeta{
 	dalutil.EntityCommonDALMeta[svccore_entfile_typ.File, svccore_entfile_typ.FileField]{
 		DbTableName: naam.New("tb_file"),
 		TypeDALMeta: GetTypeFileDALMeta(),
 	},
 }
 
-func GetEntityFileDALMeta() *EntityFileDALMeta {
-	return &_EntityFileDALMeta
+func GetEntityDALMeta() *EntityDALMeta {
+	return &_EntityDALMeta
 }
 
 type TypeFileMeta struct {

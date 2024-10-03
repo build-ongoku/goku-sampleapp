@@ -18,20 +18,20 @@ import (
 
 var llog = log.GetLogger().WithHeading("DAL Meta")
 
-type EntityTeamDALMeta struct {
+type EntityDALMeta struct {
 	dalutil.EntityCommonDALMeta[svcuser_entteam_typ.Team, svcuser_entteam_typ.TeamField]
 }
 
-// _EntityTeamDALMeta implements the singleton pattern.
-var _EntityTeamDALMeta = EntityTeamDALMeta{
+// _EntityDALMeta implements the singleton pattern.
+var _EntityDALMeta = EntityDALMeta{
 	dalutil.EntityCommonDALMeta[svcuser_entteam_typ.Team, svcuser_entteam_typ.TeamField]{
 		DbTableName: naam.New("tb_team"),
 		TypeDALMeta: GetTypeTeamDALMeta(),
 	},
 }
 
-func GetEntityTeamDALMeta() *EntityTeamDALMeta {
-	return &_EntityTeamDALMeta
+func GetEntityDALMeta() *EntityDALMeta {
+	return &_EntityDALMeta
 }
 
 type TypeTeamMeta struct {

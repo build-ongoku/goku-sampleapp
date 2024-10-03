@@ -1,4 +1,4 @@
-package svcauth_entsecret_dal
+package svccore_entjobapplicant_dal
 
 import (
 	"context"
@@ -14,13 +14,13 @@ import (
 	"github.com/teejays/gokutil/panics"
 	"github.com/teejays/gokutil/scalars"
 
-	svcauth_dal "sampleapp/backend/.goku/generated/service/auth/dal"
-	svcauth_entsecret_client "sampleapp/backend/.goku/generated/service/auth/entity/secret/client"
-	svcauth_entsecret_meta "sampleapp/backend/.goku/generated/service/auth/entity/secret/meta"
-	svcauth_entsecret_typ "sampleapp/backend/.goku/generated/service/auth/entity/secret/typ"
+	svccore_dal "sampleapp/backend/.goku/generated/service/core/dal"
+	svccore_entjobapplicant_client "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/client"
+	svccore_entjobapplicant_meta "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/meta"
+	svccore_entjobapplicant_typ "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/typ"
 )
 
-var llog = log.GetLogger().WithHeading("DAL").WithHeading("?.service[Auth].entity[Secret]")
+var llog = log.GetLogger().WithHeading("DAL").WithHeading("?.service[Core].entity[JobApplicant]")
 
 /* Entity Client */
 
@@ -29,9 +29,9 @@ type Client struct {
 	dal  DAL
 }
 
-func NewClient(ctx context.Context) (svcauth_entsecret_client.CRUDClient, error) {
+func NewClient(ctx context.Context) (svccore_entjobapplicant_client.CRUDClient, error) {
 	// Get DB Connection
-	databaseName := "auth"
+	databaseName := "core"
 	conn, err := db.NewConnection(databaseName)
 	if err != nil {
 		return nil, fmt.Errorf("Getting DB connection for database [%s]: %w", databaseName, err)
@@ -44,22 +44,22 @@ func NewClient(ctx context.Context) (svcauth_entsecret_client.CRUDClient, error)
 	return Client{conn: conn, dal: dal}, nil
 }
 
-// Add handles insertion of a single Secret entity in the database.
-func (c Client) Add(ctx context.Context, req svcauth_entsecret_typ.AddRequest) (svcauth_entsecret_typ.Secret, error) {
+// Add handles insertion of a single JobApplicant entity in the database.
+func (c Client) Add(ctx context.Context, req svccore_entjobapplicant_typ.AddRequest) (svccore_entjobapplicant_typ.JobApplicant, error) {
 	elems, err := c.AddBatch(ctx, req)
 	if err != nil {
-		return svcauth_entsecret_typ.Secret{}, err
+		return svccore_entjobapplicant_typ.JobApplicant{}, err
 	}
-	panics.If(len(elems) != 1, "Add%s: Expected 1 element to be inserted, but got %d", "Secret", len(elems))
+	panics.If(len(elems) != 1, "Add%s: Expected 1 element to be inserted, but got %d", "JobApplicant", len(elems))
 	return elems[0], nil
 }
 
-// AddBatch handles insertion of multiple Secrets in the database.
-func (c Client) AddBatch(ctx context.Context, reqs ...svcauth_entsecret_typ.AddRequest) ([]svcauth_entsecret_typ.Secret, error) {
-	llog.Debug(ctx, "AddSecrets: Adding entities...", "request", reqs)
+// AddBatch handles insertion of multiple JobApplicants in the database.
+func (c Client) AddBatch(ctx context.Context, reqs ...svccore_entjobapplicant_typ.AddRequest) ([]svccore_entjobapplicant_typ.JobApplicant, error) {
+	llog.Debug(ctx, "AddJobApplicants: Adding entities...", "request", reqs)
 
 	// Meta info
-	meta := svcauth_entsecret_meta.GetEntityDALMeta()
+	meta := svccore_entjobapplicant_meta.GetEntityDALMeta()
 
 	params := db.InsertTypeParams{
 		TableName: meta.DbTableName.FormatSQL(),
@@ -71,15 +71,15 @@ func (c Client) AddBatch(ctx context.Context, reqs ...svcauth_entsecret_typ.AddR
 		return nil, err
 	}
 
-	var elems []svcauth_entsecret_typ.Secret
+	var elems []svccore_entjobapplicant_typ.JobApplicant
 	for _, r := range reqs {
-		obj := svcauth_entsecret_typ.NewSecretWithMetaFromInput(ctx, r.Object)
+		obj := svccore_entjobapplicant_typ.NewJobApplicantWithMetaFromInput(ctx, r.Object)
 		elems = append(elems, obj)
 	}
 
-	resp, err := dalutil.BatchAddType[svcauth_entsecret_typ.Secret, svcauth_entsecret_typ.SecretField](ctx, c.conn, params, meta.GetTypeDALMeta(), elems...)
+	resp, err := dalutil.BatchAddType[svccore_entjobapplicant_typ.JobApplicant, svccore_entjobapplicant_typ.JobApplicantField](ctx, c.conn, params, meta.GetTypeDALMeta(), elems...)
 	if err != nil {
-		return nil, fmt.Errorf("Inserting type %s: %w", "Secrets", err)
+		return nil, fmt.Errorf("Inserting type %s: %w", "JobApplicants", err)
 	}
 
 	err = c.conn.Commit(ctx)
@@ -90,67 +90,67 @@ func (c Client) AddBatch(ctx context.Context, reqs ...svcauth_entsecret_typ.AddR
 	return resp, nil
 }
 
-// Get fetches the entity Secret based on the ID provided.
-func (c Client) Get(ctx context.Context, req svcauth_entsecret_typ.GetRequest) (svcauth_entsecret_typ.Secret, error) {
+// Get fetches the entity JobApplicant based on the ID provided.
+func (c Client) Get(ctx context.Context, req svccore_entjobapplicant_typ.GetRequest) (svccore_entjobapplicant_typ.JobApplicant, error) {
 	id := req.ID
-	var elem svcauth_entsecret_typ.Secret
+	var elem svccore_entjobapplicant_typ.JobApplicant
 
-	listReq := svcauth_entsecret_typ.ListRequest{
-		Filter: svcauth_entsecret_typ.SecretFilter{
+	listReq := svccore_entjobapplicant_typ.ListRequest{
+		Filter: svccore_entjobapplicant_typ.JobApplicantFilter{
 			ID: &filterlib.IDCondition{Op: filterlib.EQUAL, Values: []scalars.ID{id}},
 		},
 	}
 
 	listResp, err := c.List(ctx, listReq)
 	if err != nil {
-		return elem, fmt.Errorf("Could not list Secrets by ID: %w", err)
+		return elem, fmt.Errorf("Could not list JobApplicants by ID: %w", err)
 	}
 	if len(listResp.Items) < 1 {
-		return elem, fmt.Errorf("No Secret found with ID %s", id)
+		return elem, fmt.Errorf("No JobApplicant found with ID %s", id)
 	}
-	panics.If(len(listResp.Items) > 1, "Expected 1 item but found %d Secrets found with ID %s", len(listResp.Items), id)
+	panics.If(len(listResp.Items) > 1, "Expected 1 item but found %d JobApplicants found with ID %s", len(listResp.Items), id)
 
 	return listResp.Items[0], nil
 
 }
 
-// QueryByText searches the entity Secret by the given text query.
-func (c Client) QueryByText(ctx context.Context, req svcauth_entsecret_typ.QueryByTextRequest) (svcauth_entsecret_typ.ListResponse, error) {
+// QueryByText searches the entity JobApplicant by the given text query.
+func (c Client) QueryByText(ctx context.Context, req svccore_entjobapplicant_typ.QueryByTextRequest) (svccore_entjobapplicant_typ.ListResponse, error) {
 
-	var resp svcauth_entsecret_typ.ListResponse
+	var resp svccore_entjobapplicant_typ.ListResponse
 
 	queryText := req.QueryText
 
 	// Prepare filter
-	filter, err := c.dal.GetQueryByTextFilterForTypeSecret(ctx, queryText)
+	filter, err := c.dal.GetQueryByTextFilterForTypeJobApplicant(ctx, queryText)
 	if err != nil {
 		return resp, err
 	}
 
 	// If no empty filter returned, means we have no way to search by text on this entity
 	if filter == nil {
-		llog.Error(ctx, "Text search is not set up", "type", "Secret")
+		llog.Error(ctx, "Text search is not set up", "type", "JobApplicant")
 		return resp, nil
 	}
 
-	listReq := svcauth_entsecret_typ.ListRequest{
+	listReq := svccore_entjobapplicant_typ.ListRequest{
 		Filter: *filter,
 	}
 
 	listResp, err := c.List(ctx, listReq)
 	if err != nil {
-		return listResp, fmt.Errorf("Could not query Secrets by text `%s`: %w", req.QueryText, err)
+		return listResp, fmt.Errorf("Could not query JobApplicants by text `%s`: %w", req.QueryText, err)
 	}
 
 	return listResp, nil
 }
 
-// List fetches a list of Secret entities based on the given parameters.
-func (c Client) List(ctx context.Context, req svcauth_entsecret_typ.ListRequest) (svcauth_entsecret_typ.ListResponse, error) {
-	var resp svcauth_entsecret_typ.ListResponse
+// List fetches a list of JobApplicant entities based on the given parameters.
+func (c Client) List(ctx context.Context, req svccore_entjobapplicant_typ.ListRequest) (svccore_entjobapplicant_typ.ListResponse, error) {
+	var resp svccore_entjobapplicant_typ.ListResponse
 
 	// Meta info
-	meta := svcauth_entsecret_meta.GetEntityDALMeta()
+	meta := svccore_entjobapplicant_meta.GetEntityDALMeta()
 
 	// Begin a Transaction
 	err := c.conn.Begin(ctx)
@@ -158,7 +158,7 @@ func (c Client) List(ctx context.Context, req svcauth_entsecret_typ.ListRequest)
 		return resp, err
 	}
 
-	// Get all the unique Secret IDs that we should fetch (based on the filters)
+	// Get all the unique JobApplicant IDs that we should fetch (based on the filters)
 	params := db.UniqueIDsQueryBuilderParams{
 		TableName:     meta.DbTableName.FormatSQL(),
 		SelectColumns: []string{"id"},
@@ -169,7 +169,7 @@ func (c Client) List(ctx context.Context, req svcauth_entsecret_typ.ListRequest)
 		return resp, err
 	}
 
-	llog.Debug(ctx, "Listing Secret", "ids", ids)
+	llog.Debug(ctx, "Listing JobApplicant", "ids", ids)
 
 	// Use the IDs to fetch the elements
 	listTypeByIDsParams := db.ListTypeByIDsParams{
@@ -177,7 +177,7 @@ func (c Client) List(ctx context.Context, req svcauth_entsecret_typ.ListRequest)
 		IDColumn:  "id",
 		IDs:       ids,
 	}
-	typeResp, err := dalutil.ListTypeByIDs[svcauth_entsecret_typ.Secret, svcauth_entsecret_typ.SecretField](ctx, c.conn, listTypeByIDsParams, meta.GetTypeDALMeta())
+	typeResp, err := dalutil.ListTypeByIDs[svccore_entjobapplicant_typ.JobApplicant, svccore_entjobapplicant_typ.JobApplicantField](ctx, c.conn, listTypeByIDsParams, meta.GetTypeDALMeta())
 	if err != nil {
 		return resp, err
 	}
@@ -195,8 +195,8 @@ func (c Client) List(ctx context.Context, req svcauth_entsecret_typ.ListRequest)
 
 }
 
-// listIDs fetches a list of unique IDs for entity Secret that match the filter provided.
-func (c Client) listIDs(ctx context.Context, req svcauth_entsecret_typ.ListRequest, params db.UniqueIDsQueryBuilderParams) ([]scalars.ID, error) {
+// listIDs fetches a list of unique IDs for entity JobApplicant that match the filter provided.
+func (c Client) listIDs(ctx context.Context, req svccore_entjobapplicant_typ.ListRequest, params db.UniqueIDsQueryBuilderParams) ([]scalars.ID, error) {
 
 	ids, err := c.listUniqueIDsByFilter(ctx, req.Filter, params)
 	if err != nil {
@@ -205,8 +205,8 @@ func (c Client) listIDs(ctx context.Context, req svcauth_entsecret_typ.ListReque
 	return ids, nil
 }
 
-// listUniqueIDsByFilter fetches a list of unique IDs for entity Secret that match the filter provided.
-func (c Client) listUniqueIDsByFilter(ctx context.Context, filter svcauth_entsecret_typ.SecretFilter, params db.UniqueIDsQueryBuilderParams) ([]scalars.ID, error) {
+// listUniqueIDsByFilter fetches a list of unique IDs for entity JobApplicant that match the filter provided.
+func (c Client) listUniqueIDsByFilter(ctx context.Context, filter svccore_entjobapplicant_typ.JobApplicantFilter, params db.UniqueIDsQueryBuilderParams) ([]scalars.ID, error) {
 
 	// By default, the baseIds, orIDs, and andIDs should be ANDed together i.e. only the IDs that satisfy everything should be returned
 	var finalIDs []scalars.ID
@@ -248,18 +248,18 @@ func (c Client) listUniqueIDsByFilter(ctx context.Context, filter svcauth_entsec
 	return finalIDs, nil
 }
 
-// listUniqueIDsByBaseFilter fetches a list of unique IDs for entity Secret that match the filter provided, ignoring the OR and AND filters.
-func (c Client) listUniqueIDsByBaseFilter(ctx context.Context, filter svcauth_entsecret_typ.SecretFilter, params db.UniqueIDsQueryBuilderParams) ([]scalars.ID, error) {
+// listUniqueIDsByBaseFilter fetches a list of unique IDs for entity JobApplicant that match the filter provided, ignoring the OR and AND filters.
+func (c Client) listUniqueIDsByBaseFilter(ctx context.Context, filter svccore_entjobapplicant_typ.JobApplicantFilter, params db.UniqueIDsQueryBuilderParams) ([]scalars.ID, error) {
 
 	// Since we do not look at Or/And in this function, nil them out
 	filter.Or = nil
 	filter.And = nil
 
 	// Fetch the Query builder
-	subReq := dalutil.ListTypeRequest[svcauth_entsecret_typ.SecretFilter]{Filter: filter}
-	ds, err := c.dal.ConstructListQueryBuilderForTypeSecret(ctx, c.conn, subReq, params)
+	subReq := dalutil.ListTypeRequest[svccore_entjobapplicant_typ.JobApplicantFilter]{Filter: filter}
+	ds, err := c.dal.ConstructListQueryBuilderForTypeJobApplicant(ctx, c.conn, subReq, params)
 	if err != nil {
-		return nil, fmt.Errorf("Constructing query to fetch unique Secret IDs that satisfy the filters: %w", err)
+		return nil, fmt.Errorf("Constructing query to fetch unique JobApplicant IDs that satisfy the filters: %w", err)
 	}
 
 	// Construct the query
@@ -282,19 +282,19 @@ func (c Client) listUniqueIDsByBaseFilter(ctx context.Context, filter svcauth_en
 	return ids, nil
 }
 
-// Update handles the update of Secret entity.
-func (c Client) Update(ctx context.Context, req svcauth_entsecret_typ.UpdateRequest) (dalutil.UpdateEntityResponse[svcauth_entsecret_typ.Secret], error) {
+// Update handles the update of JobApplicant entity.
+func (c Client) Update(ctx context.Context, req svccore_entjobapplicant_typ.UpdateRequest) (dalutil.UpdateEntityResponse[svccore_entjobapplicant_typ.JobApplicant], error) {
 
-	var resp dalutil.UpdateEntityResponse[svcauth_entsecret_typ.Secret]
+	var resp dalutil.UpdateEntityResponse[svccore_entjobapplicant_typ.JobApplicant]
 
 	if req.Object.ID.IsEmpty() {
 		return resp, fmt.Errorf("entity to be updated has an empty ID")
 	}
 
 	// Meta info
-	meta := svcauth_entsecret_meta.GetEntityDALMeta()
+	meta := svccore_entjobapplicant_meta.GetEntityDALMeta()
 
-	subReq := dalutil.UpdateTypeRequest[svcauth_entsecret_typ.Secret, svcauth_entsecret_typ.SecretField]{
+	subReq := dalutil.UpdateTypeRequest[svccore_entjobapplicant_typ.JobApplicant, svccore_entjobapplicant_typ.JobApplicantField]{
 		TableName:     meta.DbTableName.FormatSQLTable(),
 		Object:        req.Object,
 		Fields:        req.Fields,
@@ -310,7 +310,7 @@ func (c Client) Update(ctx context.Context, req svcauth_entsecret_typ.UpdateRequ
 	_, err = dalutil.UpdateType(ctx, c.conn, subReq, meta.GetTypeDALMeta())
 	if err != nil {
 		c.conn.MustRollback(ctx)
-		return resp, fmt.Errorf("Updating Secret: %w", err)
+		return resp, fmt.Errorf("Updating JobApplicant: %w", err)
 	}
 
 	err = c.conn.Commit(ctx)
@@ -321,11 +321,11 @@ func (c Client) Update(ctx context.Context, req svcauth_entsecret_typ.UpdateRequ
 
 	// Get the entity from the DB again. We cannot use `subResp.Object` since that is based on the req.Object, which may not
 	// reflect the actual state of the entity since the req.Object may contain updated/missing fields that are not in the Field mask.
-	var getReq svcauth_entsecret_typ.GetRequest
+	var getReq svccore_entjobapplicant_typ.GetRequest
 	getReq.ID = req.Object.ID
 	entity, err := c.Get(ctx, getReq)
 	if err != nil {
-		return resp, fmt.Errorf("Updating Secret: failed to get Secret entity after update: %w", err)
+		return resp, fmt.Errorf("Updating JobApplicant: failed to get JobApplicant entity after update: %w", err)
 	}
 
 	resp.Object = entity
@@ -336,16 +336,16 @@ func (c Client) Update(ctx context.Context, req svcauth_entsecret_typ.UpdateRequ
 
 /* Type Methods */
 
-// DAL encapsulates DAL methods for types that fall under Secret
+// DAL encapsulates DAL methods for types that fall under JobApplicant
 type DAL struct {
-	svcauth_dal.DAL
+	svccore_dal.DAL
 
 	conn db.Connection
 }
 
 func NewDAL(ctx context.Context, conn db.Connection) (DAL, error) {
 	dal := DAL{conn: conn}
-	parentDAL, err := svcauth_dal.NewDAL(ctx, conn)
+	parentDAL, err := svccore_dal.NewDAL(ctx, conn)
 	if err != nil {
 		return DAL{}, err
 	}
@@ -353,10 +353,10 @@ func NewDAL(ctx context.Context, conn db.Connection) (DAL, error) {
 	return dal, nil
 }
 
-// ConstructListQueryBuilderForTypeSecret provides a query builder (goqu.SelectDataset) representing a query that can
-// be used to get the IDs of all Secret items that belong to `params.TableName` and match the filter.
-func (d DAL) ConstructListQueryBuilderForTypeSecret(ctx context.Context, conn db.Connection, req dalutil.ListTypeRequest[svcauth_entsecret_typ.SecretFilter], params db.UniqueIDsQueryBuilderParams) (db.SelectQueryBuilder, error) {
-	llog.Debug(ctx, "Constructing query builder for Secret", "request", req)
+// ConstructListQueryBuilderForTypeJobApplicant provides a query builder (goqu.SelectDataset) representing a query that can
+// be used to get the IDs of all JobApplicant items that belong to `params.TableName` and match the filter.
+func (d DAL) ConstructListQueryBuilderForTypeJobApplicant(ctx context.Context, conn db.Connection, req dalutil.ListTypeRequest[svccore_entjobapplicant_typ.JobApplicantFilter], params db.UniqueIDsQueryBuilderParams) (db.SelectQueryBuilder, error) {
+	llog.Debug(ctx, "Constructing query builder for JobApplicant", "request", req)
 	var resp db.SelectQueryBuilder
 	var err error
 
@@ -386,23 +386,9 @@ func (d DAL) ConstructListQueryBuilderForTypeSecret(ctx context.Context, conn db
 			return resp, err
 		}
 	}
-	if req.Filter.Type != nil {
-		// inject a Where filter for Type
-		ds, err = filterlib.InjectConditionIntoSqlBuilder(req.Filter.Type, ds, "type")
-		if err != nil {
-			return resp, err
-		}
-	}
-	if req.Filter.Secret != nil {
-		// inject a Where filter for Secret
-		ds, err = filterlib.InjectConditionIntoSqlBuilder(req.Filter.Secret, ds, "secret")
-		if err != nil {
-			return resp, err
-		}
-	}
-	if req.Filter.ExpiresAt != nil {
-		// inject a Where filter for ExpiresAt
-		ds, err = filterlib.InjectConditionIntoSqlBuilder(req.Filter.ExpiresAt, ds, "expires_at")
+	if req.Filter.Name != nil {
+		// inject a Where filter for Name
+		ds, err = filterlib.InjectConditionIntoSqlBuilder(req.Filter.Name, ds, "name")
 		if err != nil {
 			return resp, err
 		}
@@ -435,12 +421,12 @@ func (d DAL) ConstructListQueryBuilderForTypeSecret(ctx context.Context, conn db
 	return resp, nil
 }
 
-func (d DAL) GetQueryByTextFilterForTypeSecret(ctx context.Context, queryText string) (*svcauth_entsecret_typ.SecretFilter, error) {
+func (d DAL) GetQueryByTextFilterForTypeJobApplicant(ctx context.Context, queryText string) (*svccore_entjobapplicant_typ.JobApplicantFilter, error) {
 
 	// Add OR filters for each field that can be searched over text
-	var orFilters []svcauth_entsecret_typ.SecretFilter
+	var orFilters []svccore_entjobapplicant_typ.JobApplicantFilter
 	{
-		filter := svcauth_entsecret_typ.SecretFilter{Secret: &filterlib.StringCondition{Op: filterlib.ILIKE, Values: []string{queryText}}}
+		filter := svccore_entjobapplicant_typ.JobApplicantFilter{Name: &filterlib.StringCondition{Op: filterlib.ILIKE, Values: []string{queryText}}}
 		orFilters = append(orFilters, filter)
 	}
 
@@ -448,7 +434,7 @@ func (d DAL) GetQueryByTextFilterForTypeSecret(ctx context.Context, queryText st
 		return nil, nil
 	}
 
-	filter := svcauth_entsecret_typ.SecretFilter{
+	filter := svccore_entjobapplicant_typ.JobApplicantFilter{
 		Or: orFilters,
 	}
 

@@ -252,10 +252,6 @@ input Auth_Secret_SecretFilter {
     Or: [Auth_Secret_SecretFilter!]!
 }
 
-input Core_JobApplicant_StandardEntityRequest {
-    ID: ID!
-}
-
 input User_Team_StandardEntityRequest {
     ID: ID!
 }
@@ -264,11 +260,15 @@ input User_User_StandardEntityRequest {
     ID: ID!
 }
 
-input Auth_Secret_StandardEntityRequest {
+input Core_File_StandardEntityRequest {
     ID: ID!
 }
 
-input Core_File_StandardEntityRequest {
+input Core_JobApplicant_StandardEntityRequest {
+    ID: ID!
+}
+
+input Auth_Secret_StandardEntityRequest {
     ID: ID!
 }
 
@@ -540,16 +540,16 @@ type User_User_StandardEntityResponse {
     Object: User_User!
 }
 
-type Auth_Secret_StandardEntityResponse {
-    Object: Auth_Secret!
-}
-
 type Core_File_StandardEntityResponse {
     Object: Core_File!
 }
 
 type Core_JobApplicant_StandardEntityResponse {
     Object: Core_JobApplicant!
+}
+
+type Auth_Secret_StandardEntityResponse {
+    Object: Auth_Secret!
 }
 
 type User_Team {

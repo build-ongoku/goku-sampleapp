@@ -363,10 +363,6 @@ func (r *Auth_Secret_SecretFilterResolver) Or() []*Auth_Secret_SecretFilterResol
 	return ret
 }
 
-type Core_JobApplicant_StandardEntityRequestResolver struct {
-	svccore_entjobapplicant_typ.StandardEntityRequest
-}
-
 type User_Team_StandardEntityRequestResolver struct {
 	svcuser_entteam_typ.StandardEntityRequest
 }
@@ -375,12 +371,16 @@ type User_User_StandardEntityRequestResolver struct {
 	svcuser_entuser_typ.StandardEntityRequest
 }
 
-type Auth_Secret_StandardEntityRequestResolver struct {
-	svcauth_entsecret_typ.StandardEntityRequest
-}
-
 type Core_File_StandardEntityRequestResolver struct {
 	svccore_entfile_typ.StandardEntityRequest
+}
+
+type Core_JobApplicant_StandardEntityRequestResolver struct {
+	svccore_entjobapplicant_typ.StandardEntityRequest
+}
+
+type Auth_Secret_StandardEntityRequestResolver struct {
+	svcauth_entsecret_typ.StandardEntityRequest
 }
 
 type User_Team_StandardEntityResponseResolver struct {
@@ -399,14 +399,6 @@ func (r *User_User_StandardEntityResponseResolver) Object() *User_UserResolver {
 	return &User_UserResolver{User: r.StandardEntityResponse.Object}
 }
 
-type Auth_Secret_StandardEntityResponseResolver struct {
-	svcauth_entsecret_typ.StandardEntityResponse
-}
-
-func (r *Auth_Secret_StandardEntityResponseResolver) Object() *Auth_SecretResolver {
-	return &Auth_SecretResolver{Secret: r.StandardEntityResponse.Object}
-}
-
 type Core_File_StandardEntityResponseResolver struct {
 	svccore_entfile_typ.StandardEntityResponse
 }
@@ -421,6 +413,14 @@ type Core_JobApplicant_StandardEntityResponseResolver struct {
 
 func (r *Core_JobApplicant_StandardEntityResponseResolver) Object() *Core_JobApplicantResolver {
 	return &Core_JobApplicantResolver{JobApplicant: r.StandardEntityResponse.Object}
+}
+
+type Auth_Secret_StandardEntityResponseResolver struct {
+	svcauth_entsecret_typ.StandardEntityResponse
+}
+
+func (r *Auth_Secret_StandardEntityResponseResolver) Object() *Auth_SecretResolver {
+	return &Auth_SecretResolver{Secret: r.StandardEntityResponse.Object}
 }
 
 type Core_File_StorageClientConditionResolver struct {

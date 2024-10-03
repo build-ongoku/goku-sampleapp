@@ -1984,32 +1984,6 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'Core',
-                entity: 'JobApplicant',
-                types: ['StandardEntityRequest'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('id'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('Core_JobApplicant'),
-                        kind: fieldkind.ForeignEntityKind,
-                        namespace: {
-                            service: 'Core',
-                            entity: 'JobApplicant',
-                        },
-                    },
-                },
-            ],
-        },
-        {
-            namespace: {
                 service: 'User',
                 entity: 'Team',
                 types: ['StandardEntityRequest'],
@@ -2062,32 +2036,6 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'Auth',
-                entity: 'Secret',
-                types: ['StandardEntityRequest'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('id'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('Auth_Secret'),
-                        kind: fieldkind.ForeignEntityKind,
-                        namespace: {
-                            service: 'Auth',
-                            entity: 'Secret',
-                        },
-                    },
-                },
-            ],
-        },
-        {
-            namespace: {
                 service: 'Core',
                 entity: 'File',
                 types: ['StandardEntityRequest'],
@@ -2107,6 +2055,58 @@ export const appReq: AppReq = {
                         namespace: {
                             service: 'Core',
                             entity: 'File',
+                        },
+                    },
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'Core',
+                entity: 'JobApplicant',
+                types: ['StandardEntityRequest'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('Core_JobApplicant'),
+                        kind: fieldkind.ForeignEntityKind,
+                        namespace: {
+                            service: 'Core',
+                            entity: 'JobApplicant',
+                        },
+                    },
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'Auth',
+                entity: 'Secret',
+                types: ['StandardEntityRequest'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('Auth_Secret'),
+                        kind: fieldkind.ForeignEntityKind,
+                        namespace: {
+                            service: 'Auth',
+                            entity: 'Secret',
                         },
                     },
                 },
@@ -2172,35 +2172,6 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'Auth',
-                entity: 'Secret',
-                types: ['StandardEntityResponse'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('object'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('Auth_Secret'),
-                        kind: fieldkind.NestedKind,
-                        namespace: {
-                            service: 'Auth',
-                            entity: 'Secret',
-                            types: ['Secret'],
-                            enum: undefined,
-                            method: undefined,
-                        },
-                    },
-                },
-            ],
-        },
-        {
-            namespace: {
                 service: 'Core',
                 entity: 'File',
                 types: ['StandardEntityResponse'],
@@ -2250,6 +2221,35 @@ export const appReq: AppReq = {
                             service: 'Core',
                             entity: 'JobApplicant',
                             types: ['JobApplicant'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'Auth',
+                entity: 'Secret',
+                types: ['StandardEntityResponse'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('Auth_Secret'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'Auth',
+                            entity: 'Secret',
+                            types: ['Secret'],
                             enum: undefined,
                             method: undefined,
                         },
@@ -4861,30 +4861,6 @@ export const appReq: AppReq = {
     methods: [
         {
             namespace: {
-                service: 'Core',
-                entity: undefined,
-                types: undefined,
-                enum: undefined,
-                method: 'FileUpload',
-            },
-            requestTypeNamespace: undefined,
-            responseTypeNamespace: {
-                service: 'Core',
-                entity: 'File',
-                types: ['File'],
-                enum: undefined,
-                method: undefined,
-            },
-            apis: [
-                {
-                    method: 'POST',
-                    path: 'file/upload',
-                    version: 1, // hard coded for now
-                },
-            ],
-        },
-        {
-            namespace: {
                 service: 'Auth',
                 entity: undefined,
                 types: undefined,
@@ -4969,6 +4945,30 @@ export const appReq: AppReq = {
                 {
                     method: 'POST',
                     path: '/authenticate_token',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'Core',
+                entity: undefined,
+                types: undefined,
+                enum: undefined,
+                method: 'FileUpload',
+            },
+            requestTypeNamespace: undefined,
+            responseTypeNamespace: {
+                service: 'Core',
+                entity: 'File',
+                types: ['File'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'POST',
+                    path: 'file/upload',
                     version: 1, // hard coded for now
                 },
             ],

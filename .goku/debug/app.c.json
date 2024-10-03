@@ -53,7 +53,8 @@
    },
    "Options": {},
    "Actions": null,
-   "Associations": null
+   "Associations": null,
+   "Hooks": null
   },
   {
    "Name": "JobApplicant",
@@ -65,7 +66,8 @@
    },
    "Options": {},
    "Actions": null,
-   "Associations": null
+   "Associations": null,
+   "Hooks": null
   },
   {
    "Name": "Secret",
@@ -77,7 +79,8 @@
    },
    "Options": {},
    "Actions": null,
-   "Associations": null
+   "Associations": null,
+   "Hooks": null
   },
   {
    "Name": "Team",
@@ -89,7 +92,8 @@
    },
    "Options": {},
    "Actions": null,
-   "Associations": null
+   "Associations": null,
+   "Hooks": null
   },
   {
    "Name": "User",
@@ -101,7 +105,8 @@
    },
    "Options": {},
    "Actions": null,
-   "Associations": null
+   "Associations": null,
+   "Hooks": null
   }
  ],
  "types": [
@@ -4371,58 +4376,6 @@
      "description": "",
      "data_type": {
       "Kind": "Wrapper_ID_ForeignEntity",
-      "Name": "Core_JobApplicant",
-      "Namespace": {
-       "App": "Sampleapp",
-       "service": "Core",
-       "entity": "JobApplicant"
-      },
-      "IsUnknown": false
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": false,
-      "default_database_value": null,
-      "golang_tags": {},
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    }
-   ],
-   "Namespace": {
-    "App": "Sampleapp",
-    "service": "Core",
-    "entity": "JobApplicant",
-    "types": [
-     "StandardEntityRequest"
-    ],
-    "enum": "",
-    "method": ""
-   },
-   "Options": {
-    "Kind": "StandardRequest",
-    "Siblings": null,
-    "BaseVariantKind": "Input",
-    "BaseTypeName": "JobApplicant",
-    "IsAddedByGoku": true
-   }
-  },
-  {
-   "Name": "StandardEntityRequest",
-   "Description": "",
-   "Fields": [
-    {
-     "name": "ID",
-     "description": "",
-     "data_type": {
-      "Kind": "Wrapper_ID_ForeignEntity",
       "Name": "User_Team",
       "Namespace": {
        "App": "Sampleapp",
@@ -4527,58 +4480,6 @@
      "description": "",
      "data_type": {
       "Kind": "Wrapper_ID_ForeignEntity",
-      "Name": "Auth_Secret",
-      "Namespace": {
-       "App": "Sampleapp",
-       "service": "Auth",
-       "entity": "Secret"
-      },
-      "IsUnknown": false
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": false,
-      "default_database_value": null,
-      "golang_tags": {},
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    }
-   ],
-   "Namespace": {
-    "App": "Sampleapp",
-    "service": "Auth",
-    "entity": "Secret",
-    "types": [
-     "StandardEntityRequest"
-    ],
-    "enum": "",
-    "method": ""
-   },
-   "Options": {
-    "Kind": "StandardRequest",
-    "Siblings": null,
-    "BaseVariantKind": "Input",
-    "BaseTypeName": "Secret",
-    "IsAddedByGoku": true
-   }
-  },
-  {
-   "Name": "StandardEntityRequest",
-   "Description": "",
-   "Fields": [
-    {
-     "name": "ID",
-     "description": "",
-     "data_type": {
-      "Kind": "Wrapper_ID_ForeignEntity",
       "Name": "Core_File",
       "Namespace": {
        "App": "Sampleapp",
@@ -4619,6 +4520,110 @@
     "Siblings": null,
     "BaseVariantKind": "Input",
     "BaseTypeName": "File",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "StandardEntityRequest",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": {
+      "Kind": "Wrapper_ID_ForeignEntity",
+      "Name": "Core_JobApplicant",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Core",
+       "entity": "JobApplicant"
+      },
+      "IsUnknown": false
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {},
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "JobApplicant",
+    "types": [
+     "StandardEntityRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "StandardRequest",
+    "Siblings": null,
+    "BaseVariantKind": "Input",
+    "BaseTypeName": "JobApplicant",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "StandardEntityRequest",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": {
+      "Kind": "Wrapper_ID_ForeignEntity",
+      "Name": "Auth_Secret",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Auth",
+       "entity": "Secret"
+      },
+      "IsUnknown": false
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": {},
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Auth",
+    "entity": "Secret",
+    "types": [
+     "StandardEntityRequest"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "StandardRequest",
+    "Siblings": null,
+    "BaseVariantKind": "Input",
+    "BaseTypeName": "Secret",
     "IsAddedByGoku": true
    }
   },
@@ -4747,64 +4752,6 @@
      "description": "",
      "data_type": {
       "Kind": "Nested",
-      "Name": "Auth_Secret",
-      "Namespace": {
-       "App": "Sampleapp",
-       "service": "Auth",
-       "entity": "Secret",
-       "types": [
-        "Secret"
-       ],
-       "enum": "",
-       "method": ""
-      },
-      "MetaFields": false,
-      "InputVariant": false
-     },
-     "is_repeated": false,
-     "options": {
-      "is_optional": false,
-      "is_primary_key": false,
-      "is_meta_field": false,
-      "Is_immutable": false,
-      "is_set_internally_by_dal": false,
-      "is_set_internally": false,
-      "default_database_value": null,
-      "golang_tags": null,
-      "nested_options": {
-       "expand_fields": false,
-       "use_separate_database_table": false
-      }
-     }
-    }
-   ],
-   "Namespace": {
-    "App": "Sampleapp",
-    "service": "Auth",
-    "entity": "Secret",
-    "types": [
-     "StandardEntityResponse"
-    ],
-    "enum": "",
-    "method": ""
-   },
-   "Options": {
-    "Kind": "StandardResponse",
-    "Siblings": null,
-    "BaseVariantKind": "",
-    "BaseTypeName": "Secret",
-    "IsAddedByGoku": true
-   }
-  },
-  {
-   "Name": "StandardEntityResponse",
-   "Description": "",
-   "Fields": [
-    {
-     "name": "Object",
-     "description": "",
-     "data_type": {
-      "Kind": "Nested",
       "Name": "Core_File",
       "Namespace": {
        "App": "Sampleapp",
@@ -4909,6 +4856,64 @@
     "Siblings": null,
     "BaseVariantKind": "",
     "BaseTypeName": "JobApplicant",
+    "IsAddedByGoku": true
+   }
+  },
+  {
+   "Name": "StandardEntityResponse",
+   "Description": "",
+   "Fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": {
+      "Kind": "Nested",
+      "Name": "Auth_Secret",
+      "Namespace": {
+       "App": "Sampleapp",
+       "service": "Auth",
+       "entity": "Secret",
+       "types": [
+        "Secret"
+       ],
+       "enum": "",
+       "method": ""
+      },
+      "MetaFields": false,
+      "InputVariant": false
+     },
+     "is_repeated": false,
+     "options": {
+      "is_optional": false,
+      "is_primary_key": false,
+      "is_meta_field": false,
+      "Is_immutable": false,
+      "is_set_internally_by_dal": false,
+      "is_set_internally": false,
+      "default_database_value": null,
+      "golang_tags": null,
+      "nested_options": {
+       "expand_fields": false,
+       "use_separate_database_table": false
+      }
+     }
+    }
+   ],
+   "Namespace": {
+    "App": "Sampleapp",
+    "service": "Auth",
+    "entity": "Secret",
+    "types": [
+     "StandardEntityResponse"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "Options": {
+    "Kind": "StandardResponse",
+    "Siblings": null,
+    "BaseVariantKind": "",
+    "BaseTypeName": "Secret",
     "IsAddedByGoku": true
    }
   },
@@ -9683,62 +9688,6 @@
  ],
  "methods": [
   {
-   "name": "FileUpload",
-   "description": "Create a new file",
-   "namespace": {
-    "App": "Sampleapp",
-    "service": "Core",
-    "entity": "",
-    "types": null,
-    "enum": "",
-    "method": "FileUpload"
-   },
-   "argument_type": {
-    "App": "Sampleapp",
-    "service": "",
-    "entity": "",
-    "types": null,
-    "enum": "",
-    "method": ""
-   },
-   "return_type": {
-    "App": "Sampleapp",
-    "service": "Core",
-    "entity": "File",
-    "types": [
-     "File"
-    ],
-    "enum": "",
-    "method": ""
-   },
-   "options": {
-    "type": "Mutation",
-    "is_generated_dal": false,
-    "is_static": true,
-    "is_direct_http_request_handler": true
-   },
-   "apis": [
-    {
-     "path": "file/upload",
-     "http_method": "POST",
-     "is_public": false,
-     "options": {
-      "success_status": 0,
-      "use_body_for_request": true,
-      "use_url_params_for_request": false
-     },
-     "Namespace": {
-      "App": "Sampleapp",
-      "service": "Core",
-      "entity": "",
-      "types": null,
-      "enum": "",
-      "method": ""
-     }
-    }
-   ]
-  },
-  {
    "name": "LoginUser",
    "description": "Logs in a user",
    "namespace": {
@@ -9904,6 +9853,62 @@
      "Namespace": {
       "App": "Sampleapp",
       "service": "Auth",
+      "entity": "",
+      "types": null,
+      "enum": "",
+      "method": ""
+     }
+    }
+   ]
+  },
+  {
+   "name": "FileUpload",
+   "description": "Create a new file",
+   "namespace": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "",
+    "types": null,
+    "enum": "",
+    "method": "FileUpload"
+   },
+   "argument_type": {
+    "App": "Sampleapp",
+    "service": "",
+    "entity": "",
+    "types": null,
+    "enum": "",
+    "method": ""
+   },
+   "return_type": {
+    "App": "Sampleapp",
+    "service": "Core",
+    "entity": "File",
+    "types": [
+     "File"
+    ],
+    "enum": "",
+    "method": ""
+   },
+   "options": {
+    "type": "Mutation",
+    "is_generated_dal": false,
+    "is_static": true,
+    "is_direct_http_request_handler": true
+   },
+   "apis": [
+    {
+     "path": "file/upload",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     },
+     "Namespace": {
+      "App": "Sampleapp",
+      "service": "Core",
       "entity": "",
       "types": null,
       "enum": "",

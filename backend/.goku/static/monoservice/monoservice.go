@@ -155,7 +155,7 @@ func Initialize(ctx context.Context) (app_client.Client, context.Context, error)
 	}
 
 	// Set Static Hooks
-	err = svccore_entfile_meta.GetTypeFileDALMeta().SetHookAddBefore(
+	err = svccore_entfile_meta.GetTypeFileDALMeta().SetHookCreatePre(
 		func(ctx context.Context, f svccore_entfile_typ.File) (svccore_entfile_typ.File, error) {
 			return sttc_svccore_mthd.FileHookAddBefore(ctx, c, f)
 		},
@@ -164,7 +164,7 @@ func Initialize(ctx context.Context) (app_client.Client, context.Context, error)
 		return c, ctx, fmt.Errorf("Setting BeforeCreateUpdateHook for [File] type: %w", err)
 	}
 	// Verify that the BeforeCreateUpdateHook is set
-	if svccore_entfile_meta.GetTypeFileMeta().GetHookAddBefore() == nil {
+	if svccore_entfile_meta.GetTypeFileMeta().GetHookCreatePre() == nil {
 		return c, ctx, fmt.Errorf("BeforeCreateUpdateHook for [File] type is not set")
 	}
 

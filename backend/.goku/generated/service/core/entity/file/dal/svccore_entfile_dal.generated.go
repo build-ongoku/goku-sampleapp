@@ -59,7 +59,7 @@ func (c Client) AddBatch(ctx context.Context, reqs ...svccore_entfile_typ.AddReq
 	llog.Debug(ctx, "AddFiles: Adding entities...", "request", reqs)
 
 	// Meta info
-	meta := svccore_entfile_meta.GetEntityFileDALMeta()
+	meta := svccore_entfile_meta.GetEntityDALMeta()
 
 	params := db.InsertTypeParams{
 		TableName: meta.DbTableName.FormatSQL(),
@@ -150,7 +150,7 @@ func (c Client) List(ctx context.Context, req svccore_entfile_typ.ListRequest) (
 	var resp svccore_entfile_typ.ListResponse
 
 	// Meta info
-	meta := svccore_entfile_meta.GetEntityFileDALMeta()
+	meta := svccore_entfile_meta.GetEntityDALMeta()
 
 	// Begin a Transaction
 	err := c.conn.Begin(ctx)
@@ -292,7 +292,7 @@ func (c Client) Update(ctx context.Context, req svccore_entfile_typ.UpdateReques
 	}
 
 	// Meta info
-	meta := svccore_entfile_meta.GetEntityFileDALMeta()
+	meta := svccore_entfile_meta.GetEntityDALMeta()
 
 	subReq := dalutil.UpdateTypeRequest[svccore_entfile_typ.File, svccore_entfile_typ.FileField]{
 		TableName:     meta.DbTableName.FormatSQLTable(),
