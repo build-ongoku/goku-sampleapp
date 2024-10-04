@@ -1,0 +1,9 @@
+databases:
+  - identidier: common
+    type: sql
+    services:
+      - all
+servers:
+  - identifier: common
+    services:
+      - all
