@@ -1,0 +1,84 @@
+app:
+  services:
+    - name: auth
+        
+      methods:
+        - name: LoginUser
+          description: Logs in a user
+          options:
+            type: Query
+            is_static: true
+          argument_type: $.service[auth].type[LoginRequest]
+          return_type: $.service[auth].type[AuthenticateResponse]
+          apis:
+            - path: /login
+              http_method: POST
+              is_public: true
+        
+        - name: RegisterUser
+          description: Create a new user
+          options:
+            type: Mutation
+            is_static: true
+          argument_type: $.service[auth].type[RegisterUserRequest]
+          return_type: $.service[auth].type[AuthenticateResponse]
+          apis:
+            - path: /register
+              http_method: POST
+              is_public: true
+
+        - name: AuthenticateToken
+          description: Determine if a token is valid/authenticated
+          options:
+            type: Query
+            is_static: true
+          argument_type: $.service[auth].type[AuthenticateTokenRequest]
+          return_type: $.service[auth].type[AuthenticateResponse]
+          apis:
+            - path: /authenticate_token
+              http_method: POST
+              is_public: true
+
+      types:
+        - name: RegisterUserRequest
+          options:
+            is_request_type: true
+          fields:
+            - Email: email
+            - Name: $.type[PersonName]
+            - Password: string
+            - TeamID: ID
+
+        - name: LoginRequest
+          options:
+            is_request_type: true
+          fields:
+            - Email: email
+            - Password: string
+        
+        - name: AuthenticateTokenRequest
+          options:
+            is_request_type: true
+          fields:
+            - Token: string
+        
+        - name: AuthenticateResponse
+          options:
+            is_response_type: true
+          fields:
+            - Token: string
+
+      # Entities
+      entities:
+        - name: Secret
+          description: A secret is a credential that is used to authenticate a user
+          fields:
+            - UserID: $.service[user].entity[User]
+            - Type: $.service[auth].entity[Secret].enum[Type]
+            - Secret: string
+            - ExpiresAt: timestamp optional
+          enums:
+            - name: Type
+              values:
+                - PASSWORD: 1
+                - GITHUB_TOKEN: 2

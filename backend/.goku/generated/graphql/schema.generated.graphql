@@ -1,0 +1,1274 @@
+# Scalar types
+scalar Timestamp # Time is an RFC3339 timestamp.
+scalar Date # Date is YYYY-MM-DD format date.
+scalar ID
+scalar Email
+scalar Secret # Secret is any string that should be protected.
+scalar GenericData
+
+# Filter Operators
+enum FilterOperator {
+    EQUAL
+    NOT_EQUAL
+    IN
+    GREATER_THAN
+    GREATER_THAN_EQUAL
+    LESS_THAN
+    LESS_THAN_EQUAL
+    LIKE
+    NOT_LIKE
+    IS_NULL
+    IS_NOT_NULL
+}
+
+# Primitive Type Conditions
+
+input StringCondition {
+    Op: FilterOperator!
+    Values: [String!]!
+}
+input NumberCondition {
+    Op: FilterOperator!
+    Values: [Int!]!
+}
+input FloatCondition {
+    Op: FilterOperator!
+    Values: [Float!]!
+}
+input BoolCondition {
+    Op: FilterOperator!
+    Values: [Boolean!]!
+}
+input TimestampCondition {
+    Op: FilterOperator!
+    Values: [Timestamp!]!
+}
+input DateCondition {
+    Op: FilterOperator!
+    Values: [Date!]!
+}
+input IDCondition {
+    Op: FilterOperator!
+    Values: [ID!]!
+}
+input EmailCondition {
+    Op: FilterOperator!
+    Values: [Email!]!
+}
+input SecretCondition {
+    Op: FilterOperator!
+    Values: [Secret!]!
+}
+
+# Methods
+type Query {
+    auth_authenticateToken(req: Auth_AuthenticateTokenRequest!): Auth_AuthenticateResponse!
+    core_task_get(req: Core_Task_GetRequest!): Core_Task!
+    user_user_get(req: User_User_GetRequest!): User_User!
+    user_team_get(req: User_Team_GetRequest!): User_Team!
+    core_file_get(req: Core_File_GetRequest!): Core_File!
+    auth_secret_get(req: Auth_Secret_GetRequest!): Auth_Secret!
+    core_taskRun_get(req: Core_TaskRun_GetRequest!): Core_TaskRun!
+    user_user_list(req: User_User_ListRequest!): User_User_ListResponse!
+    core_task_list(req: Core_Task_ListRequest!): Core_Task_ListResponse!
+    user_team_list(req: User_Team_ListRequest!): User_Team_ListResponse!
+    auth_secret_list(req: Auth_Secret_ListRequest!): Auth_Secret_ListResponse!
+    core_taskRun_list(req: Core_TaskRun_ListRequest!): Core_TaskRun_ListResponse!
+    core_file_list(req: Core_File_ListRequest!): Core_File_ListResponse!
+    auth_loginUser(req: Auth_LoginRequest!): Auth_AuthenticateResponse!
+    auth_secret_queryByText(req: Auth_Secret_QueryByTextRequest!): Auth_Secret_ListResponse!
+    user_user_queryByText(req: User_User_QueryByTextRequest!): User_User_ListResponse!
+    core_file_queryByText(req: Core_File_QueryByTextRequest!): Core_File_ListResponse!
+    core_taskRun_queryByText(req: Core_TaskRun_QueryByTextRequest!): Core_TaskRun_ListResponse!
+    core_task_queryByText(req: Core_Task_QueryByTextRequest!): Core_Task_ListResponse!
+    user_team_queryByText(req: User_Team_QueryByTextRequest!): User_Team_ListResponse!
+}
+
+type Mutation {
+    core_task_actionRun(req: Core_Task_StandardEntityRequest!): Core_Task_StandardEntityResponse!
+    core_taskRun_actionRun(req: Core_TaskRun_StandardEntityRequest!): Core_TaskRun_StandardEntityResponse!
+    user_team_add(req: User_Team_AddRequest!): User_Team!
+    auth_secret_add(req: Auth_Secret_AddRequest!): Auth_Secret!
+    user_user_add(req: User_User_AddRequest!): User_User!
+    core_taskRun_add(req: Core_TaskRun_AddRequest!): Core_TaskRun!
+    core_task_add(req: Core_Task_AddRequest!): Core_Task!
+    core_file_add(req: Core_File_AddRequest!): Core_File!
+    core_file_hookCreatePre(req: Core_File_FileInput!): Core_File!
+    core_taskRun_hookCreatePre(req: Core_TaskRun_TaskRunInput!): Core_TaskRun!
+    core_task_hookSavePre(req: Core_Task_TaskInput!): Core_Task!
+    auth_registerUser(req: Auth_RegisterUserRequest!): Auth_AuthenticateResponse!
+    core_taskRun_update(req: Core_TaskRun_UpdateRequest!): Core_TaskRun_UpdateResponse!
+    user_team_update(req: User_Team_UpdateRequest!): User_Team_UpdateResponse!
+    user_user_update(req: User_User_UpdateRequest!): User_User_UpdateResponse!
+    core_task_update(req: Core_Task_UpdateRequest!): Core_Task_UpdateResponse!
+    core_file_update(req: Core_File_UpdateRequest!): Core_File_UpdateResponse!
+    auth_secret_update(req: Auth_Secret_UpdateRequest!): Auth_Secret_UpdateResponse!
+}
+
+# Inputs
+
+input Core_File_AddRequest {
+    Object: Core_File_FileInput!
+}
+
+input User_User_AddRequest {
+    Object: User_User_UserInput!
+}
+
+input Auth_Secret_AddRequest {
+    Object: Auth_Secret_SecretInput!
+}
+
+input User_Team_AddRequest {
+    Object: User_Team_TeamInput!
+}
+
+input Core_TaskRun_AddRequest {
+    Object: Core_TaskRun_TaskRunInput!
+}
+
+input Core_Task_AddRequest {
+    Object: Core_Task_TaskInput!
+}
+
+input AddressInput {
+    Line1: String!
+    Line2: String
+    City: String!
+    State: String!
+    PostalCode: String!
+    Country: Country!
+}
+
+input AddressFilter {
+    ParentID: IDCondition
+    ID: IDCondition
+    Line1: StringCondition
+    Line2: StringCondition
+    City: StringCondition
+    State: StringCondition
+    PostalCode: StringCondition
+    Country: CountryCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [AddressFilter!]!
+    Or: [AddressFilter!]!
+}
+
+input Auth_AuthenticateTokenRequest {
+    Token: String!
+}
+
+input ContactInput {
+    Name: PersonNameInput!
+    Email: Email!
+    Address: AddressInput!
+}
+
+input ContactFilter {
+    ParentID: IDCondition
+    ID: IDCondition
+    Name: PersonNameFilter
+    Email: EmailCondition
+    Address: AddressFilter
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [ContactFilter!]!
+    Or: [ContactFilter!]!
+}
+
+input Core_CronExpressionInput {
+    Second: String!
+    Minute: String!
+    Hour: String!
+    DayOfMonth: String!
+    Month: String!
+    DayOfWeek: String!
+}
+
+input Core_CronExpressionFilter {
+    ParentID: IDCondition
+    ID: IDCondition
+    Second: StringCondition
+    Minute: StringCondition
+    Hour: StringCondition
+    DayOfMonth: StringCondition
+    Month: StringCondition
+    DayOfWeek: StringCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [Core_CronExpressionFilter!]!
+    Or: [Core_CronExpressionFilter!]!
+}
+
+input Core_File_FileInput {
+    FileName: String!
+    StorageClient: Core_File_StorageClient!
+    StorageClientIdentifier: String!
+}
+
+input Core_File_FileFilter {
+    ID: IDCondition
+    FileName: StringCondition
+    StorageClient: Core_File_StorageClientCondition
+    StorageClientIdentifier: StringCondition
+    SizeBytes: NumberCondition
+    MimeType: StringCondition
+    FileHash: StringCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [Core_File_FileFilter!]!
+    Or: [Core_File_FileFilter!]!
+}
+
+input User_User_GetRequest {
+    ID: ID!
+}
+
+input User_Team_GetRequest {
+    ID: ID!
+}
+
+input Core_File_GetRequest {
+    ID: ID!
+}
+
+input Core_TaskRun_GetRequest {
+    ID: ID!
+}
+
+input Core_Task_GetRequest {
+    ID: ID!
+}
+
+input Auth_Secret_GetRequest {
+    ID: ID!
+}
+
+input Auth_Secret_ListRequest {
+    Filter: Auth_Secret_SecretFilter!
+}
+
+input User_Team_ListRequest {
+    Filter: User_Team_TeamFilter!
+}
+
+input User_User_ListRequest {
+    Filter: User_User_UserFilter!
+}
+
+input Core_File_ListRequest {
+    Filter: Core_File_FileFilter!
+}
+
+input Core_Task_ListRequest {
+    Filter: Core_Task_TaskFilter!
+}
+
+input Core_TaskRun_ListRequest {
+    Filter: Core_TaskRun_TaskRunFilter!
+}
+
+input Auth_LoginRequest {
+    Email: Email!
+    Password: String!
+}
+
+input PersonNameInput {
+    FirstName: String!
+    MiddleInitial: String
+    LastName: String!
+}
+
+input PersonNameFilter {
+    ParentID: IDCondition
+    ID: IDCondition
+    FirstName: StringCondition
+    MiddleInitial: StringCondition
+    LastName: StringCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [PersonNameFilter!]!
+    Or: [PersonNameFilter!]!
+}
+
+input PhoneNumberInput {
+    CountryCode: Int!
+    Number: String!
+    Extension: String
+}
+
+input PhoneNumberFilter {
+    ParentID: IDCondition
+    ID: IDCondition
+    CountryCode: NumberCondition
+    Number: StringCondition
+    Extension: StringCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [PhoneNumberFilter!]!
+    Or: [PhoneNumberFilter!]!
+}
+
+input Auth_Secret_QueryByTextRequest {
+    QueryText: String!
+}
+
+input Core_File_QueryByTextRequest {
+    QueryText: String!
+}
+
+input Core_Task_QueryByTextRequest {
+    QueryText: String!
+}
+
+input Core_TaskRun_QueryByTextRequest {
+    QueryText: String!
+}
+
+input User_Team_QueryByTextRequest {
+    QueryText: String!
+}
+
+input User_User_QueryByTextRequest {
+    QueryText: String!
+}
+
+input Auth_RegisterUserRequest {
+    Email: Email!
+    Name: PersonNameInput!
+    Password: String!
+    TeamID: ID!
+}
+
+input Auth_Secret_SecretInput {
+    UserID: ID!
+    Type: Auth_Secret_Type!
+    Secret: String!
+    ExpiresAt: Timestamp
+}
+
+input Auth_Secret_SecretFilter {
+    ID: IDCondition
+    UserID: IDCondition
+    Type: Auth_Secret_TypeCondition
+    Secret: StringCondition
+    ExpiresAt: TimestampCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [Auth_Secret_SecretFilter!]!
+    Or: [Auth_Secret_SecretFilter!]!
+}
+
+input Auth_Secret_StandardEntityRequest {
+    ID: ID!
+}
+
+input Core_TaskRun_StandardEntityRequest {
+    ID: ID!
+}
+
+input Core_Task_StandardEntityRequest {
+    ID: ID!
+}
+
+input User_User_StandardEntityRequest {
+    ID: ID!
+}
+
+input Core_File_StandardEntityRequest {
+    ID: ID!
+}
+
+input User_Team_StandardEntityRequest {
+    ID: ID!
+}
+
+input Core_Task_TaskInput {
+    Name: String!
+    # stringDescription: String!
+    Method: MethodName!
+    MethodRequestData: GenericData!
+    Enabled: Boolean!
+}
+
+input Core_Task_TaskFilter {
+    ID: IDCondition
+    Name: StringCondition
+    Description: StringCondition
+    Method: MethodNameCondition
+    MethodRequestData: GenericDataCondition
+    Enabled: BoolCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [Core_Task_TaskFilter!]!
+    Or: [Core_Task_TaskFilter!]!
+}
+
+input Core_TaskRun_TaskRunInput {
+    MethodRequestData: GenericData!
+    TriggeredBy: Core_TaskRun_TriggeredBy!
+    TaskID: ID!
+}
+
+input Core_TaskRun_TaskRunFilter {
+    ID: IDCondition
+    StartedAt: TimestampCondition
+    CompletedAt: TimestampCondition
+    Status: Core_TaskRun_StatusCondition
+    MethodRequestData: GenericDataCondition
+    MethodResponseData: GenericDataCondition
+    TriggeredBy: Core_TaskRun_TriggeredByCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    TaskID: IDCondition
+    And: [Core_TaskRun_TaskRunFilter!]!
+    Or: [Core_TaskRun_TaskRunFilter!]!
+}
+
+input User_Team_TeamInput {
+    Name: String!
+}
+
+input User_Team_TeamFilter {
+    ID: IDCondition
+    Name: StringCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [User_Team_TeamFilter!]!
+    Or: [User_Team_TeamFilter!]!
+}
+
+input User_Team_UpdateRequest {
+    Object: User_Team_TeamInput!
+    Fields: [User_Team_TeamField!]!
+    ExcludeFields: [User_Team_TeamField!]!
+}
+
+input Core_File_UpdateRequest {
+    Object: Core_File_FileInput!
+    Fields: [Core_File_FileField!]!
+    ExcludeFields: [Core_File_FileField!]!
+}
+
+input Auth_Secret_UpdateRequest {
+    Object: Auth_Secret_SecretInput!
+    Fields: [Auth_Secret_SecretField!]!
+    ExcludeFields: [Auth_Secret_SecretField!]!
+}
+
+input Core_Task_UpdateRequest {
+    Object: Core_Task_TaskInput!
+    Fields: [Core_Task_TaskField!]!
+    ExcludeFields: [Core_Task_TaskField!]!
+}
+
+input Core_TaskRun_UpdateRequest {
+    Object: Core_TaskRun_TaskRunInput!
+    Fields: [Core_TaskRun_TaskRunField!]!
+    ExcludeFields: [Core_TaskRun_TaskRunField!]!
+}
+
+input User_User_UpdateRequest {
+    Object: User_User_UserInput!
+    Fields: [User_User_UserField!]!
+    ExcludeFields: [User_User_UserField!]!
+}
+
+input User_User_UserInput {
+    Name: PersonNameInput!
+    Email: Email!
+    Addresses: [AddressInput!]!
+    PastTeamIDs: [ID!]!
+    TeamsIDs: [ID!]!
+}
+
+input User_User_UserFilter {
+    ID: IDCondition
+    Name: PersonNameFilter
+    Email: EmailCondition
+    HavingAddresses: AddressFilter
+    HavingPastTeamIDs: IDCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    HavingTeamsIDs: IDCondition
+    And: [User_User_UserFilter!]!
+    Or: [User_User_UserFilter!]!
+}
+
+# Types
+
+type Address {
+    Line1: String!
+    Line2: String
+    City: String!
+    State: String!
+    PostalCode: String!
+    Country: Country!
+}
+
+type AddressWithMeta {
+    ParentID: ID!
+    ID: ID!
+    Line1: String!
+    Line2: String
+    City: String!
+    State: String!
+    PostalCode: String!
+    Country: Country!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
+type Auth_AuthenticateResponse {
+    Token: String!
+}
+
+type Contact {
+    Name: PersonName!
+    Email: Email!
+    Address: Address!
+}
+
+type ContactWithMeta {
+    ParentID: ID!
+    ID: ID!
+    Name: PersonNameWithMeta!
+    Email: Email!
+    Address: AddressWithMeta!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
+type Core_CronExpression {
+    Second: String!
+    Minute: String!
+    Hour: String!
+    DayOfMonth: String!
+    Month: String!
+    DayOfWeek: String!
+}
+
+type Core_CronExpressionWithMeta {
+    ParentID: ID!
+    ID: ID!
+    Second: String!
+    Minute: String!
+    Hour: String!
+    DayOfMonth: String!
+    Month: String!
+    DayOfWeek: String!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
+type Core_File {
+    ID: ID!
+    FileName: String!
+    StorageClient: Core_File_StorageClient!
+    StorageClientIdentifier: String!
+    SizeBytes: Int!
+    MimeType: String!
+    FileHash: String!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
+type Core_TaskRun_ListResponse {
+    Items: [Core_TaskRun!]!
+    Count: Int!
+}
+
+type Core_Task_ListResponse {
+    Items: [Core_Task!]!
+    Count: Int!
+}
+
+type User_User_ListResponse {
+    Items: [User_User!]!
+    Count: Int!
+}
+
+type User_Team_ListResponse {
+    Items: [User_Team!]!
+    Count: Int!
+}
+
+type Core_File_ListResponse {
+    Items: [Core_File!]!
+    Count: Int!
+}
+
+type Auth_Secret_ListResponse {
+    Items: [Auth_Secret!]!
+    Count: Int!
+}
+
+type PersonName {
+    FirstName: String!
+    MiddleInitial: String
+    LastName: String!
+}
+
+type PersonNameWithMeta {
+    ParentID: ID!
+    ID: ID!
+    FirstName: String!
+    MiddleInitial: String
+    LastName: String!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
+type PhoneNumber {
+    CountryCode: Int!
+    Number: String!
+    Extension: String
+}
+
+type PhoneNumberWithMeta {
+    ParentID: ID!
+    ID: ID!
+    CountryCode: Int!
+    Number: String!
+    Extension: String
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
+type Auth_Secret {
+    ID: ID!
+    UserID: ID!
+    Type: Auth_Secret_Type!
+    Secret: String!
+    ExpiresAt: Timestamp
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
+type Core_Task_StandardEntityResponse {
+    Object: Core_Task!
+}
+
+type Core_TaskRun_StandardEntityResponse {
+    Object: Core_TaskRun!
+}
+
+type User_User_StandardEntityResponse {
+    Object: User_User!
+}
+
+type Core_File_StandardEntityResponse {
+    Object: Core_File!
+}
+
+type Auth_Secret_StandardEntityResponse {
+    Object: Auth_Secret!
+}
+
+type User_Team_StandardEntityResponse {
+    Object: User_Team!
+}
+
+type Core_Task {
+    ID: ID!
+    Name: String!
+    # stringDescription: String!
+    Method: MethodName!
+    MethodRequestData: GenericData!
+    Enabled: Boolean!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
+type Core_TaskRun {
+    ID: ID!
+    StartedAt: Timestamp!
+    CompletedAt: Timestamp!
+    Status: Core_TaskRun_Status!
+    MethodRequestData: GenericData!
+    MethodResponseData: GenericData!
+    TriggeredBy: Core_TaskRun_TriggeredBy!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+    TaskID: ID!
+}
+
+type User_Team {
+    ID: ID!
+    Name: String!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
+type Core_File_UpdateResponse {
+    Object: Core_File!
+}
+
+type User_Team_UpdateResponse {
+    Object: User_Team!
+}
+
+type Core_Task_UpdateResponse {
+    Object: Core_Task!
+}
+
+type Core_TaskRun_UpdateResponse {
+    Object: Core_TaskRun!
+}
+
+type User_User_UpdateResponse {
+    Object: User_User!
+}
+
+type Auth_Secret_UpdateResponse {
+    Object: Auth_Secret!
+}
+
+type User_User {
+    ID: ID!
+    Name: PersonNameWithMeta!
+    Email: Email!
+    Addresses: [AddressWithMeta!]!
+    PastTeamIDs: [ID!]!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+    TeamsIDs: [ID!]!
+}
+
+# Enums
+enum AddressField {
+    PARENT_ID
+    ID
+    LINE_1
+    LINE_2
+    CITY
+    STATE
+    POSTAL_CODE
+    COUNTRY
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input AddressFieldCondition {
+    Op: FilterOperator!
+    Values: [AddressField!]!
+}
+
+enum ContactField {
+    PARENT_ID
+    ID
+    NAME
+    NAME__PARENT_ID
+    NAME__ID
+    NAME__FIRST_NAME
+    NAME__MIDDLE_INITIAL
+    NAME__LAST_NAME
+    NAME__CREATED_AT
+    NAME__UPDATED_AT
+    NAME__DELETED_AT
+    EMAIL
+    ADDRESS
+    ADDRESS__PARENT_ID
+    ADDRESS__ID
+    ADDRESS__LINE_1
+    ADDRESS__LINE_2
+    ADDRESS__CITY
+    ADDRESS__STATE
+    ADDRESS__POSTAL_CODE
+    ADDRESS__COUNTRY
+    ADDRESS__CREATED_AT
+    ADDRESS__UPDATED_AT
+    ADDRESS__DELETED_AT
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input ContactFieldCondition {
+    Op: FilterOperator!
+    Values: [ContactField!]!
+}
+
+enum Country {
+    USA
+    CANADA
+    MEXICO
+}
+
+input CountryCondition {
+    Op: FilterOperator!
+    Values: [Country!]!
+}
+
+enum Core_CronExpressionField {
+    PARENT_ID
+    ID
+    SECOND
+    MINUTE
+    HOUR
+    DAY_OF_MONTH
+    MONTH
+    DAY_OF_WEEK
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input Core_CronExpressionFieldCondition {
+    Op: FilterOperator!
+    Values: [Core_CronExpressionField!]!
+}
+
+enum Core_EntityName {
+    FILE
+    TASK
+    TASK_RUN
+}
+
+input Core_EntityNameCondition {
+    Op: FilterOperator!
+    Values: [Core_EntityName!]!
+}
+
+enum EntityName {
+    AUTH__SECRET
+    CORE__FILE
+    CORE__TASK
+    CORE__TASK_RUN
+    USER__USER
+    USER__TEAM
+}
+
+input EntityNameCondition {
+    Op: FilterOperator!
+    Values: [EntityName!]!
+}
+
+enum User_EntityName {
+    USER
+    TEAM
+}
+
+input User_EntityNameCondition {
+    Op: FilterOperator!
+    Values: [User_EntityName!]!
+}
+
+enum Auth_EntityName {
+    SECRET
+}
+
+input Auth_EntityNameCondition {
+    Op: FilterOperator!
+    Values: [Auth_EntityName!]!
+}
+
+enum Core_File_FileField {
+    ID
+    FILE_NAME
+    STORAGE_CLIENT
+    STORAGE_CLIENT_IDENTIFIER
+    SIZE_BYTES
+    MIME_TYPE
+    FILE_HASH
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input Core_File_FileFieldCondition {
+    Op: FilterOperator!
+    Values: [Core_File_FileField!]!
+}
+
+enum Gender {
+    MALE
+    FEMALE
+    OTHER
+}
+
+input GenderCondition {
+    Op: FilterOperator!
+    Values: [Gender!]!
+}
+
+enum Auth_Secret_MethodName {
+    ADD
+    UPDATE
+    GET
+    LIST
+    QUERY_BY_TEXT
+}
+
+input Auth_Secret_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [Auth_Secret_MethodName!]!
+}
+
+enum User_Team_MethodName {
+    ADD
+    UPDATE
+    GET
+    LIST
+    QUERY_BY_TEXT
+}
+
+input User_Team_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [User_Team_MethodName!]!
+}
+
+enum MethodName {
+    AUTH__LOGIN_USER
+    AUTH__REGISTER_USER
+    AUTH__AUTHENTICATE_TOKEN
+    CORE__FILE_UPLOAD
+    AUTH__SECRET__ADD
+    AUTH__SECRET__UPDATE
+    AUTH__SECRET__GET
+    AUTH__SECRET__LIST
+    AUTH__SECRET__QUERY_BY_TEXT
+    CORE__FILE__ADD
+    CORE__FILE__UPDATE
+    CORE__FILE__GET
+    CORE__FILE__LIST
+    CORE__FILE__QUERY_BY_TEXT
+    CORE__TASK__ADD
+    CORE__TASK__UPDATE
+    CORE__TASK__GET
+    CORE__TASK__LIST
+    CORE__TASK__QUERY_BY_TEXT
+    CORE__TASK_RUN__ADD
+    CORE__TASK_RUN__UPDATE
+    CORE__TASK_RUN__GET
+    CORE__TASK_RUN__LIST
+    CORE__TASK_RUN__QUERY_BY_TEXT
+    USER__USER__ADD
+    USER__USER__UPDATE
+    USER__USER__GET
+    USER__USER__LIST
+    USER__USER__QUERY_BY_TEXT
+    USER__TEAM__ADD
+    USER__TEAM__UPDATE
+    USER__TEAM__GET
+    USER__TEAM__LIST
+    USER__TEAM__QUERY_BY_TEXT
+    CORE__FILE__HOOK_CREATE_PRE
+    CORE__TASK__HOOK_SAVE_PRE
+    CORE__TASK_RUN__HOOK_CREATE_PRE
+    USER__USER__HOOK_INIT
+    CORE__TASK__ACTION_RUN
+    CORE__TASK_RUN__ACTION_RUN
+}
+
+input MethodNameCondition {
+    Op: FilterOperator!
+    Values: [MethodName!]!
+}
+
+enum User_User_MethodName {
+    ADD
+    UPDATE
+    GET
+    LIST
+    QUERY_BY_TEXT
+    HOOK_INIT
+}
+
+input User_User_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [User_User_MethodName!]!
+}
+
+enum Core_TaskRun_MethodName {
+    ADD
+    UPDATE
+    GET
+    LIST
+    QUERY_BY_TEXT
+    HOOK_CREATE_PRE
+    ACTION_RUN
+}
+
+input Core_TaskRun_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [Core_TaskRun_MethodName!]!
+}
+
+enum Core_Task_MethodName {
+    ADD
+    UPDATE
+    GET
+    LIST
+    QUERY_BY_TEXT
+    HOOK_SAVE_PRE
+    ACTION_RUN
+}
+
+input Core_Task_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [Core_Task_MethodName!]!
+}
+
+enum Core_File_MethodName {
+    ADD
+    UPDATE
+    GET
+    LIST
+    QUERY_BY_TEXT
+    HOOK_CREATE_PRE
+}
+
+input Core_File_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [Core_File_MethodName!]!
+}
+
+enum Core_MethodName {
+    FILE_UPLOAD
+}
+
+input Core_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [Core_MethodName!]!
+}
+
+enum Auth_MethodName {
+    LOGIN_USER
+    REGISTER_USER
+    AUTHENTICATE_TOKEN
+}
+
+input Auth_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [Auth_MethodName!]!
+}
+
+enum PersonNameField {
+    PARENT_ID
+    ID
+    FIRST_NAME
+    MIDDLE_INITIAL
+    LAST_NAME
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input PersonNameFieldCondition {
+    Op: FilterOperator!
+    Values: [PersonNameField!]!
+}
+
+enum PhoneNumberField {
+    PARENT_ID
+    ID
+    COUNTRY_CODE
+    NUMBER
+    EXTENSION
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input PhoneNumberFieldCondition {
+    Op: FilterOperator!
+    Values: [PhoneNumberField!]!
+}
+
+enum Auth_Secret_SecretField {
+    ID
+    USER_ID
+    TYPE
+    SECRET
+    EXPIRES_AT
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input Auth_Secret_SecretFieldCondition {
+    Op: FilterOperator!
+    Values: [Auth_Secret_SecretField!]!
+}
+
+enum ServiceName {
+    AUTH
+    CORE
+    USER
+}
+
+input ServiceNameCondition {
+    Op: FilterOperator!
+    Values: [ServiceName!]!
+}
+
+enum Core_TaskRun_Status {
+    PENDING
+    RUNNING
+    SUCCESS
+    FAILED
+}
+
+input Core_TaskRun_StatusCondition {
+    Op: FilterOperator!
+    Values: [Core_TaskRun_Status!]!
+}
+
+enum Core_File_StorageClient {
+    LOCAL_FILE
+    DATABASE
+    CLOUD_AMAZON_S_3
+}
+
+input Core_File_StorageClientCondition {
+    Op: FilterOperator!
+    Values: [Core_File_StorageClient!]!
+}
+
+enum Core_Task_TaskAction { # Run the task
+    RUN
+}
+
+input Core_Task_TaskActionCondition {
+    Op: FilterOperator!
+    Values: [Core_Task_TaskAction!]!
+}
+
+enum Core_Task_TaskField {
+    ID
+    NAME # string
+    DESCRIPTION
+    METHOD
+    METHOD_REQUEST_DATA
+    ENABLED
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input Core_Task_TaskFieldCondition {
+    Op: FilterOperator!
+    Values: [Core_Task_TaskField!]!
+}
+
+enum Core_TaskRun_TaskRunAction { # Run the task
+    RUN
+}
+
+input Core_TaskRun_TaskRunActionCondition {
+    Op: FilterOperator!
+    Values: [Core_TaskRun_TaskRunAction!]!
+}
+
+enum Core_TaskRun_TaskRunField {
+    ID
+    STARTED_AT
+    COMPLETED_AT
+    STATUS
+    METHOD_REQUEST_DATA
+    METHOD_RESPONSE_DATA
+    TRIGGERED_BY
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+    TASK_ID
+}
+
+input Core_TaskRun_TaskRunFieldCondition {
+    Op: FilterOperator!
+    Values: [Core_TaskRun_TaskRunField!]!
+}
+
+enum User_Team_TeamField {
+    ID
+    NAME
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input User_Team_TeamFieldCondition {
+    Op: FilterOperator!
+    Values: [User_Team_TeamField!]!
+}
+
+enum Core_TaskRun_TriggeredBy {
+    CRON
+    MANUAL
+}
+
+input Core_TaskRun_TriggeredByCondition {
+    Op: FilterOperator!
+    Values: [Core_TaskRun_TriggeredBy!]!
+}
+
+enum Auth_Secret_Type {
+    PASSWORD
+    GITHUB_TOKEN
+}
+
+input Auth_Secret_TypeCondition {
+    Op: FilterOperator!
+    Values: [Auth_Secret_Type!]!
+}
+
+enum User_User_UserField {
+    ID
+    NAME
+    NAME__PARENT_ID
+    NAME__ID
+    NAME__FIRST_NAME
+    NAME__MIDDLE_INITIAL
+    NAME__LAST_NAME
+    NAME__CREATED_AT
+    NAME__UPDATED_AT
+    NAME__DELETED_AT
+    EMAIL
+    ADDRESSES
+    ADDRESSES__PARENT_ID
+    ADDRESSES__ID
+    ADDRESSES__LINE_1
+    ADDRESSES__LINE_2
+    ADDRESSES__CITY
+    ADDRESSES__STATE
+    ADDRESSES__POSTAL_CODE
+    ADDRESSES__COUNTRY
+    ADDRESSES__CREATED_AT
+    ADDRESSES__UPDATED_AT
+    ADDRESSES__DELETED_AT
+    PAST_TEAM_IDS
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+    TEAMS_IDS
+}
+
+input User_User_UserFieldCondition {
+    Op: FilterOperator!
+    Values: [User_User_UserField!]!
+}

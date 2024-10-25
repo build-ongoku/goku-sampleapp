@@ -1,0 +1,25 @@
+table tb_user:
+  columns:
+  - id:
+      not_null: true
+      type: uuid
+  - email:
+      not_null: true
+      type: text
+  - past_team_ids:
+      type: uuid[]
+  - created_at:
+      not_null: true
+      type: timestamp without time zone
+  - updated_at:
+      not_null: true
+      type: timestamp without time zone
+  - deleted_at:
+      type: timestamp without time zone
+  - teams_ids:
+      type: uuid[]
+  owner: goku
+  primary_key:
+    pk_user_id:
+      columns:
+      - id

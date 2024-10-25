@@ -1,0 +1,5 @@
+schema public:
+  schema: schema.public.yaml
+  table tb_file: schema.public/table.tb_file.yaml
+  table tb_task: schema.public/table.tb_task.yaml
+  table tb_task_run: schema.public/table.tb_task_run.yaml

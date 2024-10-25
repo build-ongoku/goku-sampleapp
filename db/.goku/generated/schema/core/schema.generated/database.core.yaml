@@ -1,0 +1,5 @@
+schema public:
+    schema: schema.public.yaml
+    table file: schema.public/tables.file.generated.yaml
+    table task: schema.public/tables.task.generated.yaml
+    table task_run: schema.public/tables.task_run.generated.yaml

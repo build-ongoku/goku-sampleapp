@@ -1,0 +1,68 @@
+table tb_file:
+    check_constraints:
+        chk_file__file_name__empty_str:
+            columns:
+                - file_name
+            expression: (file_name <> ''::TEXT)
+        chk_file_storage_client_enum:
+            columns:
+                - storage_client
+            expression: (storage_client = ANY (ARRAY['LocalFile'::text, 'Database'::text, 'CloudAmazonS3'::text]))
+        chk_file__storage_client_identifier__empty_str:
+            columns:
+                - storage_client_identifier
+            expression: (storage_client_identifier <> ''::TEXT)
+        chk_file__mime_type__empty_str:
+            columns:
+                - mime_type
+            expression: (mime_type <> ''::TEXT)
+        chk_file__file_hash__empty_str:
+            columns:
+                - file_hash
+            expression: (file_hash <> ''::TEXT)
+
+    columns:
+        - id:
+              not_null: true
+              type: uuid
+
+        - file_name:
+              not_null: true
+              type: text
+
+        - storage_client:
+              not_null: true
+              type: text
+
+        - storage_client_identifier:
+              not_null: true
+              type: text
+
+        - size_bytes:
+              not_null: true
+              type: int
+
+        - mime_type:
+              not_null: true
+              type: text
+
+        - file_hash:
+              not_null: true
+              type: text
+
+        - created_at:
+              not_null: true
+              type: timestamp without time zone
+
+        - updated_at:
+              not_null: true
+              type: timestamp without time zone
+
+        - deleted_at:
+              not_null: false
+              type: timestamp without time zone
+
+    primary_key:
+        pk_file_id:
+            columns:
+                - id

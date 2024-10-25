@@ -1,0 +1,8 @@
+name: auth
+version: v1.0.0
+depends_on:
+  - name: user
+    version: v1.0.0
+  - name: util-type
+    version: v1.0.0
+

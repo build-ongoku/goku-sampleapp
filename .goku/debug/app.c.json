@@ -1,0 +1,6165 @@
+{
+ "name": "Sampleapp",
+ "options": {},
+ "services": [
+  {
+   "name": "Auth",
+   "options": {
+    "frontend_options": {}
+   }
+  },
+  {
+   "name": "Core",
+   "options": {
+    "frontend_options": {}
+   }
+  },
+  {
+   "name": "User",
+   "options": {
+    "frontend_options": {}
+   }
+  }
+ ],
+ "entities": [
+  {
+   "name": "File",
+   "description": "",
+   "options": {},
+   "actions": null,
+   "associations": null,
+   "hooks": [
+    {
+     "type": "create_pre",
+     "is_static": true
+    }
+   ]
+  },
+  {
+   "name": "Secret",
+   "description": "A secret is a credential that is used to authenticate a user",
+   "options": {},
+   "actions": null,
+   "associations": null,
+   "hooks": null
+  },
+  {
+   "name": "Task",
+   "description": "Represents a scheduled call to a method",
+   "options": {},
+   "actions": [
+    {
+     "name": "Run",
+     "description": "Run the task"
+    }
+   ],
+   "associations": [
+    {
+     "relationship": "parent_of",
+     "type": "many",
+     "entity": "$.service[Core].entity[TaskRun]",
+     "name": "TaskRuns",
+     "other_association_name": "Task"
+    }
+   ],
+   "hooks": [
+    {
+     "type": "save_pre"
+    }
+   ]
+  },
+  {
+   "name": "TaskRun",
+   "description": "Represents a run of a scheduled task",
+   "options": {},
+   "actions": [
+    {
+     "name": "Run",
+     "description": "Run the task"
+    }
+   ],
+   "associations": [
+    {
+     "relationship": "child_of",
+     "type": "one",
+     "entity": "$.service[Core].entity[Task]",
+     "name": "Task",
+     "other_association_name": ""
+    }
+   ],
+   "hooks": [
+    {
+     "type": "create_pre"
+    }
+   ]
+  },
+  {
+   "name": "Team",
+   "description": "",
+   "options": {},
+   "actions": null,
+   "associations": [
+    {
+     "relationship": "parent_of",
+     "type": "many",
+     "entity": "$.service[User].entity[User]",
+     "name": "Users",
+     "other_association_name": "Teams"
+    }
+   ],
+   "hooks": null
+  },
+  {
+   "name": "User",
+   "description": "",
+   "options": {},
+   "actions": null,
+   "associations": [
+    {
+     "relationship": "child_of",
+     "type": "many",
+     "entity": "$.service[User].entity[Team]",
+     "name": "Teams",
+     "other_association_name": "Users"
+    }
+   ],
+   "hooks": [
+    {
+     "type": "init",
+     "is_static": true
+    }
+   ]
+  }
+ ],
+ "types": [
+  {
+   "name": "AddRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_File",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "AddRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "User_User",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "AddRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Auth_Secret",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "AddRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "User_Team",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "AddRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_TaskRun",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "AddRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_Task",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Address",
+   "description": "",
+   "fields": [
+    {
+     "name": "Line1",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Line2",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "City",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "State",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "PostalCode",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Country",
+     "description": "",
+     "data_type": "Country",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "AddressFieldCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "AddressFilter",
+   "description": "",
+   "fields": [
+    {
+     "name": "ParentID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Line1",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Line2",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "City",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "State",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "PostalCode",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Country",
+     "description": "",
+     "data_type": "CountryCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": "AddressFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": "AddressFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "AuthenticateResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Token",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {
+    "is_response_type": true
+   }
+  },
+  {
+   "name": "AuthenticateTokenRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Token",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {
+    "is_request_type": true
+   }
+  },
+  {
+   "name": "Contact",
+   "description": "",
+   "fields": [
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "PersonName",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Email",
+     "description": "",
+     "data_type": "Email",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Address",
+     "description": "",
+     "data_type": "Address",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ContactFieldCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "ContactFilter",
+   "description": "",
+   "fields": [
+    {
+     "name": "ParentID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "PersonNameFilter",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Email",
+     "description": "",
+     "data_type": "EmailCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Address",
+     "description": "",
+     "data_type": "AddressFilter",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": "ContactFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": "ContactFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "CountryCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "CronExpression",
+   "description": "",
+   "fields": [
+    {
+     "name": "Second",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Minute",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Hour",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DayOfMonth",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Month",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DayOfWeek",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "CronExpressionFieldCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "CronExpressionFilter",
+   "description": "",
+   "fields": [
+    {
+     "name": "ParentID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Second",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Minute",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Hour",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DayOfMonth",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Month",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DayOfWeek",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": "Core_CronExpressionFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": "Core_CronExpressionFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "EntityNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "EntityNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "EntityNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "EntityNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "File",
+   "description": "Main type for entity File",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "is_primary_key": true,
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "FileName",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "StorageClient",
+     "description": "",
+     "data_type": "Core_File_StorageClient",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "StorageClientIdentifier",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "SizeBytes",
+     "description": "",
+     "data_type": "Number",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "MimeType",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "FileHash",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_optional": true,
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "FileFieldCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "FileFilter",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "FileName",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "StorageClient",
+     "description": "",
+     "data_type": "StorageClientCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "StorageClientIdentifier",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "SizeBytes",
+     "description": "",
+     "data_type": "NumberCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "MimeType",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "FileHash",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": "Core_File_FileFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": "Core_File_FileFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "GenderCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "GetRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "GetRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "GetRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "GetRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "GetRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "GetRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Filter",
+     "description": "",
+     "data_type": "Auth_Secret_SecretFilter",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Filter",
+     "description": "",
+     "data_type": "User_Team_TeamFilter",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Filter",
+     "description": "",
+     "data_type": "User_User_UserFilter",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Filter",
+     "description": "",
+     "data_type": "Core_File_FileFilter",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Filter",
+     "description": "",
+     "data_type": "Core_Task_TaskFilter",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Filter",
+     "description": "",
+     "data_type": "Core_TaskRun_TaskRunFilter",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Items",
+     "description": "",
+     "data_type": "Core_TaskRun",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Count",
+     "description": "",
+     "data_type": "Number",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Items",
+     "description": "",
+     "data_type": "Core_Task",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Count",
+     "description": "",
+     "data_type": "Number",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Items",
+     "description": "",
+     "data_type": "User_User",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Count",
+     "description": "",
+     "data_type": "Number",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Items",
+     "description": "",
+     "data_type": "User_Team",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Count",
+     "description": "",
+     "data_type": "Number",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Items",
+     "description": "",
+     "data_type": "Core_File",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Count",
+     "description": "",
+     "data_type": "Number",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ListResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Items",
+     "description": "",
+     "data_type": "Auth_Secret",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Count",
+     "description": "",
+     "data_type": "Number",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "LoginRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Email",
+     "description": "",
+     "data_type": "Email",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Password",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {
+    "is_request_type": true
+   }
+  },
+  {
+   "name": "MethodNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "MethodNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "MethodNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "MethodNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "MethodNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "MethodNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "MethodNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "MethodNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "MethodNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "PersonName",
+   "description": "",
+   "fields": [
+    {
+     "name": "FirstName",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "MiddleInitial",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "LastName",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "PersonNameFieldCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "PersonNameFilter",
+   "description": "",
+   "fields": [
+    {
+     "name": "ParentID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "FirstName",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "MiddleInitial",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "LastName",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": "PersonNameFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": "PersonNameFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "PhoneNumber",
+   "description": "",
+   "fields": [
+    {
+     "name": "CountryCode",
+     "description": "",
+     "data_type": "Number",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Number",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Extension",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "PhoneNumberFieldCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "PhoneNumberFilter",
+   "description": "",
+   "fields": [
+    {
+     "name": "ParentID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CountryCode",
+     "description": "",
+     "data_type": "NumberCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Number",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Extension",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": "PhoneNumberFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": "PhoneNumberFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "QueryByTextRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "QueryText",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "QueryByTextRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "QueryText",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "QueryByTextRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "QueryText",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "QueryByTextRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "QueryText",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "QueryByTextRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "QueryText",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "QueryByTextRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "QueryText",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "RegisterUserRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Email",
+     "description": "",
+     "data_type": "Email",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "PersonName",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Password",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "TeamID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required",
+        "uuid"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {
+    "is_request_type": true
+   }
+  },
+  {
+   "name": "Secret",
+   "description": "Main type for entity Secret",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "is_primary_key": true,
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UserID",
+     "description": "",
+     "data_type": "User_User",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Type",
+     "description": "",
+     "data_type": "Auth_Secret_Type",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Secret",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ExpiresAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_optional": true,
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "SecretFieldCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "SecretFilter",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UserID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Type",
+     "description": "",
+     "data_type": "TypeCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Secret",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ExpiresAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": "Auth_Secret_SecretFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": "Auth_Secret_SecretFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ServiceNameCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "StandardEntityRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "Auth_Secret",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StandardEntityRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "Core_TaskRun",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StandardEntityRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "Core_Task",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StandardEntityRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "User_User",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StandardEntityRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "Core_File",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StandardEntityRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "User_Team",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StandardEntityResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_Task",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StandardEntityResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_TaskRun",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StandardEntityResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "User_User",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StandardEntityResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_File",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StandardEntityResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Auth_Secret",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StandardEntityResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "User_Team",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StatusCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "StorageClientCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "Task",
+   "description": "Main type for entity Task",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "is_primary_key": true,
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Description",
+     "description": "string",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Method",
+     "description": "",
+     "data_type": "MethodName",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "MethodRequestData",
+     "description": "",
+     "data_type": "GenericData",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Enabled",
+     "description": "",
+     "data_type": "Bool",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_optional": true,
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "TaskActionCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "TaskFieldCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "TaskFilter",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Description",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Method",
+     "description": "",
+     "data_type": "MethodNameCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "MethodRequestData",
+     "description": "",
+     "data_type": "GenericDataCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Enabled",
+     "description": "",
+     "data_type": "BoolCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": "Core_Task_TaskFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": "Core_Task_TaskFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "TaskRun",
+   "description": "Main type for entity TaskRun",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "is_primary_key": true,
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "StartedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CompletedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Status",
+     "description": "",
+     "data_type": "Core_TaskRun_Status",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "MethodRequestData",
+     "description": "",
+     "data_type": "GenericData",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "MethodResponseData",
+     "description": "",
+     "data_type": "GenericData",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "TriggeredBy",
+     "description": "",
+     "data_type": "Core_TaskRun_TriggeredBy",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_optional": true,
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "TaskID",
+     "description": "",
+     "data_type": "Core_Task",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "TaskRunActionCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "TaskRunFieldCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "TaskRunFilter",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "StartedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CompletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Status",
+     "description": "",
+     "data_type": "StatusCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "MethodRequestData",
+     "description": "",
+     "data_type": "GenericDataCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "MethodResponseData",
+     "description": "",
+     "data_type": "GenericDataCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "TriggeredBy",
+     "description": "",
+     "data_type": "TriggeredByCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "TaskID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": "Core_TaskRun_TaskRunFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": "Core_TaskRun_TaskRunFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Team",
+   "description": "Main type for entity Team",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "is_primary_key": true,
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_optional": true,
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "TeamFieldCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "TeamFilter",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "StringCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": "User_Team_TeamFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": "User_Team_TeamFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "TriggeredByCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "TypeCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "UpdateRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "User_Team",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Fields",
+     "description": "",
+     "data_type": "User_Team_TeamField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ExcludeFields",
+     "description": "",
+     "data_type": "User_Team_TeamField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UpdateRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_File",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Fields",
+     "description": "",
+     "data_type": "Core_File_FileField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ExcludeFields",
+     "description": "",
+     "data_type": "Core_File_FileField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UpdateRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Auth_Secret",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Fields",
+     "description": "",
+     "data_type": "Auth_Secret_SecretField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ExcludeFields",
+     "description": "",
+     "data_type": "Auth_Secret_SecretField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UpdateRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_Task",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Fields",
+     "description": "",
+     "data_type": "Core_Task_TaskField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ExcludeFields",
+     "description": "",
+     "data_type": "Core_Task_TaskField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UpdateRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_TaskRun",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Fields",
+     "description": "",
+     "data_type": "Core_TaskRun_TaskRunField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ExcludeFields",
+     "description": "",
+     "data_type": "Core_TaskRun_TaskRunField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UpdateRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "User_User",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Fields",
+     "description": "",
+     "data_type": "User_User_UserField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ExcludeFields",
+     "description": "",
+     "data_type": "User_User_UserField",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UpdateResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_File",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UpdateResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "User_Team",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UpdateResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_Task",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UpdateResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Core_TaskRun",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UpdateResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "User_User",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UpdateResponse",
+   "description": "",
+   "fields": [
+    {
+     "name": "Object",
+     "description": "",
+     "data_type": "Auth_Secret",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "User",
+   "description": "Main type for entity User",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "is_primary_key": true,
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "PersonNamemetaFields",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Email",
+     "description": "",
+     "data_type": "Email",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Addresses",
+     "description": "",
+     "data_type": "AddressmetaFields",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "PastTeamIDs",
+     "description": "",
+     "data_type": "User_Team",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_immutable": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "Timestamp",
+     "options": {
+      "is_optional": true,
+      "is_meta_field": true,
+      "is_set_internally_by_dal": true,
+      "is_set_internally": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "TeamsIDs",
+     "description": "",
+     "data_type": "User_Team",
+     "is_repeated": true,
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UserFieldCondition",
+   "description": "",
+   "fields": null,
+   "options": {}
+  },
+  {
+   "name": "UserFilter",
+   "description": "",
+   "fields": [
+    {
+     "name": "ID",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "PersonNameFilter",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Email",
+     "description": "",
+     "data_type": "EmailCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "HavingAddresses",
+     "description": "",
+     "data_type": "AddressFilter",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "HavingPastTeamIDs",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "data_type": "TimestampCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "HavingTeamsIDs",
+     "description": "",
+     "data_type": "IDCondition",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "And",
+     "description": "",
+     "data_type": "User_User_UserFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Or",
+     "description": "",
+     "data_type": "User_User_UserFilter",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  }
+ ],
+ "enums": [
+  {
+   "name": "AddressField",
+   "values": [
+    {
+     "name": "ParentID",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "ID",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Line1",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "Line2",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "City",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "State",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "PostalCode",
+     "description": "",
+     "id": 7,
+     "options": {}
+    },
+    {
+     "name": "Country",
+     "description": "",
+     "id": 8,
+     "options": {}
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 9,
+     "options": {}
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 10,
+     "options": {}
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 11,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ContactField",
+   "values": [
+    {
+     "name": "ParentID",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "ID",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "Name_ParentID",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "Name_ID",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "Name_FirstName",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "Name_MiddleInitial",
+     "description": "",
+     "id": 7,
+     "options": {}
+    },
+    {
+     "name": "Name_LastName",
+     "description": "",
+     "id": 8,
+     "options": {}
+    },
+    {
+     "name": "Name_CreatedAt",
+     "description": "",
+     "id": 9,
+     "options": {}
+    },
+    {
+     "name": "Name_UpdatedAt",
+     "description": "",
+     "id": 10,
+     "options": {}
+    },
+    {
+     "name": "Name_DeletedAt",
+     "description": "",
+     "id": 11,
+     "options": {}
+    },
+    {
+     "name": "Email",
+     "description": "",
+     "id": 12,
+     "options": {}
+    },
+    {
+     "name": "Address",
+     "description": "",
+     "id": 13,
+     "options": {}
+    },
+    {
+     "name": "Address_ParentID",
+     "description": "",
+     "id": 14,
+     "options": {}
+    },
+    {
+     "name": "Address_ID",
+     "description": "",
+     "id": 15,
+     "options": {}
+    },
+    {
+     "name": "Address_Line1",
+     "description": "",
+     "id": 16,
+     "options": {}
+    },
+    {
+     "name": "Address_Line2",
+     "description": "",
+     "id": 17,
+     "options": {}
+    },
+    {
+     "name": "Address_City",
+     "description": "",
+     "id": 18,
+     "options": {}
+    },
+    {
+     "name": "Address_State",
+     "description": "",
+     "id": 19,
+     "options": {}
+    },
+    {
+     "name": "Address_PostalCode",
+     "description": "",
+     "id": 20,
+     "options": {}
+    },
+    {
+     "name": "Address_Country",
+     "description": "",
+     "id": 21,
+     "options": {}
+    },
+    {
+     "name": "Address_CreatedAt",
+     "description": "",
+     "id": 22,
+     "options": {}
+    },
+    {
+     "name": "Address_UpdatedAt",
+     "description": "",
+     "id": 23,
+     "options": {}
+    },
+    {
+     "name": "Address_DeletedAt",
+     "description": "",
+     "id": 24,
+     "options": {}
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 25,
+     "options": {}
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 26,
+     "options": {}
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 27,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Country",
+   "values": [
+    {
+     "name": "USA",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Canada",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Mexico",
+     "description": "",
+     "id": 3,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "CronExpressionField",
+   "values": [
+    {
+     "name": "ParentID",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "ID",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Second",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "Minute",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "Hour",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "DayOfMonth",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "Month",
+     "description": "",
+     "id": 7,
+     "options": {}
+    },
+    {
+     "name": "DayOfWeek",
+     "description": "",
+     "id": 8,
+     "options": {}
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 9,
+     "options": {}
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 10,
+     "options": {}
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 11,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "EntityName",
+   "values": [
+    {
+     "name": "File",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Task",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "TaskRun",
+     "description": "",
+     "id": 3,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "EntityName",
+   "values": [
+    {
+     "name": "Auth_Secret",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Core_File",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Core_Task",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "Core_TaskRun",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "User_User",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "User_Team",
+     "description": "",
+     "id": 6,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "EntityName",
+   "values": [
+    {
+     "name": "User",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Team",
+     "description": "",
+     "id": 2,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "EntityName",
+   "values": [
+    {
+     "name": "Secret",
+     "description": "",
+     "id": 1,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "FileField",
+   "values": [
+    {
+     "name": "ID",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "FileName",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "StorageClient",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "StorageClientIdentifier",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "SizeBytes",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "MimeType",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "FileHash",
+     "description": "",
+     "id": 7,
+     "options": {}
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 8,
+     "options": {}
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 9,
+     "options": {}
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 10,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Gender",
+   "values": [
+    {
+     "name": "Male",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Female",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Other",
+     "description": "",
+     "id": 3,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "MethodName",
+   "values": [
+    {
+     "name": "Add",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Update",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Get",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "List",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "QueryByText",
+     "description": "",
+     "id": 5,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "MethodName",
+   "values": [
+    {
+     "name": "Add",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Update",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Get",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "List",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "QueryByText",
+     "description": "",
+     "id": 5,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "MethodName",
+   "values": [
+    {
+     "name": "Auth_LoginUser",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Auth_RegisterUser",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Auth_AuthenticateToken",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "Core_FileUpload",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "Auth_Secret_Add",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "Auth_Secret_Update",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "Auth_Secret_Get",
+     "description": "",
+     "id": 7,
+     "options": {}
+    },
+    {
+     "name": "Auth_Secret_List",
+     "description": "",
+     "id": 8,
+     "options": {}
+    },
+    {
+     "name": "Auth_Secret_QueryByText",
+     "description": "",
+     "id": 9,
+     "options": {}
+    },
+    {
+     "name": "Core_File_Add",
+     "description": "",
+     "id": 10,
+     "options": {}
+    },
+    {
+     "name": "Core_File_Update",
+     "description": "",
+     "id": 11,
+     "options": {}
+    },
+    {
+     "name": "Core_File_Get",
+     "description": "",
+     "id": 12,
+     "options": {}
+    },
+    {
+     "name": "Core_File_List",
+     "description": "",
+     "id": 13,
+     "options": {}
+    },
+    {
+     "name": "Core_File_QueryByText",
+     "description": "",
+     "id": 14,
+     "options": {}
+    },
+    {
+     "name": "Core_Task_Add",
+     "description": "",
+     "id": 15,
+     "options": {}
+    },
+    {
+     "name": "Core_Task_Update",
+     "description": "",
+     "id": 16,
+     "options": {}
+    },
+    {
+     "name": "Core_Task_Get",
+     "description": "",
+     "id": 17,
+     "options": {}
+    },
+    {
+     "name": "Core_Task_List",
+     "description": "",
+     "id": 18,
+     "options": {}
+    },
+    {
+     "name": "Core_Task_QueryByText",
+     "description": "",
+     "id": 19,
+     "options": {}
+    },
+    {
+     "name": "Core_TaskRun_Add",
+     "description": "",
+     "id": 20,
+     "options": {}
+    },
+    {
+     "name": "Core_TaskRun_Update",
+     "description": "",
+     "id": 21,
+     "options": {}
+    },
+    {
+     "name": "Core_TaskRun_Get",
+     "description": "",
+     "id": 22,
+     "options": {}
+    },
+    {
+     "name": "Core_TaskRun_List",
+     "description": "",
+     "id": 23,
+     "options": {}
+    },
+    {
+     "name": "Core_TaskRun_QueryByText",
+     "description": "",
+     "id": 24,
+     "options": {}
+    },
+    {
+     "name": "User_User_Add",
+     "description": "",
+     "id": 25,
+     "options": {}
+    },
+    {
+     "name": "User_User_Update",
+     "description": "",
+     "id": 26,
+     "options": {}
+    },
+    {
+     "name": "User_User_Get",
+     "description": "",
+     "id": 27,
+     "options": {}
+    },
+    {
+     "name": "User_User_List",
+     "description": "",
+     "id": 28,
+     "options": {}
+    },
+    {
+     "name": "User_User_QueryByText",
+     "description": "",
+     "id": 29,
+     "options": {}
+    },
+    {
+     "name": "User_Team_Add",
+     "description": "",
+     "id": 30,
+     "options": {}
+    },
+    {
+     "name": "User_Team_Update",
+     "description": "",
+     "id": 31,
+     "options": {}
+    },
+    {
+     "name": "User_Team_Get",
+     "description": "",
+     "id": 32,
+     "options": {}
+    },
+    {
+     "name": "User_Team_List",
+     "description": "",
+     "id": 33,
+     "options": {}
+    },
+    {
+     "name": "User_Team_QueryByText",
+     "description": "",
+     "id": 34,
+     "options": {}
+    },
+    {
+     "name": "Core_File_HookCreatePre",
+     "description": "",
+     "id": 35,
+     "options": {}
+    },
+    {
+     "name": "Core_Task_HookSavePre",
+     "description": "",
+     "id": 36,
+     "options": {}
+    },
+    {
+     "name": "Core_TaskRun_HookCreatePre",
+     "description": "",
+     "id": 37,
+     "options": {}
+    },
+    {
+     "name": "User_User_HookInit",
+     "description": "",
+     "id": 38,
+     "options": {}
+    },
+    {
+     "name": "Core_Task_ActionRun",
+     "description": "",
+     "id": 39,
+     "options": {}
+    },
+    {
+     "name": "Core_TaskRun_ActionRun",
+     "description": "",
+     "id": 40,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "MethodName",
+   "values": [
+    {
+     "name": "Add",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Update",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Get",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "List",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "QueryByText",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "HookInit",
+     "description": "",
+     "id": 6,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "MethodName",
+   "values": [
+    {
+     "name": "Add",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Update",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Get",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "List",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "QueryByText",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "HookCreatePre",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "ActionRun",
+     "description": "",
+     "id": 7,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "MethodName",
+   "values": [
+    {
+     "name": "Add",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Update",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Get",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "List",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "QueryByText",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "HookSavePre",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "ActionRun",
+     "description": "",
+     "id": 7,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "MethodName",
+   "values": [
+    {
+     "name": "Add",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Update",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Get",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "List",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "QueryByText",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "HookCreatePre",
+     "description": "",
+     "id": 6,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "MethodName",
+   "values": [
+    {
+     "name": "FileUpload",
+     "description": "",
+     "id": 1,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "MethodName",
+   "values": [
+    {
+     "name": "LoginUser",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "RegisterUser",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "AuthenticateToken",
+     "description": "",
+     "id": 3,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "PersonNameField",
+   "values": [
+    {
+     "name": "ParentID",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "ID",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "FirstName",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "MiddleInitial",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "LastName",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 7,
+     "options": {}
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 8,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "PhoneNumberField",
+   "values": [
+    {
+     "name": "ParentID",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "ID",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "CountryCode",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "Number",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "Extension",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 7,
+     "options": {}
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 8,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "SecretField",
+   "values": [
+    {
+     "name": "ID",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "UserID",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Type",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "Secret",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "ExpiresAt",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 7,
+     "options": {}
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 8,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "ServiceName",
+   "values": [
+    {
+     "name": "Auth",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Core",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "User",
+     "description": "",
+     "id": 3,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Status",
+   "values": [
+    {
+     "name": "Pending",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Running",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Success",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "Failed",
+     "description": "",
+     "id": 4,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "StorageClient",
+   "values": [
+    {
+     "name": "LocalFile",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Database",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "CloudAmazonS3",
+     "description": "",
+     "id": 3,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "TaskAction",
+   "values": [
+    {
+     "name": "Run",
+     "description": "Run the task",
+     "id": 1,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "TaskField",
+   "values": [
+    {
+     "name": "ID",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Description",
+     "description": "string",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "Method",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "MethodRequestData",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "Enabled",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 7,
+     "options": {}
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 8,
+     "options": {}
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 9,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "TaskRunAction",
+   "values": [
+    {
+     "name": "Run",
+     "description": "Run the task",
+     "id": 1,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "TaskRunField",
+   "values": [
+    {
+     "name": "ID",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "StartedAt",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "CompletedAt",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "Status",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "MethodRequestData",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "MethodResponseData",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "TriggeredBy",
+     "description": "",
+     "id": 7,
+     "options": {}
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 8,
+     "options": {}
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 9,
+     "options": {}
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 10,
+     "options": {}
+    },
+    {
+     "name": "TaskID",
+     "description": "",
+     "id": 11,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "TeamField",
+   "values": [
+    {
+     "name": "ID",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 5,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "TriggeredBy",
+   "values": [
+    {
+     "name": "Cron",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Manual",
+     "description": "",
+     "id": 2,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Type",
+   "values": [
+    {
+     "name": "Password",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "GithubToken",
+     "description": "",
+     "id": 2,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "UserField",
+   "values": [
+    {
+     "name": "ID",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Name",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Name_ParentID",
+     "description": "",
+     "id": 3,
+     "options": {}
+    },
+    {
+     "name": "Name_ID",
+     "description": "",
+     "id": 4,
+     "options": {}
+    },
+    {
+     "name": "Name_FirstName",
+     "description": "",
+     "id": 5,
+     "options": {}
+    },
+    {
+     "name": "Name_MiddleInitial",
+     "description": "",
+     "id": 6,
+     "options": {}
+    },
+    {
+     "name": "Name_LastName",
+     "description": "",
+     "id": 7,
+     "options": {}
+    },
+    {
+     "name": "Name_CreatedAt",
+     "description": "",
+     "id": 8,
+     "options": {}
+    },
+    {
+     "name": "Name_UpdatedAt",
+     "description": "",
+     "id": 9,
+     "options": {}
+    },
+    {
+     "name": "Name_DeletedAt",
+     "description": "",
+     "id": 10,
+     "options": {}
+    },
+    {
+     "name": "Email",
+     "description": "",
+     "id": 11,
+     "options": {}
+    },
+    {
+     "name": "Addresses",
+     "description": "",
+     "id": 12,
+     "options": {}
+    },
+    {
+     "name": "Addresses_ParentID",
+     "description": "",
+     "id": 13,
+     "options": {}
+    },
+    {
+     "name": "Addresses_ID",
+     "description": "",
+     "id": 14,
+     "options": {}
+    },
+    {
+     "name": "Addresses_Line1",
+     "description": "",
+     "id": 15,
+     "options": {}
+    },
+    {
+     "name": "Addresses_Line2",
+     "description": "",
+     "id": 16,
+     "options": {}
+    },
+    {
+     "name": "Addresses_City",
+     "description": "",
+     "id": 17,
+     "options": {}
+    },
+    {
+     "name": "Addresses_State",
+     "description": "",
+     "id": 18,
+     "options": {}
+    },
+    {
+     "name": "Addresses_PostalCode",
+     "description": "",
+     "id": 19,
+     "options": {}
+    },
+    {
+     "name": "Addresses_Country",
+     "description": "",
+     "id": 20,
+     "options": {}
+    },
+    {
+     "name": "Addresses_CreatedAt",
+     "description": "",
+     "id": 21,
+     "options": {}
+    },
+    {
+     "name": "Addresses_UpdatedAt",
+     "description": "",
+     "id": 22,
+     "options": {}
+    },
+    {
+     "name": "Addresses_DeletedAt",
+     "description": "",
+     "id": 23,
+     "options": {}
+    },
+    {
+     "name": "PastTeamIDs",
+     "description": "",
+     "id": 24,
+     "options": {}
+    },
+    {
+     "name": "CreatedAt",
+     "description": "",
+     "id": 25,
+     "options": {}
+    },
+    {
+     "name": "UpdatedAt",
+     "description": "",
+     "id": 26,
+     "options": {}
+    },
+    {
+     "name": "DeletedAt",
+     "description": "",
+     "id": 27,
+     "options": {}
+    },
+    {
+     "name": "TeamsIDs",
+     "description": "",
+     "id": 28,
+     "options": {}
+    }
+   ],
+   "options": {}
+  }
+ ],
+ "methods": [
+  {
+   "name": "ActionRun",
+   "description": "Run the task",
+   "argument_type": "$.service[Core].entity[Task].type[StandardEntityRequest]",
+   "return_type": "$.service[Core].entity[Task].type[StandardEntityResponse]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/run",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "ActionRun",
+   "description": "Run the task",
+   "argument_type": "$.service[Core].entity[TaskRun].type[StandardEntityRequest]",
+   "return_type": "$.service[Core].entity[TaskRun].type[StandardEntityResponse]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/run",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Add",
+   "description": "Adds a new Team entity",
+   "argument_type": "$.service[User].entity[Team].type[AddRequest]",
+   "return_type": "$.service[User].entity[Team].type[Team]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Add",
+   "description": "Adds a new Secret entity",
+   "argument_type": "$.service[Auth].entity[Secret].type[AddRequest]",
+   "return_type": "$.service[Auth].entity[Secret].type[Secret]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Add",
+   "description": "Adds a new User entity",
+   "argument_type": "$.service[User].entity[User].type[AddRequest]",
+   "return_type": "$.service[User].entity[User].type[User]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Add",
+   "description": "Adds a new TaskRun entity",
+   "argument_type": "$.service[Core].entity[TaskRun].type[AddRequest]",
+   "return_type": "$.service[Core].entity[TaskRun].type[TaskRun]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Add",
+   "description": "Adds a new Task entity",
+   "argument_type": "$.service[Core].entity[Task].type[AddRequest]",
+   "return_type": "$.service[Core].entity[Task].type[Task]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Add",
+   "description": "Adds a new File entity",
+   "argument_type": "$.service[Core].entity[File].type[AddRequest]",
+   "return_type": "$.service[Core].entity[File].type[File]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "AuthenticateToken",
+   "description": "Determine if a token is valid/authenticated",
+   "argument_type": "$.service[Auth].type[AuthenticateTokenRequest]",
+   "return_type": "$.service[Auth].type[AuthenticateResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": true
+   },
+   "apis": [
+    {
+     "path": "/authenticate_token",
+     "http_method": "POST",
+     "is_public": true,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "FileUpload",
+   "description": "Create a new file",
+   "argument_type": "$",
+   "return_type": "$.service[Core].entity[File].type[File]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": true,
+    "is_static": true
+   },
+   "apis": [
+    {
+     "path": "file/upload",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Get",
+   "description": "Get a Task entity",
+   "argument_type": "$.service[Core].entity[Task].type[GetRequest]",
+   "return_type": "$.service[Core].entity[Task].type[Task]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "Get",
+   "description": "Get a User entity",
+   "argument_type": "$.service[User].entity[User].type[GetRequest]",
+   "return_type": "$.service[User].entity[User].type[User]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "Get",
+   "description": "Get a Team entity",
+   "argument_type": "$.service[User].entity[Team].type[GetRequest]",
+   "return_type": "$.service[User].entity[Team].type[Team]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "Get",
+   "description": "Get a File entity",
+   "argument_type": "$.service[Core].entity[File].type[GetRequest]",
+   "return_type": "$.service[Core].entity[File].type[File]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "Get",
+   "description": "Get a Secret entity",
+   "argument_type": "$.service[Auth].entity[Secret].type[GetRequest]",
+   "return_type": "$.service[Auth].entity[Secret].type[Secret]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "Get",
+   "description": "Get a TaskRun entity",
+   "argument_type": "$.service[Core].entity[TaskRun].type[GetRequest]",
+   "return_type": "$.service[Core].entity[TaskRun].type[TaskRun]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "HookCreatePre",
+   "description": "HookCreatePre hook for entity File",
+   "argument_type": "$.service[Core].entity[File].type[File]",
+   "return_type": "$.service[Core].entity[File].type[File]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": true
+   },
+   "apis": null
+  },
+  {
+   "name": "HookCreatePre",
+   "description": "HookCreatePre hook for entity TaskRun",
+   "argument_type": "$.service[Core].entity[TaskRun].type[TaskRun]",
+   "return_type": "$.service[Core].entity[TaskRun].type[TaskRun]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": null
+  },
+  {
+   "name": "HookInit",
+   "description": "HookInit hook for entity User",
+   "argument_type": "$",
+   "return_type": "$",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": true
+   },
+   "apis": null
+  },
+  {
+   "name": "HookSavePre",
+   "description": "HookSavePre hook for entity Task",
+   "argument_type": "$.service[Core].entity[Task].type[Task]",
+   "return_type": "$.service[Core].entity[Task].type[Task]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": null
+  },
+  {
+   "name": "List",
+   "description": "List User entities",
+   "argument_type": "$.service[User].entity[User].type[ListRequest]",
+   "return_type": "$.service[User].entity[User].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/list",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 200,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "List",
+   "description": "List Task entities",
+   "argument_type": "$.service[Core].entity[Task].type[ListRequest]",
+   "return_type": "$.service[Core].entity[Task].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/list",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 200,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "List",
+   "description": "List Team entities",
+   "argument_type": "$.service[User].entity[Team].type[ListRequest]",
+   "return_type": "$.service[User].entity[Team].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/list",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 200,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "List",
+   "description": "List Secret entities",
+   "argument_type": "$.service[Auth].entity[Secret].type[ListRequest]",
+   "return_type": "$.service[Auth].entity[Secret].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/list",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 200,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "List",
+   "description": "List TaskRun entities",
+   "argument_type": "$.service[Core].entity[TaskRun].type[ListRequest]",
+   "return_type": "$.service[Core].entity[TaskRun].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/list",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 200,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "List",
+   "description": "List File entities",
+   "argument_type": "$.service[Core].entity[File].type[ListRequest]",
+   "return_type": "$.service[Core].entity[File].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/list",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 200,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "LoginUser",
+   "description": "Logs in a user",
+   "argument_type": "$.service[Auth].type[LoginRequest]",
+   "return_type": "$.service[Auth].type[AuthenticateResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": true
+   },
+   "apis": [
+    {
+     "path": "/login",
+     "http_method": "POST",
+     "is_public": true,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "QueryByText",
+   "description": "List Secrets entities by free text search",
+   "argument_type": "$.service[Auth].entity[Secret].type[QueryByTextRequest]",
+   "return_type": "$.service[Auth].entity[Secret].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/query_by_text",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "QueryByText",
+   "description": "List Users entities by free text search",
+   "argument_type": "$.service[User].entity[User].type[QueryByTextRequest]",
+   "return_type": "$.service[User].entity[User].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/query_by_text",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "QueryByText",
+   "description": "List Files entities by free text search",
+   "argument_type": "$.service[Core].entity[File].type[QueryByTextRequest]",
+   "return_type": "$.service[Core].entity[File].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/query_by_text",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "QueryByText",
+   "description": "List TaskRuns entities by free text search",
+   "argument_type": "$.service[Core].entity[TaskRun].type[QueryByTextRequest]",
+   "return_type": "$.service[Core].entity[TaskRun].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/query_by_text",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "QueryByText",
+   "description": "List Tasks entities by free text search",
+   "argument_type": "$.service[Core].entity[Task].type[QueryByTextRequest]",
+   "return_type": "$.service[Core].entity[Task].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/query_by_text",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "QueryByText",
+   "description": "List Teams entities by free text search",
+   "argument_type": "$.service[User].entity[Team].type[QueryByTextRequest]",
+   "return_type": "$.service[User].entity[Team].type[ListResponse]",
+   "options": {
+    "type": "Query",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "/query_by_text",
+     "http_method": "GET",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": false,
+      "use_url_params_for_request": true
+     }
+    }
+   ]
+  },
+  {
+   "name": "RegisterUser",
+   "description": "Create a new user",
+   "argument_type": "$.service[Auth].type[RegisterUserRequest]",
+   "return_type": "$.service[Auth].type[AuthenticateResponse]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": true
+   },
+   "apis": [
+    {
+     "path": "/register",
+     "http_method": "POST",
+     "is_public": true,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Update",
+   "description": "Adds a new TaskRun entity",
+   "argument_type": "$.service[Core].entity[TaskRun].type[UpdateRequest]",
+   "return_type": "$.service[Core].entity[TaskRun].type[UpdateResponse]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "PUT",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Update",
+   "description": "Adds a new Team entity",
+   "argument_type": "$.service[User].entity[Team].type[UpdateRequest]",
+   "return_type": "$.service[User].entity[Team].type[UpdateResponse]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "PUT",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Update",
+   "description": "Adds a new User entity",
+   "argument_type": "$.service[User].entity[User].type[UpdateRequest]",
+   "return_type": "$.service[User].entity[User].type[UpdateResponse]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "PUT",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Update",
+   "description": "Adds a new Task entity",
+   "argument_type": "$.service[Core].entity[Task].type[UpdateRequest]",
+   "return_type": "$.service[Core].entity[Task].type[UpdateResponse]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "PUT",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Update",
+   "description": "Adds a new File entity",
+   "argument_type": "$.service[Core].entity[File].type[UpdateRequest]",
+   "return_type": "$.service[Core].entity[File].type[UpdateResponse]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "PUT",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "Update",
+   "description": "Adds a new Secret entity",
+   "argument_type": "$.service[Auth].entity[Secret].type[UpdateRequest]",
+   "return_type": "$.service[Auth].entity[Secret].type[UpdateResponse]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": false
+   },
+   "apis": [
+    {
+     "path": "",
+     "http_method": "PUT",
+     "is_public": false,
+     "options": {
+      "success_status": 201,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  }
+ ]
+}

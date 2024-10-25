@@ -1,0 +1,3 @@
+schema public:
+  schema: schema.public.yaml
+  table tb_secret: schema.public/table.tb_secret.yaml

@@ -1,0 +1,6 @@
+schema public:
+  schema: schema.public.yaml
+  table tb_team: schema.public/table.tb_team.yaml
+  table tb_user: schema.public/table.tb_user.yaml
+  table tb_user_addresses: schema.public/table.tb_user_addresses.yaml
+  table tb_user_name: schema.public/table.tb_user_name.yaml

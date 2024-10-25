@@ -1,0 +1,68 @@
+app:
+  services:
+    - name: core
+      
+      types:
+        - name: CronExpression
+          fields:
+            - second: string
+            - minute: string
+            - hour: string
+            - day_of_month: string
+            - month: string
+            - day_of_week: string
+
+      # Entities
+      entities:
+        - name: Task
+          description: Represents a scheduled call to a method
+          fields:
+            - name: string
+            - description: string
+            - method: $.enum[MethodName]
+            - method_request_data: generic_data
+            - enabled: bool
+          associations:
+            - relationship: parent_of
+              type: many
+              entity: $.service[core].entity[TaskRun]
+              name: task_runs
+              other_association_name: task
+          hooks:
+            - type: save_pre
+              # is_static: true
+          actions:
+            - name: run
+              description: Run the task
+
+        - name: TaskRun
+          description: Represents a run of a scheduled task
+          fields:
+            - started_at: timestamp set_internally
+            - completed_at: timestamp set_internally
+            - status: $.service[core].entity[TaskRun].enum[Status] set_internally
+            - method_request_data: generic_data
+            - method_response_data: generic_data set_internally
+            - triggered_by: $.service[core].entity[TaskRun].enum[TriggeredBy]
+          enums:
+            - name: TriggeredBy
+              values:
+                - Cron: 1
+                - Manual: 2
+            - name: Status
+              values:
+                - Pending: 1
+                - Running: 2
+                - Success: 3
+                - Failed: 4
+          associations:
+            - relationship: child_of
+              type: one
+              entity: $.service[core].entity[Task]
+              name: task
+          hooks:
+            - type: create_pre
+              # is_static: true
+          actions:
+            - name: run
+              description: Run the task

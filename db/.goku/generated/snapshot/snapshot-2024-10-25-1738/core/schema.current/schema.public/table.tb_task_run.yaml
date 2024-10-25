@@ -1,0 +1,59 @@
+table tb_task_run:
+  check_constraints:
+    chk_task_run_status_enum:
+      columns:
+      - status
+      expression: (status = ANY (ARRAY['Pending'::text, 'Running'::text, 'Success'::text,
+        'Failed'::text]))
+    chk_task_run_triggered_by_enum:
+      columns:
+      - triggered_by
+      expression: (triggered_by = ANY (ARRAY['Cron'::text, 'Manual'::text]))
+  columns:
+  - id:
+      not_null: true
+      type: uuid
+  - started_at:
+      not_null: true
+      type: timestamp without time zone
+  - completed_at:
+      not_null: true
+      type: timestamp without time zone
+  - status:
+      not_null: true
+      type: text
+  - method_request_data:
+      not_null: true
+      type: jsonb
+  - method_response_data:
+      not_null: true
+      type: jsonb
+  - triggered_by:
+      not_null: true
+      type: text
+  - created_at:
+      not_null: true
+      type: timestamp without time zone
+  - updated_at:
+      not_null: true
+      type: timestamp without time zone
+  - deleted_at:
+      type: timestamp without time zone
+  - task_id:
+      not_null: true
+      type: uuid
+  foreign_keys:
+    fk_task_run__task_id__task:
+      columns:
+      - task_id
+      on_delete: cascade
+      references:
+        columns:
+        - id
+        schema: public
+        table: tb_task
+  owner: goku
+  primary_key:
+    pk_task_run_id:
+      columns:
+      - id

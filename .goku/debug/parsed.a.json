@@ -1,0 +1,943 @@
+{
+ "Name": "Sampleapp",
+ "Enums": [
+  {
+   "name": "Gender",
+   "values": [
+    {
+     "name": "Male",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Female",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Other",
+     "description": "",
+     "id": 3,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Country",
+   "values": [
+    {
+     "name": "USA",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "Canada",
+     "description": "",
+     "id": 2,
+     "options": {}
+    },
+    {
+     "name": "Mexico",
+     "description": "",
+     "id": 3,
+     "options": {}
+    }
+   ],
+   "options": {}
+  }
+ ],
+ "Types": [
+  {
+   "name": "PersonName",
+   "description": "",
+   "fields": [
+    {
+     "name": "FirstName",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "MiddleInitial",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "LastName",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "PhoneNumber",
+   "description": "",
+   "fields": [
+    {
+     "name": "CountryCode",
+     "description": "",
+     "data_type": "Number",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Number",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Extension",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Address",
+   "description": "",
+   "fields": [
+    {
+     "name": "Line1",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Line2",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "City",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "State",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "PostalCode",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Country",
+     "description": "",
+     "data_type": "Country",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Contact",
+   "description": "",
+   "fields": [
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "PersonName",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Email",
+     "description": "",
+     "data_type": "Email",
+     "options": {
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Address",
+     "description": "",
+     "data_type": "Address",
+     "options": {
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  }
+ ],
+ "Services": [
+  {
+   "Name": "Auth",
+   "options": {
+    "frontend_options": {}
+   },
+   "entities": [
+    {
+     "name": "Secret",
+     "description": "A secret is a credential that is used to authenticate a user",
+     "options": {},
+     "actions": null,
+     "associations": null,
+     "hooks": null,
+     "fields": [
+      {
+       "name": "UserID",
+       "description": "",
+       "data_type": "User_User",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Type",
+       "description": "",
+       "data_type": "Auth_Secret_Type",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Secret",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "ExpiresAt",
+       "description": "",
+       "data_type": "Timestamp",
+       "options": {
+        "is_optional": true,
+        "nested_options": {}
+       }
+      }
+     ],
+     "Types": null,
+     "Enums": [
+      {
+       "name": "Type",
+       "values": [
+        {
+         "name": "Password",
+         "description": "",
+         "id": 1,
+         "options": {}
+        },
+        {
+         "name": "GithubToken",
+         "description": "",
+         "id": 2,
+         "options": {}
+        }
+       ],
+       "options": {}
+      }
+     ],
+     "Methods": null
+    }
+   ],
+   "Methods": [
+    {
+     "name": "LoginUser",
+     "description": "Logs in a user",
+     "argument_type": "$.service[Auth].type[LoginRequest]",
+     "return_type": "$.service[Auth].type[AuthenticateResponse]",
+     "options": {
+      "type": "Query",
+      "is_direct_http_handler": false,
+      "is_static": true
+     },
+     "apis": [
+      {
+       "path": "/login",
+       "http_method": "POST",
+       "is_public": true,
+       "options": {
+        "success_status": 0,
+        "use_body_for_request": false,
+        "use_url_params_for_request": false
+       }
+      }
+     ]
+    },
+    {
+     "name": "RegisterUser",
+     "description": "Create a new user",
+     "argument_type": "$.service[Auth].type[RegisterUserRequest]",
+     "return_type": "$.service[Auth].type[AuthenticateResponse]",
+     "options": {
+      "type": "Mutation",
+      "is_direct_http_handler": false,
+      "is_static": true
+     },
+     "apis": [
+      {
+       "path": "/register",
+       "http_method": "POST",
+       "is_public": true,
+       "options": {
+        "success_status": 0,
+        "use_body_for_request": false,
+        "use_url_params_for_request": false
+       }
+      }
+     ]
+    },
+    {
+     "name": "AuthenticateToken",
+     "description": "Determine if a token is valid/authenticated",
+     "argument_type": "$.service[Auth].type[AuthenticateTokenRequest]",
+     "return_type": "$.service[Auth].type[AuthenticateResponse]",
+     "options": {
+      "type": "Query",
+      "is_direct_http_handler": false,
+      "is_static": true
+     },
+     "apis": [
+      {
+       "path": "/authenticate_token",
+       "http_method": "POST",
+       "is_public": true,
+       "options": {
+        "success_status": 0,
+        "use_body_for_request": false,
+        "use_url_params_for_request": false
+       }
+      }
+     ]
+    }
+   ],
+   "Enums": null,
+   "Types": [
+    {
+     "name": "RegisterUserRequest",
+     "description": "",
+     "fields": [
+      {
+       "name": "Email",
+       "description": "",
+       "data_type": "Email",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Name",
+       "description": "",
+       "data_type": "PersonName",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Password",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "TeamID",
+       "description": "",
+       "data_type": "ID",
+       "options": {
+        "nested_options": {}
+       }
+      }
+     ],
+     "options": {
+      "is_request_type": true
+     }
+    },
+    {
+     "name": "LoginRequest",
+     "description": "",
+     "fields": [
+      {
+       "name": "Email",
+       "description": "",
+       "data_type": "Email",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Password",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      }
+     ],
+     "options": {
+      "is_request_type": true
+     }
+    },
+    {
+     "name": "AuthenticateTokenRequest",
+     "description": "",
+     "fields": [
+      {
+       "name": "Token",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      }
+     ],
+     "options": {
+      "is_request_type": true
+     }
+    },
+    {
+     "name": "AuthenticateResponse",
+     "description": "",
+     "fields": [
+      {
+       "name": "Token",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      }
+     ],
+     "options": {
+      "is_response_type": true
+     }
+    }
+   ]
+  },
+  {
+   "Name": "Core",
+   "options": {
+    "frontend_options": {}
+   },
+   "entities": [
+    {
+     "name": "File",
+     "description": "",
+     "options": {},
+     "actions": null,
+     "associations": null,
+     "hooks": [
+      {
+       "type": "create_pre",
+       "is_static": true
+      }
+     ],
+     "fields": [
+      {
+       "name": "FileName",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "StorageClient",
+       "description": "",
+       "data_type": "Core_File_StorageClient",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "StorageClientIdentifier",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "SizeBytes",
+       "description": "",
+       "data_type": "Number",
+       "options": {
+        "is_set_internally": true,
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "MimeType",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "is_set_internally": true,
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "FileHash",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "is_set_internally": true,
+        "nested_options": {}
+       }
+      }
+     ],
+     "Types": null,
+     "Enums": [
+      {
+       "name": "StorageClient",
+       "values": [
+        {
+         "name": "LocalFile",
+         "description": "",
+         "id": 1,
+         "options": {}
+        },
+        {
+         "name": "Database",
+         "description": "",
+         "id": 2,
+         "options": {}
+        },
+        {
+         "name": "CloudAmazonS3",
+         "description": "",
+         "id": 3,
+         "options": {}
+        }
+       ],
+       "options": {}
+      }
+     ],
+     "Methods": null
+    },
+    {
+     "name": "Task",
+     "description": "Represents a scheduled call to a method",
+     "options": {},
+     "actions": [
+      {
+       "name": "Run",
+       "description": "Run the task"
+      }
+     ],
+     "associations": [
+      {
+       "relationship": "parent_of",
+       "type": "many",
+       "entity": "$.service[Core].entity[TaskRun]",
+       "name": "TaskRuns",
+       "other_association_name": "Task"
+      }
+     ],
+     "hooks": [
+      {
+       "type": "save_pre"
+      }
+     ],
+     "fields": [
+      {
+       "name": "Name",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Description",
+       "description": "string",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Method",
+       "description": "",
+       "data_type": "MethodName",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "MethodRequestData",
+       "description": "",
+       "data_type": "GenericData",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Enabled",
+       "description": "",
+       "data_type": "Bool",
+       "options": {
+        "nested_options": {}
+       }
+      }
+     ],
+     "Types": null,
+     "Enums": null,
+     "Methods": null
+    },
+    {
+     "name": "TaskRun",
+     "description": "Represents a run of a scheduled task",
+     "options": {},
+     "actions": [
+      {
+       "name": "Run",
+       "description": "Run the task"
+      }
+     ],
+     "associations": [
+      {
+       "relationship": "child_of",
+       "type": "one",
+       "entity": "$.service[Core].entity[Task]",
+       "name": "Task",
+       "other_association_name": ""
+      }
+     ],
+     "hooks": [
+      {
+       "type": "create_pre"
+      }
+     ],
+     "fields": [
+      {
+       "name": "StartedAt",
+       "description": "",
+       "data_type": "Timestamp",
+       "options": {
+        "is_set_internally": true,
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "CompletedAt",
+       "description": "",
+       "data_type": "Timestamp",
+       "options": {
+        "is_set_internally": true,
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Status",
+       "description": "",
+       "data_type": "Core_TaskRun_Status",
+       "options": {
+        "is_set_internally": true,
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "MethodRequestData",
+       "description": "",
+       "data_type": "GenericData",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "MethodResponseData",
+       "description": "",
+       "data_type": "GenericData",
+       "options": {
+        "is_set_internally": true,
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "TriggeredBy",
+       "description": "",
+       "data_type": "Core_TaskRun_TriggeredBy",
+       "options": {
+        "nested_options": {}
+       }
+      }
+     ],
+     "Types": null,
+     "Enums": [
+      {
+       "name": "TriggeredBy",
+       "values": [
+        {
+         "name": "Cron",
+         "description": "",
+         "id": 1,
+         "options": {}
+        },
+        {
+         "name": "Manual",
+         "description": "",
+         "id": 2,
+         "options": {}
+        }
+       ],
+       "options": {}
+      },
+      {
+       "name": "Status",
+       "values": [
+        {
+         "name": "Pending",
+         "description": "",
+         "id": 1,
+         "options": {}
+        },
+        {
+         "name": "Running",
+         "description": "",
+         "id": 2,
+         "options": {}
+        },
+        {
+         "name": "Success",
+         "description": "",
+         "id": 3,
+         "options": {}
+        },
+        {
+         "name": "Failed",
+         "description": "",
+         "id": 4,
+         "options": {}
+        }
+       ],
+       "options": {}
+      }
+     ],
+     "Methods": null
+    }
+   ],
+   "Methods": [
+    {
+     "name": "FileUpload",
+     "description": "Create a new file",
+     "argument_type": "$",
+     "return_type": "$.service[Core].entity[File].type[File]",
+     "options": {
+      "type": "Mutation",
+      "is_direct_http_handler": true,
+      "is_static": true
+     },
+     "apis": [
+      {
+       "path": "file/upload",
+       "http_method": "POST",
+       "is_public": false,
+       "options": {
+        "success_status": 0,
+        "use_body_for_request": false,
+        "use_url_params_for_request": false
+       }
+      }
+     ]
+    }
+   ],
+   "Enums": null,
+   "Types": [
+    {
+     "name": "CronExpression",
+     "description": "",
+     "fields": [
+      {
+       "name": "Second",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Minute",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Hour",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "DayOfMonth",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Month",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "DayOfWeek",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      }
+     ],
+     "options": {}
+    }
+   ]
+  },
+  {
+   "Name": "User",
+   "options": {
+    "frontend_options": {}
+   },
+   "entities": [
+    {
+     "name": "User",
+     "description": "",
+     "options": {},
+     "actions": null,
+     "associations": [
+      {
+       "relationship": "child_of",
+       "type": "many",
+       "entity": "$.service[User].entity[Team]",
+       "name": "Teams",
+       "other_association_name": "Users"
+      }
+     ],
+     "hooks": [
+      {
+       "type": "init",
+       "is_static": true
+      }
+     ],
+     "fields": [
+      {
+       "name": "Name",
+       "description": "",
+       "data_type": "PersonName",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Email",
+       "description": "",
+       "data_type": "Email",
+       "options": {
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Addresses",
+       "description": "",
+       "data_type": "Address",
+       "is_repeated": true,
+       "options": {
+        "is_optional": true,
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "PastTeam",
+       "description": "",
+       "data_type": "User_Team",
+       "is_repeated": true,
+       "options": {
+        "is_optional": true,
+        "nested_options": {}
+       }
+      }
+     ],
+     "Types": null,
+     "Enums": null,
+     "Methods": null
+    },
+    {
+     "name": "Team",
+     "description": "",
+     "options": {},
+     "actions": null,
+     "associations": [
+      {
+       "relationship": "parent_of",
+       "type": "many",
+       "entity": "$.service[User].entity[User]",
+       "name": "Users",
+       "other_association_name": "Teams"
+      }
+     ],
+     "hooks": null,
+     "fields": [
+      {
+       "name": "Name",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "nested_options": {}
+       }
+      }
+     ],
+     "Types": null,
+     "Enums": null,
+     "Methods": null
+    }
+   ],
+   "Methods": null,
+   "Enums": null,
+   "Types": null
+  }
+ ]
+}

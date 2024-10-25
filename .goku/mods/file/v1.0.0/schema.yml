@@ -1,0 +1,38 @@
+app:
+  services:
+    - name: core
+      
+      types:
+
+      methods:
+        - name: FileUpload
+          description: Create a new file
+          return_type: $.service[core].entity[File].type[File]
+          options:
+            type: Mutation
+            is_direct_http_handler: true
+            is_static: true
+          apis:
+            - path: file/upload
+              http_method: POST
+
+      # Entities
+      entities:
+        - name: File
+          fields:
+            - FileName: string
+            - StorageClient: $.service[core].entity[File].enum[StorageClient]
+            - StorageClientIdentifier: string
+            - SizeBytes: number set_internally
+            - MIMEType: string set_internally
+            - FileHash: string set_internally
+          enums:
+            - name: StorageClient
+              values:
+                - LocalFile: 1 # Local file storage: Useful for dev/test
+                - Database: 2 # Store in database: Useful for small files
+                - CloudAmazonS3: 3 # Amazon S3
+          hooks:
+            - type: create_pre
+              is_static: true
+        

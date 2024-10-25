@@ -1,0 +1,48 @@
+table tb_user_name:
+  check_constraints:
+    chk_name__first_name__empty_str:
+      columns:
+      - first_name
+      expression: (first_name <> ''::text)
+    chk_name__last_name__empty_str:
+      columns:
+      - last_name
+      expression: (last_name <> ''::text)
+  columns:
+  - parent_id:
+      not_null: true
+      type: uuid
+  - id:
+      not_null: true
+      type: uuid
+  - first_name:
+      not_null: true
+      type: text
+  - middle_initial:
+      type: text
+  - last_name:
+      not_null: true
+      type: text
+  - created_at:
+      not_null: true
+      type: timestamp without time zone
+  - updated_at:
+      not_null: true
+      type: timestamp without time zone
+  - deleted_at:
+      type: timestamp without time zone
+  foreign_keys:
+    fk_user_name__parent_id__user:
+      columns:
+      - parent_id
+      on_delete: cascade
+      references:
+        columns:
+        - id
+        schema: public
+        table: tb_user
+  owner: goku
+  primary_key:
+    pk_user_name_id:
+      columns:
+      - id

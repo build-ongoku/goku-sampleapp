@@ -1,0 +1,69 @@
+table tb_user_addresses:
+  check_constraints:
+    chk_addresses__city__empty_str:
+      columns:
+      - city
+      expression: (city <> ''::text)
+    chk_addresses__line_1__empty_str:
+      columns:
+      - line_1
+      expression: (line_1 <> ''::text)
+    chk_addresses__postal_code__empty_str:
+      columns:
+      - postal_code
+      expression: (postal_code <> ''::text)
+    chk_addresses__state__empty_str:
+      columns:
+      - state
+      expression: (state <> ''::text)
+    chk_addresses_country_enum:
+      columns:
+      - country
+      expression: (country = ANY (ARRAY['USA'::text, 'Canada'::text, 'Mexico'::text]))
+  columns:
+  - parent_id:
+      not_null: true
+      type: uuid
+  - id:
+      not_null: true
+      type: uuid
+  - line_1:
+      not_null: true
+      type: text
+  - line_2:
+      type: text
+  - city:
+      not_null: true
+      type: text
+  - state:
+      not_null: true
+      type: text
+  - postal_code:
+      not_null: true
+      type: text
+  - country:
+      not_null: true
+      type: text
+  - created_at:
+      not_null: true
+      type: timestamp without time zone
+  - updated_at:
+      not_null: true
+      type: timestamp without time zone
+  - deleted_at:
+      type: timestamp without time zone
+  foreign_keys:
+    fk_user_addresses__parent_id__user:
+      columns:
+      - parent_id
+      on_delete: cascade
+      references:
+        columns:
+        - id
+        schema: public
+        table: tb_user
+  owner: goku
+  primary_key:
+    pk_user_addresses_id:
+      columns:
+      - id

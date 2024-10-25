@@ -1,0 +1,174 @@
+table tb_user:
+    columns:
+        - id:
+              not_null: true
+              type: uuid
+
+        - email:
+              not_null: true
+              type: text
+
+        - past_team_ids:
+              not_null: false
+              type: uuid[]
+
+        - created_at:
+              not_null: true
+              type: timestamp without time zone
+
+        - updated_at:
+              not_null: true
+              type: timestamp without time zone
+
+        - deleted_at:
+              not_null: false
+              type: timestamp without time zone
+
+        - teams_ids:
+              not_null: false
+              type: uuid[]
+
+    primary_key:
+        pk_user_id:
+            columns:
+                - id
+
+table tb_user_name:
+    check_constraints:
+        chk_name__first_name__empty_str:
+            columns:
+                - first_name
+            expression: (first_name <> ''::TEXT)
+        chk_name__last_name__empty_str:
+            columns:
+                - last_name
+            expression: (last_name <> ''::TEXT)
+
+    columns:
+        - parent_id:
+              not_null: true
+              type: uuid
+
+        - id:
+              not_null: true
+              type: uuid
+
+        - first_name:
+              not_null: true
+              type: text
+
+        - middle_initial:
+              not_null: false
+              type: text
+
+        - last_name:
+              not_null: true
+              type: text
+
+        - created_at:
+              not_null: true
+              type: timestamp without time zone
+
+        - updated_at:
+              not_null: true
+              type: timestamp without time zone
+
+        - deleted_at:
+              not_null: false
+              type: timestamp without time zone
+
+    primary_key:
+        pk_user_name_id:
+            columns:
+                - id
+    foreign_keys:
+        fk_user_name__parent_id__user:
+            columns:
+                - parent_id
+            on_delete: cascade
+            references:
+                table: tb_user
+                columns:
+                    - id
+
+table tb_user_addresses:
+    check_constraints:
+        chk_addresses__line_1__empty_str:
+            columns:
+                - line_1
+            expression: (line_1 <> ''::TEXT)
+        chk_addresses__city__empty_str:
+            columns:
+                - city
+            expression: (city <> ''::TEXT)
+        chk_addresses__state__empty_str:
+            columns:
+                - state
+            expression: (state <> ''::TEXT)
+        chk_addresses__postal_code__empty_str:
+            columns:
+                - postal_code
+            expression: (postal_code <> ''::TEXT)
+        chk_addresses_country_enum:
+            columns:
+                - country
+            expression: (country = ANY (ARRAY['USA'::text, 'Canada'::text, 'Mexico'::text]))
+
+    columns:
+        - parent_id:
+              not_null: true
+              type: uuid
+
+        - id:
+              not_null: true
+              type: uuid
+
+        - line_1:
+              not_null: true
+              type: text
+
+        - line_2:
+              not_null: false
+              type: text
+
+        - city:
+              not_null: true
+              type: text
+
+        - state:
+              not_null: true
+              type: text
+
+        - postal_code:
+              not_null: true
+              type: text
+
+        - country:
+              not_null: true
+              type: text
+
+        - created_at:
+              not_null: true
+              type: timestamp without time zone
+
+        - updated_at:
+              not_null: true
+              type: timestamp without time zone
+
+        - deleted_at:
+              not_null: false
+              type: timestamp without time zone
+
+    primary_key:
+        pk_user_addresses_id:
+            columns:
+                - id
+    foreign_keys:
+        fk_user_addresses__parent_id__user:
+            columns:
+                - parent_id
+            on_delete: cascade
+            references:
+                table: tb_user
+                columns:
+                    - id

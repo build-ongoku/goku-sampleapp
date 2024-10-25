@@ -1,0 +1,30 @@
+# Generic 
+.DS_Store
+*/.DS_Store
+
+# Secrets
+.secret
+.secret/*
+.env*
+!.env.template
+
+# Dev / Debug
+.dev
+
+# Uncomment these if you want to ignore the generated files
+
+# # Goku
+# .goku
+# .goku/generated
+
+# # Goku - Sys
+
+# # Goku - DB
+# db/schema/*/schema.current
+# # - Dev migrations don't need to be committed
+# *.dev.migration.sql 
+
+# Goku - Apps
+.yarn
+node_modules
+.next
