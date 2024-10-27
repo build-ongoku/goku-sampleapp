@@ -950,13 +950,16 @@ func (c CountryCondition) GetValue(i int) interface{} {
 type EntityName int
 
 const (
-	EntityName_INVALID      EntityName = 0
-	EntityName_Auth_Secret  EntityName = 1
-	EntityName_Core_File    EntityName = 2
-	EntityName_Core_Task    EntityName = 3
-	EntityName_Core_TaskRun EntityName = 4
-	EntityName_User_User    EntityName = 5
-	EntityName_User_Team    EntityName = 6
+	EntityName_INVALID                EntityName = 0
+	EntityName_Auth_Secret            EntityName = 1
+	EntityName_User_User              EntityName = 2
+	EntityName_User_Team              EntityName = 3
+	EntityName_Core_JobApplicant      EntityName = 4
+	EntityName_Core_File              EntityName = 5
+	EntityName_Core_SecretKey         EntityName = 6
+	EntityName_Core_SecretDecryptable EntityName = 7
+	EntityName_Core_Task              EntityName = 8
+	EntityName_Core_TaskRun           EntityName = 9
 )
 
 func NewEntityNameFromString(s string) EntityName {
@@ -965,16 +968,22 @@ func NewEntityNameFromString(s string) EntityName {
 		return EntityName_INVALID
 	case "Auth_Secret":
 		return EntityName_Auth_Secret
-	case "Core_File":
-		return EntityName_Core_File
-	case "Core_Task":
-		return EntityName_Core_Task
-	case "Core_TaskRun":
-		return EntityName_Core_TaskRun
 	case "User_User":
 		return EntityName_User_User
 	case "User_Team":
 		return EntityName_User_Team
+	case "Core_JobApplicant":
+		return EntityName_Core_JobApplicant
+	case "Core_File":
+		return EntityName_Core_File
+	case "Core_SecretKey":
+		return EntityName_Core_SecretKey
+	case "Core_SecretDecryptable":
+		return EntityName_Core_SecretDecryptable
+	case "Core_Task":
+		return EntityName_Core_Task
+	case "Core_TaskRun":
+		return EntityName_Core_TaskRun
 
 	default:
 		panic(fmt.Sprintf("'%s' is not a valid value for type '%s'", s, "EntityName"))
@@ -988,16 +997,22 @@ func (f EntityName) String() string {
 		return "INVALID"
 	case EntityName_Auth_Secret:
 		return "Auth_Secret"
-	case EntityName_Core_File:
-		return "Core_File"
-	case EntityName_Core_Task:
-		return "Core_Task"
-	case EntityName_Core_TaskRun:
-		return "Core_TaskRun"
 	case EntityName_User_User:
 		return "User_User"
 	case EntityName_User_Team:
 		return "User_Team"
+	case EntityName_Core_JobApplicant:
+		return "Core_JobApplicant"
+	case EntityName_Core_File:
+		return "Core_File"
+	case EntityName_Core_SecretKey:
+		return "Core_SecretKey"
+	case EntityName_Core_SecretDecryptable:
+		return "Core_SecretDecryptable"
+	case EntityName_Core_Task:
+		return "Core_Task"
+	case EntityName_Core_TaskRun:
+		return "Core_TaskRun"
 
 	default:
 		panic(fmt.Sprintf("'%d' is not a valid type '%s'", f, "EntityName"))
@@ -1009,16 +1024,22 @@ func (f EntityName) Name() naam.Name {
 	switch f {
 	case EntityName_Auth_Secret:
 		return naam.New("auth___secret")
-	case EntityName_Core_File:
-		return naam.New("core___file")
-	case EntityName_Core_Task:
-		return naam.New("core___task")
-	case EntityName_Core_TaskRun:
-		return naam.New("core___task_run")
 	case EntityName_User_User:
 		return naam.New("user___user")
 	case EntityName_User_Team:
 		return naam.New("user___team")
+	case EntityName_Core_JobApplicant:
+		return naam.New("core___job_applicant")
+	case EntityName_Core_File:
+		return naam.New("core___file")
+	case EntityName_Core_SecretKey:
+		return naam.New("core___secret_key")
+	case EntityName_Core_SecretDecryptable:
+		return naam.New("core___secret_decryptable")
+	case EntityName_Core_Task:
+		return naam.New("core___task")
+	case EntityName_Core_TaskRun:
+		return naam.New("core___task_run")
 	default:
 		panics.P("EntityName.Name(): Unrecognized field (%d)", f)
 	}
@@ -1032,16 +1053,22 @@ func (f EntityName) Value() (driver.Value, error) {
 		return nil, nil
 	case EntityName_Auth_Secret:
 		return "Auth_Secret", nil
-	case EntityName_Core_File:
-		return "Core_File", nil
-	case EntityName_Core_Task:
-		return "Core_Task", nil
-	case EntityName_Core_TaskRun:
-		return "Core_TaskRun", nil
 	case EntityName_User_User:
 		return "User_User", nil
 	case EntityName_User_Team:
 		return "User_Team", nil
+	case EntityName_Core_JobApplicant:
+		return "Core_JobApplicant", nil
+	case EntityName_Core_File:
+		return "Core_File", nil
+	case EntityName_Core_SecretKey:
+		return "Core_SecretKey", nil
+	case EntityName_Core_SecretDecryptable:
+		return "Core_SecretDecryptable", nil
+	case EntityName_Core_Task:
+		return "Core_Task", nil
+	case EntityName_Core_TaskRun:
+		return "Core_TaskRun", nil
 
 	default:
 		return nil, fmt.Errorf("Cannot save enum EntityName to DB: '%d' is not a valid value for enum EntityName", f)
@@ -1261,47 +1288,67 @@ func (c GenderCondition) GetValue(i int) interface{} {
 type MethodName int
 
 const (
-	MethodName_INVALID                    MethodName = 0
-	MethodName_Auth_LoginUser             MethodName = 1
-	MethodName_Auth_RegisterUser          MethodName = 2
-	MethodName_Auth_AuthenticateToken     MethodName = 3
-	MethodName_Core_FileUpload            MethodName = 4
-	MethodName_Auth_Secret_Add            MethodName = 5
-	MethodName_Auth_Secret_Update         MethodName = 6
-	MethodName_Auth_Secret_Get            MethodName = 7
-	MethodName_Auth_Secret_List           MethodName = 8
-	MethodName_Auth_Secret_QueryByText    MethodName = 9
-	MethodName_Core_File_Add              MethodName = 10
-	MethodName_Core_File_Update           MethodName = 11
-	MethodName_Core_File_Get              MethodName = 12
-	MethodName_Core_File_List             MethodName = 13
-	MethodName_Core_File_QueryByText      MethodName = 14
-	MethodName_Core_Task_Add              MethodName = 15
-	MethodName_Core_Task_Update           MethodName = 16
-	MethodName_Core_Task_Get              MethodName = 17
-	MethodName_Core_Task_List             MethodName = 18
-	MethodName_Core_Task_QueryByText      MethodName = 19
-	MethodName_Core_TaskRun_Add           MethodName = 20
-	MethodName_Core_TaskRun_Update        MethodName = 21
-	MethodName_Core_TaskRun_Get           MethodName = 22
-	MethodName_Core_TaskRun_List          MethodName = 23
-	MethodName_Core_TaskRun_QueryByText   MethodName = 24
-	MethodName_User_User_Add              MethodName = 25
-	MethodName_User_User_Update           MethodName = 26
-	MethodName_User_User_Get              MethodName = 27
-	MethodName_User_User_List             MethodName = 28
-	MethodName_User_User_QueryByText      MethodName = 29
-	MethodName_User_Team_Add              MethodName = 30
-	MethodName_User_Team_Update           MethodName = 31
-	MethodName_User_Team_Get              MethodName = 32
-	MethodName_User_Team_List             MethodName = 33
-	MethodName_User_Team_QueryByText      MethodName = 34
-	MethodName_Core_File_HookCreatePre    MethodName = 35
-	MethodName_Core_Task_HookSavePre      MethodName = 36
-	MethodName_Core_TaskRun_HookCreatePre MethodName = 37
-	MethodName_User_User_HookInit         MethodName = 38
-	MethodName_Core_Task_ActionRun        MethodName = 39
-	MethodName_Core_TaskRun_ActionRun     MethodName = 40
+	MethodName_INVALID                              MethodName = 0
+	MethodName_Auth_LoginUser                       MethodName = 1
+	MethodName_Auth_RegisterUser                    MethodName = 2
+	MethodName_Auth_AuthenticateToken               MethodName = 3
+	MethodName_Core_FileUpload                      MethodName = 4
+	MethodName_Core_SecretDecryptabeAdd             MethodName = 5
+	MethodName_Auth_Secret_Add                      MethodName = 6
+	MethodName_Auth_Secret_Update                   MethodName = 7
+	MethodName_Auth_Secret_Get                      MethodName = 8
+	MethodName_Auth_Secret_List                     MethodName = 9
+	MethodName_Auth_Secret_QueryByText              MethodName = 10
+	MethodName_User_User_Add                        MethodName = 11
+	MethodName_User_User_Update                     MethodName = 12
+	MethodName_User_User_Get                        MethodName = 13
+	MethodName_User_User_List                       MethodName = 14
+	MethodName_User_User_QueryByText                MethodName = 15
+	MethodName_User_Team_Add                        MethodName = 16
+	MethodName_User_Team_Update                     MethodName = 17
+	MethodName_User_Team_Get                        MethodName = 18
+	MethodName_User_Team_List                       MethodName = 19
+	MethodName_User_Team_QueryByText                MethodName = 20
+	MethodName_Core_JobApplicant_Add                MethodName = 21
+	MethodName_Core_JobApplicant_Update             MethodName = 22
+	MethodName_Core_JobApplicant_Get                MethodName = 23
+	MethodName_Core_JobApplicant_List               MethodName = 24
+	MethodName_Core_JobApplicant_QueryByText        MethodName = 25
+	MethodName_Core_File_Add                        MethodName = 26
+	MethodName_Core_File_Update                     MethodName = 27
+	MethodName_Core_File_Get                        MethodName = 28
+	MethodName_Core_File_List                       MethodName = 29
+	MethodName_Core_File_QueryByText                MethodName = 30
+	MethodName_Core_SecretKey_Add                   MethodName = 31
+	MethodName_Core_SecretKey_Update                MethodName = 32
+	MethodName_Core_SecretKey_Get                   MethodName = 33
+	MethodName_Core_SecretKey_List                  MethodName = 34
+	MethodName_Core_SecretKey_QueryByText           MethodName = 35
+	MethodName_Core_SecretDecryptable_Add           MethodName = 36
+	MethodName_Core_SecretDecryptable_Update        MethodName = 37
+	MethodName_Core_SecretDecryptable_Get           MethodName = 38
+	MethodName_Core_SecretDecryptable_List          MethodName = 39
+	MethodName_Core_SecretDecryptable_QueryByText   MethodName = 40
+	MethodName_Core_Task_Add                        MethodName = 41
+	MethodName_Core_Task_Update                     MethodName = 42
+	MethodName_Core_Task_Get                        MethodName = 43
+	MethodName_Core_Task_List                       MethodName = 44
+	MethodName_Core_Task_QueryByText                MethodName = 45
+	MethodName_Core_TaskRun_Add                     MethodName = 46
+	MethodName_Core_TaskRun_Update                  MethodName = 47
+	MethodName_Core_TaskRun_Get                     MethodName = 48
+	MethodName_Core_TaskRun_List                    MethodName = 49
+	MethodName_Core_TaskRun_QueryByText             MethodName = 50
+	MethodName_User_User_HookInit                   MethodName = 51
+	MethodName_Core_File_HookCreatePre              MethodName = 52
+	MethodName_Core_SecretKey_HookInit              MethodName = 53
+	MethodName_Core_SecretKey_HookCreatePre         MethodName = 54
+	MethodName_Core_SecretDecryptable_HookCreatePre MethodName = 55
+	MethodName_Core_Task_HookSavePre                MethodName = 56
+	MethodName_Core_TaskRun_HookCreatePre           MethodName = 57
+	MethodName_Core_SecretDecryptable_ActionDecrypt MethodName = 58
+	MethodName_Core_Task_ActionRun                  MethodName = 59
+	MethodName_Core_TaskRun_ActionRun               MethodName = 60
 )
 
 func NewMethodNameFromString(s string) MethodName {
@@ -1316,6 +1363,8 @@ func NewMethodNameFromString(s string) MethodName {
 		return MethodName_Auth_AuthenticateToken
 	case "Core_FileUpload":
 		return MethodName_Core_FileUpload
+	case "Core_SecretDecryptabeAdd":
+		return MethodName_Core_SecretDecryptabeAdd
 	case "Auth_Secret_Add":
 		return MethodName_Auth_Secret_Add
 	case "Auth_Secret_Update":
@@ -1326,36 +1375,6 @@ func NewMethodNameFromString(s string) MethodName {
 		return MethodName_Auth_Secret_List
 	case "Auth_Secret_QueryByText":
 		return MethodName_Auth_Secret_QueryByText
-	case "Core_File_Add":
-		return MethodName_Core_File_Add
-	case "Core_File_Update":
-		return MethodName_Core_File_Update
-	case "Core_File_Get":
-		return MethodName_Core_File_Get
-	case "Core_File_List":
-		return MethodName_Core_File_List
-	case "Core_File_QueryByText":
-		return MethodName_Core_File_QueryByText
-	case "Core_Task_Add":
-		return MethodName_Core_Task_Add
-	case "Core_Task_Update":
-		return MethodName_Core_Task_Update
-	case "Core_Task_Get":
-		return MethodName_Core_Task_Get
-	case "Core_Task_List":
-		return MethodName_Core_Task_List
-	case "Core_Task_QueryByText":
-		return MethodName_Core_Task_QueryByText
-	case "Core_TaskRun_Add":
-		return MethodName_Core_TaskRun_Add
-	case "Core_TaskRun_Update":
-		return MethodName_Core_TaskRun_Update
-	case "Core_TaskRun_Get":
-		return MethodName_Core_TaskRun_Get
-	case "Core_TaskRun_List":
-		return MethodName_Core_TaskRun_List
-	case "Core_TaskRun_QueryByText":
-		return MethodName_Core_TaskRun_QueryByText
 	case "User_User_Add":
 		return MethodName_User_User_Add
 	case "User_User_Update":
@@ -1376,14 +1395,82 @@ func NewMethodNameFromString(s string) MethodName {
 		return MethodName_User_Team_List
 	case "User_Team_QueryByText":
 		return MethodName_User_Team_QueryByText
+	case "Core_JobApplicant_Add":
+		return MethodName_Core_JobApplicant_Add
+	case "Core_JobApplicant_Update":
+		return MethodName_Core_JobApplicant_Update
+	case "Core_JobApplicant_Get":
+		return MethodName_Core_JobApplicant_Get
+	case "Core_JobApplicant_List":
+		return MethodName_Core_JobApplicant_List
+	case "Core_JobApplicant_QueryByText":
+		return MethodName_Core_JobApplicant_QueryByText
+	case "Core_File_Add":
+		return MethodName_Core_File_Add
+	case "Core_File_Update":
+		return MethodName_Core_File_Update
+	case "Core_File_Get":
+		return MethodName_Core_File_Get
+	case "Core_File_List":
+		return MethodName_Core_File_List
+	case "Core_File_QueryByText":
+		return MethodName_Core_File_QueryByText
+	case "Core_SecretKey_Add":
+		return MethodName_Core_SecretKey_Add
+	case "Core_SecretKey_Update":
+		return MethodName_Core_SecretKey_Update
+	case "Core_SecretKey_Get":
+		return MethodName_Core_SecretKey_Get
+	case "Core_SecretKey_List":
+		return MethodName_Core_SecretKey_List
+	case "Core_SecretKey_QueryByText":
+		return MethodName_Core_SecretKey_QueryByText
+	case "Core_SecretDecryptable_Add":
+		return MethodName_Core_SecretDecryptable_Add
+	case "Core_SecretDecryptable_Update":
+		return MethodName_Core_SecretDecryptable_Update
+	case "Core_SecretDecryptable_Get":
+		return MethodName_Core_SecretDecryptable_Get
+	case "Core_SecretDecryptable_List":
+		return MethodName_Core_SecretDecryptable_List
+	case "Core_SecretDecryptable_QueryByText":
+		return MethodName_Core_SecretDecryptable_QueryByText
+	case "Core_Task_Add":
+		return MethodName_Core_Task_Add
+	case "Core_Task_Update":
+		return MethodName_Core_Task_Update
+	case "Core_Task_Get":
+		return MethodName_Core_Task_Get
+	case "Core_Task_List":
+		return MethodName_Core_Task_List
+	case "Core_Task_QueryByText":
+		return MethodName_Core_Task_QueryByText
+	case "Core_TaskRun_Add":
+		return MethodName_Core_TaskRun_Add
+	case "Core_TaskRun_Update":
+		return MethodName_Core_TaskRun_Update
+	case "Core_TaskRun_Get":
+		return MethodName_Core_TaskRun_Get
+	case "Core_TaskRun_List":
+		return MethodName_Core_TaskRun_List
+	case "Core_TaskRun_QueryByText":
+		return MethodName_Core_TaskRun_QueryByText
+	case "User_User_HookInit":
+		return MethodName_User_User_HookInit
 	case "Core_File_HookCreatePre":
 		return MethodName_Core_File_HookCreatePre
+	case "Core_SecretKey_HookInit":
+		return MethodName_Core_SecretKey_HookInit
+	case "Core_SecretKey_HookCreatePre":
+		return MethodName_Core_SecretKey_HookCreatePre
+	case "Core_SecretDecryptable_HookCreatePre":
+		return MethodName_Core_SecretDecryptable_HookCreatePre
 	case "Core_Task_HookSavePre":
 		return MethodName_Core_Task_HookSavePre
 	case "Core_TaskRun_HookCreatePre":
 		return MethodName_Core_TaskRun_HookCreatePre
-	case "User_User_HookInit":
-		return MethodName_User_User_HookInit
+	case "Core_SecretDecryptable_ActionDecrypt":
+		return MethodName_Core_SecretDecryptable_ActionDecrypt
 	case "Core_Task_ActionRun":
 		return MethodName_Core_Task_ActionRun
 	case "Core_TaskRun_ActionRun":
@@ -1407,6 +1494,8 @@ func (f MethodName) String() string {
 		return "Auth_AuthenticateToken"
 	case MethodName_Core_FileUpload:
 		return "Core_FileUpload"
+	case MethodName_Core_SecretDecryptabeAdd:
+		return "Core_SecretDecryptabeAdd"
 	case MethodName_Auth_Secret_Add:
 		return "Auth_Secret_Add"
 	case MethodName_Auth_Secret_Update:
@@ -1417,36 +1506,6 @@ func (f MethodName) String() string {
 		return "Auth_Secret_List"
 	case MethodName_Auth_Secret_QueryByText:
 		return "Auth_Secret_QueryByText"
-	case MethodName_Core_File_Add:
-		return "Core_File_Add"
-	case MethodName_Core_File_Update:
-		return "Core_File_Update"
-	case MethodName_Core_File_Get:
-		return "Core_File_Get"
-	case MethodName_Core_File_List:
-		return "Core_File_List"
-	case MethodName_Core_File_QueryByText:
-		return "Core_File_QueryByText"
-	case MethodName_Core_Task_Add:
-		return "Core_Task_Add"
-	case MethodName_Core_Task_Update:
-		return "Core_Task_Update"
-	case MethodName_Core_Task_Get:
-		return "Core_Task_Get"
-	case MethodName_Core_Task_List:
-		return "Core_Task_List"
-	case MethodName_Core_Task_QueryByText:
-		return "Core_Task_QueryByText"
-	case MethodName_Core_TaskRun_Add:
-		return "Core_TaskRun_Add"
-	case MethodName_Core_TaskRun_Update:
-		return "Core_TaskRun_Update"
-	case MethodName_Core_TaskRun_Get:
-		return "Core_TaskRun_Get"
-	case MethodName_Core_TaskRun_List:
-		return "Core_TaskRun_List"
-	case MethodName_Core_TaskRun_QueryByText:
-		return "Core_TaskRun_QueryByText"
 	case MethodName_User_User_Add:
 		return "User_User_Add"
 	case MethodName_User_User_Update:
@@ -1467,14 +1526,82 @@ func (f MethodName) String() string {
 		return "User_Team_List"
 	case MethodName_User_Team_QueryByText:
 		return "User_Team_QueryByText"
+	case MethodName_Core_JobApplicant_Add:
+		return "Core_JobApplicant_Add"
+	case MethodName_Core_JobApplicant_Update:
+		return "Core_JobApplicant_Update"
+	case MethodName_Core_JobApplicant_Get:
+		return "Core_JobApplicant_Get"
+	case MethodName_Core_JobApplicant_List:
+		return "Core_JobApplicant_List"
+	case MethodName_Core_JobApplicant_QueryByText:
+		return "Core_JobApplicant_QueryByText"
+	case MethodName_Core_File_Add:
+		return "Core_File_Add"
+	case MethodName_Core_File_Update:
+		return "Core_File_Update"
+	case MethodName_Core_File_Get:
+		return "Core_File_Get"
+	case MethodName_Core_File_List:
+		return "Core_File_List"
+	case MethodName_Core_File_QueryByText:
+		return "Core_File_QueryByText"
+	case MethodName_Core_SecretKey_Add:
+		return "Core_SecretKey_Add"
+	case MethodName_Core_SecretKey_Update:
+		return "Core_SecretKey_Update"
+	case MethodName_Core_SecretKey_Get:
+		return "Core_SecretKey_Get"
+	case MethodName_Core_SecretKey_List:
+		return "Core_SecretKey_List"
+	case MethodName_Core_SecretKey_QueryByText:
+		return "Core_SecretKey_QueryByText"
+	case MethodName_Core_SecretDecryptable_Add:
+		return "Core_SecretDecryptable_Add"
+	case MethodName_Core_SecretDecryptable_Update:
+		return "Core_SecretDecryptable_Update"
+	case MethodName_Core_SecretDecryptable_Get:
+		return "Core_SecretDecryptable_Get"
+	case MethodName_Core_SecretDecryptable_List:
+		return "Core_SecretDecryptable_List"
+	case MethodName_Core_SecretDecryptable_QueryByText:
+		return "Core_SecretDecryptable_QueryByText"
+	case MethodName_Core_Task_Add:
+		return "Core_Task_Add"
+	case MethodName_Core_Task_Update:
+		return "Core_Task_Update"
+	case MethodName_Core_Task_Get:
+		return "Core_Task_Get"
+	case MethodName_Core_Task_List:
+		return "Core_Task_List"
+	case MethodName_Core_Task_QueryByText:
+		return "Core_Task_QueryByText"
+	case MethodName_Core_TaskRun_Add:
+		return "Core_TaskRun_Add"
+	case MethodName_Core_TaskRun_Update:
+		return "Core_TaskRun_Update"
+	case MethodName_Core_TaskRun_Get:
+		return "Core_TaskRun_Get"
+	case MethodName_Core_TaskRun_List:
+		return "Core_TaskRun_List"
+	case MethodName_Core_TaskRun_QueryByText:
+		return "Core_TaskRun_QueryByText"
+	case MethodName_User_User_HookInit:
+		return "User_User_HookInit"
 	case MethodName_Core_File_HookCreatePre:
 		return "Core_File_HookCreatePre"
+	case MethodName_Core_SecretKey_HookInit:
+		return "Core_SecretKey_HookInit"
+	case MethodName_Core_SecretKey_HookCreatePre:
+		return "Core_SecretKey_HookCreatePre"
+	case MethodName_Core_SecretDecryptable_HookCreatePre:
+		return "Core_SecretDecryptable_HookCreatePre"
 	case MethodName_Core_Task_HookSavePre:
 		return "Core_Task_HookSavePre"
 	case MethodName_Core_TaskRun_HookCreatePre:
 		return "Core_TaskRun_HookCreatePre"
-	case MethodName_User_User_HookInit:
-		return "User_User_HookInit"
+	case MethodName_Core_SecretDecryptable_ActionDecrypt:
+		return "Core_SecretDecryptable_ActionDecrypt"
 	case MethodName_Core_Task_ActionRun:
 		return "Core_Task_ActionRun"
 	case MethodName_Core_TaskRun_ActionRun:
@@ -1496,6 +1623,8 @@ func (f MethodName) Name() naam.Name {
 		return naam.New("auth___authenticate_token")
 	case MethodName_Core_FileUpload:
 		return naam.New("core___file_upload")
+	case MethodName_Core_SecretDecryptabeAdd:
+		return naam.New("core___secret_decryptabe_add")
 	case MethodName_Auth_Secret_Add:
 		return naam.New("auth___secret___add")
 	case MethodName_Auth_Secret_Update:
@@ -1506,36 +1635,6 @@ func (f MethodName) Name() naam.Name {
 		return naam.New("auth___secret___list")
 	case MethodName_Auth_Secret_QueryByText:
 		return naam.New("auth___secret___query_by_text")
-	case MethodName_Core_File_Add:
-		return naam.New("core___file___add")
-	case MethodName_Core_File_Update:
-		return naam.New("core___file___update")
-	case MethodName_Core_File_Get:
-		return naam.New("core___file___get")
-	case MethodName_Core_File_List:
-		return naam.New("core___file___list")
-	case MethodName_Core_File_QueryByText:
-		return naam.New("core___file___query_by_text")
-	case MethodName_Core_Task_Add:
-		return naam.New("core___task___add")
-	case MethodName_Core_Task_Update:
-		return naam.New("core___task___update")
-	case MethodName_Core_Task_Get:
-		return naam.New("core___task___get")
-	case MethodName_Core_Task_List:
-		return naam.New("core___task___list")
-	case MethodName_Core_Task_QueryByText:
-		return naam.New("core___task___query_by_text")
-	case MethodName_Core_TaskRun_Add:
-		return naam.New("core___task_run___add")
-	case MethodName_Core_TaskRun_Update:
-		return naam.New("core___task_run___update")
-	case MethodName_Core_TaskRun_Get:
-		return naam.New("core___task_run___get")
-	case MethodName_Core_TaskRun_List:
-		return naam.New("core___task_run___list")
-	case MethodName_Core_TaskRun_QueryByText:
-		return naam.New("core___task_run___query_by_text")
 	case MethodName_User_User_Add:
 		return naam.New("user___user___add")
 	case MethodName_User_User_Update:
@@ -1556,14 +1655,82 @@ func (f MethodName) Name() naam.Name {
 		return naam.New("user___team___list")
 	case MethodName_User_Team_QueryByText:
 		return naam.New("user___team___query_by_text")
+	case MethodName_Core_JobApplicant_Add:
+		return naam.New("core___job_applicant___add")
+	case MethodName_Core_JobApplicant_Update:
+		return naam.New("core___job_applicant___update")
+	case MethodName_Core_JobApplicant_Get:
+		return naam.New("core___job_applicant___get")
+	case MethodName_Core_JobApplicant_List:
+		return naam.New("core___job_applicant___list")
+	case MethodName_Core_JobApplicant_QueryByText:
+		return naam.New("core___job_applicant___query_by_text")
+	case MethodName_Core_File_Add:
+		return naam.New("core___file___add")
+	case MethodName_Core_File_Update:
+		return naam.New("core___file___update")
+	case MethodName_Core_File_Get:
+		return naam.New("core___file___get")
+	case MethodName_Core_File_List:
+		return naam.New("core___file___list")
+	case MethodName_Core_File_QueryByText:
+		return naam.New("core___file___query_by_text")
+	case MethodName_Core_SecretKey_Add:
+		return naam.New("core___secret_key___add")
+	case MethodName_Core_SecretKey_Update:
+		return naam.New("core___secret_key___update")
+	case MethodName_Core_SecretKey_Get:
+		return naam.New("core___secret_key___get")
+	case MethodName_Core_SecretKey_List:
+		return naam.New("core___secret_key___list")
+	case MethodName_Core_SecretKey_QueryByText:
+		return naam.New("core___secret_key___query_by_text")
+	case MethodName_Core_SecretDecryptable_Add:
+		return naam.New("core___secret_decryptable___add")
+	case MethodName_Core_SecretDecryptable_Update:
+		return naam.New("core___secret_decryptable___update")
+	case MethodName_Core_SecretDecryptable_Get:
+		return naam.New("core___secret_decryptable___get")
+	case MethodName_Core_SecretDecryptable_List:
+		return naam.New("core___secret_decryptable___list")
+	case MethodName_Core_SecretDecryptable_QueryByText:
+		return naam.New("core___secret_decryptable___query_by_text")
+	case MethodName_Core_Task_Add:
+		return naam.New("core___task___add")
+	case MethodName_Core_Task_Update:
+		return naam.New("core___task___update")
+	case MethodName_Core_Task_Get:
+		return naam.New("core___task___get")
+	case MethodName_Core_Task_List:
+		return naam.New("core___task___list")
+	case MethodName_Core_Task_QueryByText:
+		return naam.New("core___task___query_by_text")
+	case MethodName_Core_TaskRun_Add:
+		return naam.New("core___task_run___add")
+	case MethodName_Core_TaskRun_Update:
+		return naam.New("core___task_run___update")
+	case MethodName_Core_TaskRun_Get:
+		return naam.New("core___task_run___get")
+	case MethodName_Core_TaskRun_List:
+		return naam.New("core___task_run___list")
+	case MethodName_Core_TaskRun_QueryByText:
+		return naam.New("core___task_run___query_by_text")
+	case MethodName_User_User_HookInit:
+		return naam.New("user___user___hook_init")
 	case MethodName_Core_File_HookCreatePre:
 		return naam.New("core___file___hook_create_pre")
+	case MethodName_Core_SecretKey_HookInit:
+		return naam.New("core___secret_key___hook_init")
+	case MethodName_Core_SecretKey_HookCreatePre:
+		return naam.New("core___secret_key___hook_create_pre")
+	case MethodName_Core_SecretDecryptable_HookCreatePre:
+		return naam.New("core___secret_decryptable___hook_create_pre")
 	case MethodName_Core_Task_HookSavePre:
 		return naam.New("core___task___hook_save_pre")
 	case MethodName_Core_TaskRun_HookCreatePre:
 		return naam.New("core___task_run___hook_create_pre")
-	case MethodName_User_User_HookInit:
-		return naam.New("user___user___hook_init")
+	case MethodName_Core_SecretDecryptable_ActionDecrypt:
+		return naam.New("core___secret_decryptable___action_decrypt")
 	case MethodName_Core_Task_ActionRun:
 		return naam.New("core___task___action_run")
 	case MethodName_Core_TaskRun_ActionRun:
@@ -1587,6 +1754,8 @@ func (f MethodName) Value() (driver.Value, error) {
 		return "Auth_AuthenticateToken", nil
 	case MethodName_Core_FileUpload:
 		return "Core_FileUpload", nil
+	case MethodName_Core_SecretDecryptabeAdd:
+		return "Core_SecretDecryptabeAdd", nil
 	case MethodName_Auth_Secret_Add:
 		return "Auth_Secret_Add", nil
 	case MethodName_Auth_Secret_Update:
@@ -1597,36 +1766,6 @@ func (f MethodName) Value() (driver.Value, error) {
 		return "Auth_Secret_List", nil
 	case MethodName_Auth_Secret_QueryByText:
 		return "Auth_Secret_QueryByText", nil
-	case MethodName_Core_File_Add:
-		return "Core_File_Add", nil
-	case MethodName_Core_File_Update:
-		return "Core_File_Update", nil
-	case MethodName_Core_File_Get:
-		return "Core_File_Get", nil
-	case MethodName_Core_File_List:
-		return "Core_File_List", nil
-	case MethodName_Core_File_QueryByText:
-		return "Core_File_QueryByText", nil
-	case MethodName_Core_Task_Add:
-		return "Core_Task_Add", nil
-	case MethodName_Core_Task_Update:
-		return "Core_Task_Update", nil
-	case MethodName_Core_Task_Get:
-		return "Core_Task_Get", nil
-	case MethodName_Core_Task_List:
-		return "Core_Task_List", nil
-	case MethodName_Core_Task_QueryByText:
-		return "Core_Task_QueryByText", nil
-	case MethodName_Core_TaskRun_Add:
-		return "Core_TaskRun_Add", nil
-	case MethodName_Core_TaskRun_Update:
-		return "Core_TaskRun_Update", nil
-	case MethodName_Core_TaskRun_Get:
-		return "Core_TaskRun_Get", nil
-	case MethodName_Core_TaskRun_List:
-		return "Core_TaskRun_List", nil
-	case MethodName_Core_TaskRun_QueryByText:
-		return "Core_TaskRun_QueryByText", nil
 	case MethodName_User_User_Add:
 		return "User_User_Add", nil
 	case MethodName_User_User_Update:
@@ -1647,14 +1786,82 @@ func (f MethodName) Value() (driver.Value, error) {
 		return "User_Team_List", nil
 	case MethodName_User_Team_QueryByText:
 		return "User_Team_QueryByText", nil
+	case MethodName_Core_JobApplicant_Add:
+		return "Core_JobApplicant_Add", nil
+	case MethodName_Core_JobApplicant_Update:
+		return "Core_JobApplicant_Update", nil
+	case MethodName_Core_JobApplicant_Get:
+		return "Core_JobApplicant_Get", nil
+	case MethodName_Core_JobApplicant_List:
+		return "Core_JobApplicant_List", nil
+	case MethodName_Core_JobApplicant_QueryByText:
+		return "Core_JobApplicant_QueryByText", nil
+	case MethodName_Core_File_Add:
+		return "Core_File_Add", nil
+	case MethodName_Core_File_Update:
+		return "Core_File_Update", nil
+	case MethodName_Core_File_Get:
+		return "Core_File_Get", nil
+	case MethodName_Core_File_List:
+		return "Core_File_List", nil
+	case MethodName_Core_File_QueryByText:
+		return "Core_File_QueryByText", nil
+	case MethodName_Core_SecretKey_Add:
+		return "Core_SecretKey_Add", nil
+	case MethodName_Core_SecretKey_Update:
+		return "Core_SecretKey_Update", nil
+	case MethodName_Core_SecretKey_Get:
+		return "Core_SecretKey_Get", nil
+	case MethodName_Core_SecretKey_List:
+		return "Core_SecretKey_List", nil
+	case MethodName_Core_SecretKey_QueryByText:
+		return "Core_SecretKey_QueryByText", nil
+	case MethodName_Core_SecretDecryptable_Add:
+		return "Core_SecretDecryptable_Add", nil
+	case MethodName_Core_SecretDecryptable_Update:
+		return "Core_SecretDecryptable_Update", nil
+	case MethodName_Core_SecretDecryptable_Get:
+		return "Core_SecretDecryptable_Get", nil
+	case MethodName_Core_SecretDecryptable_List:
+		return "Core_SecretDecryptable_List", nil
+	case MethodName_Core_SecretDecryptable_QueryByText:
+		return "Core_SecretDecryptable_QueryByText", nil
+	case MethodName_Core_Task_Add:
+		return "Core_Task_Add", nil
+	case MethodName_Core_Task_Update:
+		return "Core_Task_Update", nil
+	case MethodName_Core_Task_Get:
+		return "Core_Task_Get", nil
+	case MethodName_Core_Task_List:
+		return "Core_Task_List", nil
+	case MethodName_Core_Task_QueryByText:
+		return "Core_Task_QueryByText", nil
+	case MethodName_Core_TaskRun_Add:
+		return "Core_TaskRun_Add", nil
+	case MethodName_Core_TaskRun_Update:
+		return "Core_TaskRun_Update", nil
+	case MethodName_Core_TaskRun_Get:
+		return "Core_TaskRun_Get", nil
+	case MethodName_Core_TaskRun_List:
+		return "Core_TaskRun_List", nil
+	case MethodName_Core_TaskRun_QueryByText:
+		return "Core_TaskRun_QueryByText", nil
+	case MethodName_User_User_HookInit:
+		return "User_User_HookInit", nil
 	case MethodName_Core_File_HookCreatePre:
 		return "Core_File_HookCreatePre", nil
+	case MethodName_Core_SecretKey_HookInit:
+		return "Core_SecretKey_HookInit", nil
+	case MethodName_Core_SecretKey_HookCreatePre:
+		return "Core_SecretKey_HookCreatePre", nil
+	case MethodName_Core_SecretDecryptable_HookCreatePre:
+		return "Core_SecretDecryptable_HookCreatePre", nil
 	case MethodName_Core_Task_HookSavePre:
 		return "Core_Task_HookSavePre", nil
 	case MethodName_Core_TaskRun_HookCreatePre:
 		return "Core_TaskRun_HookCreatePre", nil
-	case MethodName_User_User_HookInit:
-		return "User_User_HookInit", nil
+	case MethodName_Core_SecretDecryptable_ActionDecrypt:
+		return "Core_SecretDecryptable_ActionDecrypt", nil
 	case MethodName_Core_Task_ActionRun:
 		return "Core_Task_ActionRun", nil
 	case MethodName_Core_TaskRun_ActionRun:
@@ -2112,8 +2319,8 @@ type ServiceName int
 const (
 	ServiceName_INVALID ServiceName = 0
 	ServiceName_Auth    ServiceName = 1
-	ServiceName_Core    ServiceName = 2
-	ServiceName_User    ServiceName = 3
+	ServiceName_User    ServiceName = 2
+	ServiceName_Core    ServiceName = 3
 )
 
 func NewServiceNameFromString(s string) ServiceName {
@@ -2122,10 +2329,10 @@ func NewServiceNameFromString(s string) ServiceName {
 		return ServiceName_INVALID
 	case "Auth":
 		return ServiceName_Auth
-	case "Core":
-		return ServiceName_Core
 	case "User":
 		return ServiceName_User
+	case "Core":
+		return ServiceName_Core
 
 	default:
 		panic(fmt.Sprintf("'%s' is not a valid value for type '%s'", s, "ServiceName"))
@@ -2139,10 +2346,10 @@ func (f ServiceName) String() string {
 		return "INVALID"
 	case ServiceName_Auth:
 		return "Auth"
-	case ServiceName_Core:
-		return "Core"
 	case ServiceName_User:
 		return "User"
+	case ServiceName_Core:
+		return "Core"
 
 	default:
 		panic(fmt.Sprintf("'%d' is not a valid type '%s'", f, "ServiceName"))
@@ -2154,10 +2361,10 @@ func (f ServiceName) Name() naam.Name {
 	switch f {
 	case ServiceName_Auth:
 		return naam.New("auth")
-	case ServiceName_Core:
-		return naam.New("core")
 	case ServiceName_User:
 		return naam.New("user")
+	case ServiceName_Core:
+		return naam.New("core")
 	default:
 		panics.P("ServiceName.Name(): Unrecognized field (%d)", f)
 	}
@@ -2171,10 +2378,10 @@ func (f ServiceName) Value() (driver.Value, error) {
 		return nil, nil
 	case ServiceName_Auth:
 		return "Auth", nil
-	case ServiceName_Core:
-		return "Core", nil
 	case ServiceName_User:
 		return "User", nil
+	case ServiceName_Core:
+		return "Core", nil
 
 	default:
 		return nil, fmt.Errorf("Cannot save enum ServiceName to DB: '%d' is not a valid value for enum ServiceName", f)

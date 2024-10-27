@@ -185,3 +185,105 @@ func (d DAL) GetQueryByTextFilterForTypeCronExpression(ctx context.Context, quer
 
 	return &filter, nil
 }
+
+// ConstructListQueryBuilderForTypeSecretDecryptableAddRequest provides a query builder (goqu.SelectDataset) representing a query that can
+// be used to get the IDs of all SecretDecryptableAddRequest items that belong to `params.TableName` and match the filter.
+func (d DAL) ConstructListQueryBuilderForTypeSecretDecryptableAddRequest(ctx context.Context, conn db.Connection, req dalutil.ListTypeRequest[svccore_typ.SecretDecryptableAddRequestFilter], params db.UniqueIDsQueryBuilderParams) (db.SelectQueryBuilder, error) {
+	llog.Debug(ctx, "Constructing query builder for SecretDecryptableAddRequest", "request", req)
+	var resp db.SelectQueryBuilder
+	var err error
+
+	ds := goqu.Dialect(conn.Dialect).
+		From(params.TableName)
+
+	fullColumnNames := []interface{}{}
+	for _, col := range params.SelectColumns {
+		fullColumnNames = append(fullColumnNames, params.TableName+"."+col)
+	}
+
+	ds = ds.Select(fullColumnNames...)
+
+	// Handle Nested 1:Many tables
+
+	// Handle Nested objects 1:1
+
+	// Where conditions for the main table (Primitives)
+	// TODO: Handle Where conditions for direct SQL column of array types
+
+	// Group By the columns so we don't fetch multiple rows (which can happen if the nested 1:many tables had many rows and we join on it)
+	ds = ds.GroupBy(fullColumnNames...)
+
+	if req.Filter.ParentID != nil { // inject a Where filter for ParentID
+		ds, err = filterlib.InjectConditionIntoSqlBuilder(req.Filter.ParentID, ds, "parent_id", false)
+		if err != nil {
+			return resp, err
+		}
+	}
+
+	if req.Filter.ID != nil { // inject a Where filter for ID
+		ds, err = filterlib.InjectConditionIntoSqlBuilder(req.Filter.ID, ds, "id", false)
+		if err != nil {
+			return resp, err
+		}
+	}
+
+	if req.Filter.Value != nil { // inject a Where filter for Value
+		ds, err = filterlib.InjectConditionIntoSqlBuilder(req.Filter.Value, ds, "value", false)
+		if err != nil {
+			return resp, err
+		}
+	}
+
+	if req.Filter.SecretKeyID != nil { // inject a Where filter for SecretKeyID
+		ds, err = filterlib.InjectConditionIntoSqlBuilder(req.Filter.SecretKeyID, ds, "secret_key_id", false)
+		if err != nil {
+			return resp, err
+		}
+	}
+
+	if req.Filter.CreatedAt != nil { // inject a Where filter for CreatedAt
+		ds, err = filterlib.InjectConditionIntoSqlBuilder(req.Filter.CreatedAt, ds, "created_at", false)
+		if err != nil {
+			return resp, err
+		}
+	}
+
+	if req.Filter.UpdatedAt != nil { // inject a Where filter for UpdatedAt
+		ds, err = filterlib.InjectConditionIntoSqlBuilder(req.Filter.UpdatedAt, ds, "updated_at", false)
+		if err != nil {
+			return resp, err
+		}
+	}
+
+	if req.Filter.DeletedAt != nil { // inject a Where filter for DeletedAt
+		ds, err = filterlib.InjectConditionIntoSqlBuilder(req.Filter.DeletedAt, ds, "deleted_at", false)
+		if err != nil {
+			return resp, err
+		}
+	}
+
+	// In the end, return
+	resp.Select = ds
+
+	return resp, nil
+}
+
+func (d DAL) GetQueryByTextFilterForTypeSecretDecryptableAddRequest(ctx context.Context, queryText string) (*svccore_typ.SecretDecryptableAddRequestFilter, error) {
+
+	// Add OR filters for each field that can be searched over text
+	var orFilters []svccore_typ.SecretDecryptableAddRequestFilter
+	{
+		filter := svccore_typ.SecretDecryptableAddRequestFilter{Value: &filterlib.StringCondition{Op: filterlib.ILIKE, Values: []string{queryText}}}
+		orFilters = append(orFilters, filter)
+	}
+
+	if len(orFilters) < 1 {
+		return nil, nil
+	}
+
+	filter := svccore_typ.SecretDecryptableAddRequestFilter{
+		Or: orFilters,
+	}
+
+	return &filter, nil
+}

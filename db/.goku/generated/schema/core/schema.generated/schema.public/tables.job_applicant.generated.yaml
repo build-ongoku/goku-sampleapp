@@ -1,0 +1,58 @@
+table tb_job_applicant:
+    check_constraints:
+        chk_job_applicant__name__empty_str:
+            columns:
+                - name
+            expression: (name <> ''::TEXT)
+
+    columns:
+        - id:
+              not_null: true
+              type: uuid
+
+        - name:
+              not_null: true
+              type: text
+
+        - user_id:
+              not_null: true
+              type: uuid
+
+        - resume_id:
+              not_null: true
+              type: uuid
+
+        - created_at:
+              not_null: true
+              type: timestamp without time zone
+
+        - updated_at:
+              not_null: true
+              type: timestamp without time zone
+
+        - deleted_at:
+              not_null: false
+              type: timestamp without time zone
+
+    primary_key:
+        pk_job_applicant_id:
+            columns:
+                - id
+    foreign_keys:
+        fk_job_applicant__user_id__user:
+            columns:
+                - user_id
+            on_delete: cascade
+            references:
+                table: tb_user
+                columns:
+                    - id
+
+        fk_job_applicant__resume_id__file:
+            columns:
+                - resume_id
+            on_delete: cascade
+            references:
+                table: tb_file
+                columns:
+                    - id

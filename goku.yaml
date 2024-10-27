@@ -24,3 +24,6 @@ mods:
     version: v1.0.0
   - name: task
     version: v1.0.0
+  - name: secret
+    version: v1.0.0
+

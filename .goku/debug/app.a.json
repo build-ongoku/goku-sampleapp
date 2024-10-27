@@ -9,13 +9,13 @@
    }
   },
   {
-   "name": "Core",
+   "name": "User",
    "options": {
     "frontend_options": {}
    }
   },
   {
-   "name": "User",
+   "name": "Core",
    "options": {
     "frontend_options": {}
    }
@@ -29,69 +29,6 @@
    "actions": null,
    "associations": null,
    "hooks": null
-  },
-  {
-   "name": "File",
-   "description": "",
-   "options": {},
-   "actions": null,
-   "associations": null,
-   "hooks": [
-    {
-     "type": "create_pre",
-     "is_static": true
-    }
-   ]
-  },
-  {
-   "name": "Task",
-   "description": "Represents a scheduled call to a method",
-   "options": {},
-   "actions": [
-    {
-     "name": "Run",
-     "description": "Run the task"
-    }
-   ],
-   "associations": [
-    {
-     "relationship": "parent_of",
-     "type": "many",
-     "entity": "$.service[Core].entity[TaskRun]",
-     "name": "TaskRuns",
-     "other_association_name": "Task"
-    }
-   ],
-   "hooks": [
-    {
-     "type": "save_pre"
-    }
-   ]
-  },
-  {
-   "name": "TaskRun",
-   "description": "Represents a run of a scheduled task",
-   "options": {},
-   "actions": [
-    {
-     "name": "Run",
-     "description": "Run the task"
-    }
-   ],
-   "associations": [
-    {
-     "relationship": "child_of",
-     "type": "one",
-     "entity": "$.service[Core].entity[Task]",
-     "name": "Task",
-     "other_association_name": ""
-    }
-   ],
-   "hooks": [
-    {
-     "type": "create_pre"
-    }
-   ]
   },
   {
    "name": "User",
@@ -129,6 +66,133 @@
     }
    ],
    "hooks": null
+  },
+  {
+   "name": "JobApplicant",
+   "description": "",
+   "options": {},
+   "actions": null,
+   "associations": null,
+   "hooks": null
+  },
+  {
+   "name": "File",
+   "description": "",
+   "options": {},
+   "actions": null,
+   "associations": null,
+   "hooks": [
+    {
+     "type": "create_pre",
+     "is_static": true
+    }
+   ]
+  },
+  {
+   "name": "SecretKey",
+   "description": "",
+   "options": {},
+   "actions": null,
+   "associations": [
+    {
+     "relationship": "parent_of",
+     "type": "many",
+     "entity": "$.service[Core].entity[SecretDecryptable]",
+     "name": "Secrets",
+     "other_association_name": "SecretKey"
+    }
+   ],
+   "hooks": [
+    {
+     "type": "init",
+     "is_static": true
+    },
+    {
+     "type": "create_pre",
+     "is_static": true
+    }
+   ]
+  },
+  {
+   "name": "SecretDecryptable",
+   "description": "A secret that we can decrypt and recover (unlike user passwords).",
+   "options": {},
+   "actions": [
+    {
+     "name": "Decrypt",
+     "description": "Decrypt the secret",
+     "is_static": true
+    }
+   ],
+   "associations": [
+    {
+     "relationship": "child_of",
+     "type": "one",
+     "entity": "$.service[Core].entity[SecretKey]",
+     "name": "SecretKey",
+     "other_association_name": "Secrets"
+    }
+   ],
+   "hooks": [
+    {
+     "type": "create_pre",
+     "is_static": true
+    }
+   ]
+  },
+  {
+   "name": "Task",
+   "description": "Represents a scheduled call to a method",
+   "options": {},
+   "actions": [
+    {
+     "name": "Run",
+     "description": "Run the task",
+     "is_static": true
+    }
+   ],
+   "associations": [
+    {
+     "relationship": "parent_of",
+     "type": "many",
+     "entity": "$.service[Core].entity[TaskRun]",
+     "name": "TaskRuns",
+     "other_association_name": "Task"
+    }
+   ],
+   "hooks": [
+    {
+     "type": "save_pre",
+     "is_static": true
+    }
+   ]
+  },
+  {
+   "name": "TaskRun",
+   "description": "Represents a run of a scheduled task",
+   "options": {},
+   "actions": [
+    {
+     "name": "Run",
+     "description": "Run the task",
+     "is_static": true
+    }
+   ],
+   "associations": [
+    {
+     "relationship": "child_of",
+     "type": "one",
+     "entity": "$.service[Core].entity[Task]",
+     "name": "Task",
+     "other_association_name": ""
+    }
+   ],
+   "hooks": [
+    {
+     "type": "create_pre",
+     "is_static": true
+    }
+   ]
   }
  ],
  "types": [
@@ -540,6 +604,113 @@
    "options": {}
   },
   {
+   "name": "User",
+   "description": "Main type for entity User",
+   "fields": [
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "PersonName",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Email",
+     "description": "",
+     "data_type": "Email",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Addresses",
+     "description": "",
+     "data_type": "Address",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "PastTeamIDs",
+     "description": "",
+     "data_type": "User_Team",
+     "is_repeated": true,
+     "options": {
+      "is_optional": true,
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Team",
+   "description": "Main type for entity Team",
+   "fields": [
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "SecretDecryptableAddRequest",
+   "description": "",
+   "fields": [
+    {
+     "name": "Value",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "SecretKeyID",
+     "description": "",
+     "data_type": "ID",
+     "options": {
+      "is_optional": true,
+      "golang_tags": {
+       "validate": [
+        "uuid"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
    "name": "CronExpression",
    "description": "",
    "fields": [
@@ -625,6 +796,52 @@
    "options": {}
   },
   {
+   "name": "JobApplicant",
+   "description": "Main type for entity JobApplicant",
+   "fields": [
+    {
+     "name": "Name",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "UserID",
+     "description": "",
+     "data_type": "Core_User",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "ResumeID",
+     "description": "",
+     "data_type": "File",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
    "name": "File",
    "description": "Main type for entity File",
    "fields": [
@@ -697,6 +914,113 @@
     },
     {
      "name": "FileHash",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "SecretKey",
+   "description": "Main type for entity SecretKey",
+   "fields": [
+    {
+     "name": "Type",
+     "description": "",
+     "data_type": "Core_SecretKey_Type",
+     "options": {
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "PublicKey",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "PrivateKeyFormat",
+     "description": "",
+     "data_type": "Core_SecretKey_Format",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "PublicKeyFormat",
+     "description": "",
+     "data_type": "Core_SecretKey_Format",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "SecretDecryptable",
+   "description": "Main type for entity SecretDecryptable",
+   "fields": [
+    {
+     "name": "RawValue",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_optional": true,
+      "is_transient_input": true,
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "EncryptedValue",
+     "description": "",
+     "data_type": "String",
+     "options": {
+      "is_set_internally": true,
+      "golang_tags": {
+       "validate": [
+        "required"
+       ]
+      },
+      "nested_options": {}
+     }
+    },
+    {
+     "name": "Salt",
      "description": "",
      "data_type": "String",
      "options": {
@@ -867,79 +1191,6 @@
     }
    ],
    "options": {}
-  },
-  {
-   "name": "User",
-   "description": "Main type for entity User",
-   "fields": [
-    {
-     "name": "Name",
-     "description": "",
-     "data_type": "PersonName",
-     "options": {
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {}
-     }
-    },
-    {
-     "name": "Email",
-     "description": "",
-     "data_type": "Email",
-     "options": {
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {}
-     }
-    },
-    {
-     "name": "Addresses",
-     "description": "",
-     "data_type": "Address",
-     "is_repeated": true,
-     "options": {
-      "is_optional": true,
-      "nested_options": {}
-     }
-    },
-    {
-     "name": "PastTeamIDs",
-     "description": "",
-     "data_type": "User_Team",
-     "is_repeated": true,
-     "options": {
-      "is_optional": true,
-      "nested_options": {}
-     }
-    }
-   ],
-   "options": {}
-  },
-  {
-   "name": "Team",
-   "description": "Main type for entity Team",
-   "fields": [
-    {
-     "name": "Name",
-     "description": "",
-     "data_type": "String",
-     "options": {
-      "golang_tags": {
-       "validate": [
-        "required"
-       ]
-      },
-      "nested_options": {}
-     }
-    }
-   ],
-   "options": {}
   }
  ],
  "enums": [
@@ -1028,6 +1279,42 @@
      "name": "CloudAmazonS3",
      "description": "",
      "id": 3,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Type",
+   "values": [
+    {
+     "name": "Ed25519",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "RSA",
+     "description": "",
+     "id": 2,
+     "options": {}
+    }
+   ],
+   "options": {}
+  },
+  {
+   "name": "Format",
+   "values": [
+    {
+     "name": "PEM",
+     "description": "",
+     "id": 1,
+     "options": {}
+    },
+    {
+     "name": "OpenSSH",
+     "description": "",
+     "id": 2,
      "options": {}
     }
    ],
@@ -1165,6 +1452,29 @@
    "apis": [
     {
      "path": "file/upload",
+     "http_method": "POST",
+     "is_public": false,
+     "options": {
+      "success_status": 0,
+      "use_body_for_request": true,
+      "use_url_params_for_request": false
+     }
+    }
+   ]
+  },
+  {
+   "name": "SecretDecryptabeAdd",
+   "description": "Create a new secret",
+   "argument_type": "$.service[Core].type[SecretDecryptableAddRequest]",
+   "return_type": "$.service[Core].entity[SecretDecryptable].type[SecretDecryptable]",
+   "options": {
+    "type": "Mutation",
+    "is_direct_http_handler": false,
+    "is_static": true
+   },
+   "apis": [
+    {
+     "path": "secret/add",
      "http_method": "POST",
      "is_public": false,
      "options": {

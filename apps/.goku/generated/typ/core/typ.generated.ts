@@ -8,6 +8,9 @@ import { GenericCondition, StringCondition, NumberCondition, FloatCondition, Boo
 
 import * as app_typ from '@sampleapp/goku-generated/typ/typ.generated'
 import * as svccore_entfile_typ from '@sampleapp/goku-generated/typ/core/file/typ.generated'
+import * as svccore_entjobapplicant_typ from '@sampleapp/goku-generated/typ/core/job_applicant/typ.generated'
+import * as svccore_entsecretdecryptable_typ from '@sampleapp/goku-generated/typ/core/secret_decryptable/typ.generated'
+import * as svccore_entsecretkey_typ from '@sampleapp/goku-generated/typ/core/secret_key/typ.generated'
 import * as svccore_enttask_typ from '@sampleapp/goku-generated/typ/core/task/typ.generated'
 import * as svccore_enttaskrun_typ from '@sampleapp/goku-generated/typ/core/task_run/typ.generated'
 
@@ -22,14 +25,19 @@ export type CronExpressionField = 'ParentID' | 'ID' | 'Second' | 'Minute' | 'Hou
 export type CronExpressionFieldCondition = GenericCondition<CronExpressionField>
 
 // EntityName: <description of the enum>
-export type EntityName = 'File' | 'Task' | 'TaskRun' | never
+export type EntityName = 'JobApplicant' | 'File' | 'SecretKey' | 'SecretDecryptable' | 'Task' | 'TaskRun' | never
 
 export type EntityNameCondition = GenericCondition<EntityName>
 
 // MethodName: <description of the enum>
-export type MethodName = 'FileUpload' | never
+export type MethodName = 'FileUpload' | 'SecretDecryptabeAdd' | never
 
 export type MethodNameCondition = GenericCondition<MethodName>
+
+// SecretDecryptableAddRequestField: <description of the enum>
+export type SecretDecryptableAddRequestField = 'ParentID' | 'ID' | 'Value' | 'SecretKeyID' | 'CreatedAt' | 'UpdatedAt' | 'DeletedAt' | never
+
+export type SecretDecryptableAddRequestFieldCondition = GenericCondition<SecretDecryptableAddRequestField>
 
 /**
  * Local Types, Type Info Props, Type Infos
@@ -57,6 +65,20 @@ export type CronExpressionInput = {
 }
 export type CronExpressionInputWithMeta = CronExpressionInput & field.MetaFields
 
+// SecretDecryptableAddRequest: <description of the type>
+export type SecretDecryptableAddRequest = {
+    value: string
+    secretKeyID: scalars.ID | null
+}
+export type SecretDecryptableAddRequestWithMeta = SecretDecryptableAddRequest & field.MetaFields
+
+// SecretDecryptableAddRequestInput: <description of the type>
+export type SecretDecryptableAddRequestInput = {
+    value: string
+    secretKeyID: scalars.ID | null
+}
+export type SecretDecryptableAddRequestInputWithMeta = SecretDecryptableAddRequestInput & field.MetaFields
+
 /**
  * Entity Type, Entity Info Props
  */
@@ -80,6 +102,18 @@ export type CronExpressionFilter = {
     deletedAt: TimestampCondition | null
     and: CronExpressionFilter[] | null
     or: CronExpressionFilter[] | null
+}
+// SecretDecryptableAddRequestFilter: <description of the type>
+export type SecretDecryptableAddRequestFilter = {
+    parentID: IDCondition | null
+    id: IDCondition | null
+    value: StringCondition | null
+    secretKeyID: IDCondition | null
+    createdAt: TimestampCondition | null
+    updatedAt: TimestampCondition | null
+    deletedAt: TimestampCondition | null
+    and: SecretDecryptableAddRequestFilter[] | null
+    or: SecretDecryptableAddRequestFilter[] | null
 }
 
 /**

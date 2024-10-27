@@ -63,45 +63,64 @@ input SecretCondition {
 # Methods
 type Query {
     auth_authenticateToken(req: Auth_AuthenticateTokenRequest!): Auth_AuthenticateResponse!
+    core_secretDecryptable_get(req: Core_SecretDecryptable_GetRequest!): Core_SecretDecryptable!
     core_task_get(req: Core_Task_GetRequest!): Core_Task!
-    user_user_get(req: User_User_GetRequest!): User_User!
+    core_taskRun_get(req: Core_TaskRun_GetRequest!): Core_TaskRun!
     user_team_get(req: User_Team_GetRequest!): User_Team!
+    core_jobApplicant_get(req: Core_JobApplicant_GetRequest!): Core_JobApplicant!
+    core_secretKey_get(req: Core_SecretKey_GetRequest!): Core_SecretKey!
+    user_user_get(req: User_User_GetRequest!): User_User!
     core_file_get(req: Core_File_GetRequest!): Core_File!
     auth_secret_get(req: Auth_Secret_GetRequest!): Auth_Secret!
-    core_taskRun_get(req: Core_TaskRun_GetRequest!): Core_TaskRun!
     user_user_list(req: User_User_ListRequest!): User_User_ListResponse!
+    core_file_list(req: Core_File_ListRequest!): Core_File_ListResponse!
+    core_secretKey_list(req: Core_SecretKey_ListRequest!): Core_SecretKey_ListResponse!
+    core_taskRun_list(req: Core_TaskRun_ListRequest!): Core_TaskRun_ListResponse!
+    core_jobApplicant_list(req: Core_JobApplicant_ListRequest!): Core_JobApplicant_ListResponse!
     core_task_list(req: Core_Task_ListRequest!): Core_Task_ListResponse!
+    core_secretDecryptable_list(req: Core_SecretDecryptable_ListRequest!): Core_SecretDecryptable_ListResponse!
     user_team_list(req: User_Team_ListRequest!): User_Team_ListResponse!
     auth_secret_list(req: Auth_Secret_ListRequest!): Auth_Secret_ListResponse!
-    core_taskRun_list(req: Core_TaskRun_ListRequest!): Core_TaskRun_ListResponse!
-    core_file_list(req: Core_File_ListRequest!): Core_File_ListResponse!
     auth_loginUser(req: Auth_LoginRequest!): Auth_AuthenticateResponse!
-    auth_secret_queryByText(req: Auth_Secret_QueryByTextRequest!): Auth_Secret_ListResponse!
-    user_user_queryByText(req: User_User_QueryByTextRequest!): User_User_ListResponse!
     core_file_queryByText(req: Core_File_QueryByTextRequest!): Core_File_ListResponse!
     core_taskRun_queryByText(req: Core_TaskRun_QueryByTextRequest!): Core_TaskRun_ListResponse!
+    core_secretDecryptable_queryByText(req: Core_SecretDecryptable_QueryByTextRequest!): Core_SecretDecryptable_ListResponse!
+    auth_secret_queryByText(req: Auth_Secret_QueryByTextRequest!): Auth_Secret_ListResponse!
     core_task_queryByText(req: Core_Task_QueryByTextRequest!): Core_Task_ListResponse!
+    core_secretKey_queryByText(req: Core_SecretKey_QueryByTextRequest!): Core_SecretKey_ListResponse!
+    user_user_queryByText(req: User_User_QueryByTextRequest!): User_User_ListResponse!
     user_team_queryByText(req: User_Team_QueryByTextRequest!): User_Team_ListResponse!
+    core_jobApplicant_queryByText(req: Core_JobApplicant_QueryByTextRequest!): Core_JobApplicant_ListResponse!
 }
 
 type Mutation {
+    core_secretDecryptable_actionDecrypt(req: Core_SecretDecryptable_StandardEntityRequest!): Core_SecretDecryptable_StandardEntityResponse!
     core_task_actionRun(req: Core_Task_StandardEntityRequest!): Core_Task_StandardEntityResponse!
     core_taskRun_actionRun(req: Core_TaskRun_StandardEntityRequest!): Core_TaskRun_StandardEntityResponse!
+    core_jobApplicant_add(req: Core_JobApplicant_AddRequest!): Core_JobApplicant!
     user_team_add(req: User_Team_AddRequest!): User_Team!
     auth_secret_add(req: Auth_Secret_AddRequest!): Auth_Secret!
-    user_user_add(req: User_User_AddRequest!): User_User!
     core_taskRun_add(req: Core_TaskRun_AddRequest!): Core_TaskRun!
-    core_task_add(req: Core_Task_AddRequest!): Core_Task!
     core_file_add(req: Core_File_AddRequest!): Core_File!
-    core_file_hookCreatePre(req: Core_File_FileInput!): Core_File!
+    core_secretDecryptable_add(req: Core_SecretDecryptable_AddRequest!): Core_SecretDecryptable!
+    core_secretKey_add(req: Core_SecretKey_AddRequest!): Core_SecretKey!
+    user_user_add(req: User_User_AddRequest!): User_User!
+    core_task_add(req: Core_Task_AddRequest!): Core_Task!
+    core_secretDecryptable_hookCreatePre(req: Core_SecretDecryptable_SecretDecryptableInput!): Core_SecretDecryptable!
     core_taskRun_hookCreatePre(req: Core_TaskRun_TaskRunInput!): Core_TaskRun!
+    core_file_hookCreatePre(req: Core_File_FileInput!): Core_File!
+    core_secretKey_hookCreatePre(req: Core_SecretKey_SecretKeyInput!): Core_SecretKey!
     core_task_hookSavePre(req: Core_Task_TaskInput!): Core_Task!
     auth_registerUser(req: Auth_RegisterUserRequest!): Auth_AuthenticateResponse!
-    core_taskRun_update(req: Core_TaskRun_UpdateRequest!): Core_TaskRun_UpdateResponse!
-    user_team_update(req: User_Team_UpdateRequest!): User_Team_UpdateResponse!
-    user_user_update(req: User_User_UpdateRequest!): User_User_UpdateResponse!
+    core_secretDecryptabeAdd(req: Core_SecretDecryptableAddRequestInput!): Core_SecretDecryptable!
     core_task_update(req: Core_Task_UpdateRequest!): Core_Task_UpdateResponse!
     core_file_update(req: Core_File_UpdateRequest!): Core_File_UpdateResponse!
+    core_jobApplicant_update(req: Core_JobApplicant_UpdateRequest!): Core_JobApplicant_UpdateResponse!
+    core_secretKey_update(req: Core_SecretKey_UpdateRequest!): Core_SecretKey_UpdateResponse!
+    user_team_update(req: User_Team_UpdateRequest!): User_Team_UpdateResponse!
+    core_taskRun_update(req: Core_TaskRun_UpdateRequest!): Core_TaskRun_UpdateResponse!
+    user_user_update(req: User_User_UpdateRequest!): User_User_UpdateResponse!
+    core_secretDecryptable_update(req: Core_SecretDecryptable_UpdateRequest!): Core_SecretDecryptable_UpdateResponse!
     auth_secret_update(req: Auth_Secret_UpdateRequest!): Auth_Secret_UpdateResponse!
 }
 
@@ -111,24 +130,36 @@ input Core_File_AddRequest {
     Object: Core_File_FileInput!
 }
 
-input User_User_AddRequest {
-    Object: User_User_UserInput!
+input Core_SecretDecryptable_AddRequest {
+    Object: Core_SecretDecryptable_SecretDecryptableInput!
+}
+
+input Core_JobApplicant_AddRequest {
+    Object: Core_JobApplicant_JobApplicantInput!
+}
+
+input Core_Task_AddRequest {
+    Object: Core_Task_TaskInput!
+}
+
+input Core_SecretKey_AddRequest {
+    Object: Core_SecretKey_SecretKeyInput!
 }
 
 input Auth_Secret_AddRequest {
     Object: Auth_Secret_SecretInput!
 }
 
-input User_Team_AddRequest {
-    Object: User_Team_TeamInput!
-}
-
 input Core_TaskRun_AddRequest {
     Object: Core_TaskRun_TaskRunInput!
 }
 
-input Core_Task_AddRequest {
-    Object: Core_Task_TaskInput!
+input User_User_AddRequest {
+    Object: User_User_UserInput!
+}
+
+input User_Team_AddRequest {
+    Object: User_Team_TeamInput!
 }
 
 input AddressInput {
@@ -225,7 +256,7 @@ input Core_File_FileFilter {
     Or: [Core_File_FileFilter!]!
 }
 
-input User_User_GetRequest {
+input Core_Task_GetRequest {
     ID: ID!
 }
 
@@ -233,7 +264,15 @@ input User_Team_GetRequest {
     ID: ID!
 }
 
+input Auth_Secret_GetRequest {
+    ID: ID!
+}
+
 input Core_File_GetRequest {
+    ID: ID!
+}
+
+input User_User_GetRequest {
     ID: ID!
 }
 
@@ -241,36 +280,70 @@ input Core_TaskRun_GetRequest {
     ID: ID!
 }
 
-input Core_Task_GetRequest {
+input Core_JobApplicant_GetRequest {
     ID: ID!
 }
 
-input Auth_Secret_GetRequest {
+input Core_SecretDecryptable_GetRequest {
     ID: ID!
 }
 
-input Auth_Secret_ListRequest {
-    Filter: Auth_Secret_SecretFilter!
+input Core_SecretKey_GetRequest {
+    ID: ID!
 }
 
-input User_Team_ListRequest {
-    Filter: User_Team_TeamFilter!
+input Core_JobApplicant_JobApplicantInput {
+    Name: String!
+    UserID: ID!
+    ResumeID: ID!
 }
 
-input User_User_ListRequest {
-    Filter: User_User_UserFilter!
+input Core_JobApplicant_JobApplicantFilter {
+    ID: IDCondition
+    Name: StringCondition
+    UserID: IDCondition
+    ResumeID: IDCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [Core_JobApplicant_JobApplicantFilter!]!
+    Or: [Core_JobApplicant_JobApplicantFilter!]!
 }
 
-input Core_File_ListRequest {
-    Filter: Core_File_FileFilter!
+input Core_SecretDecryptable_ListRequest {
+    Filter: Core_SecretDecryptable_SecretDecryptableFilter!
 }
 
 input Core_Task_ListRequest {
     Filter: Core_Task_TaskFilter!
 }
 
+input User_Team_ListRequest {
+    Filter: User_Team_TeamFilter!
+}
+
+input Core_JobApplicant_ListRequest {
+    Filter: Core_JobApplicant_JobApplicantFilter!
+}
+
+input User_User_ListRequest {
+    Filter: User_User_UserFilter!
+}
+
+input Core_SecretKey_ListRequest {
+    Filter: Core_SecretKey_SecretKeyFilter!
+}
+
 input Core_TaskRun_ListRequest {
     Filter: Core_TaskRun_TaskRunFilter!
+}
+
+input Auth_Secret_ListRequest {
+    Filter: Auth_Secret_SecretFilter!
+}
+
+input Core_File_ListRequest {
+    Filter: Core_File_FileFilter!
 }
 
 input Auth_LoginRequest {
@@ -316,11 +389,7 @@ input PhoneNumberFilter {
     Or: [PhoneNumberFilter!]!
 }
 
-input Auth_Secret_QueryByTextRequest {
-    QueryText: String!
-}
-
-input Core_File_QueryByTextRequest {
+input Core_TaskRun_QueryByTextRequest {
     QueryText: String!
 }
 
@@ -328,7 +397,19 @@ input Core_Task_QueryByTextRequest {
     QueryText: String!
 }
 
-input Core_TaskRun_QueryByTextRequest {
+input Auth_Secret_QueryByTextRequest {
+    QueryText: String!
+}
+
+input Core_SecretKey_QueryByTextRequest {
+    QueryText: String!
+}
+
+input User_User_QueryByTextRequest {
+    QueryText: String!
+}
+
+input Core_SecretDecryptable_QueryByTextRequest {
     QueryText: String!
 }
 
@@ -336,7 +417,11 @@ input User_Team_QueryByTextRequest {
     QueryText: String!
 }
 
-input User_User_QueryByTextRequest {
+input Core_File_QueryByTextRequest {
+    QueryText: String!
+}
+
+input Core_JobApplicant_QueryByTextRequest {
     QueryText: String!
 }
 
@@ -354,6 +439,41 @@ input Auth_Secret_SecretInput {
     ExpiresAt: Timestamp
 }
 
+input Core_SecretDecryptable_SecretDecryptableInput {
+    RawValue: String
+    SecretKeyID: ID!
+}
+
+input Core_SecretDecryptableAddRequestInput {
+    Value: String!
+    SecretKeyID: ID
+}
+
+input Core_SecretDecryptableAddRequestFilter {
+    ParentID: IDCondition
+    ID: IDCondition
+    Value: StringCondition
+    SecretKeyID: IDCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [Core_SecretDecryptableAddRequestFilter!]!
+    Or: [Core_SecretDecryptableAddRequestFilter!]!
+}
+
+input Core_SecretDecryptable_SecretDecryptableFilter {
+    ID: IDCondition
+    RawValue: StringCondition
+    EncryptedValue: StringCondition
+    Salt: StringCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    SecretKeyID: IDCondition
+    And: [Core_SecretDecryptable_SecretDecryptableFilter!]!
+    Or: [Core_SecretDecryptable_SecretDecryptableFilter!]!
+}
+
 input Auth_Secret_SecretFilter {
     ID: IDCondition
     UserID: IDCondition
@@ -367,7 +487,24 @@ input Auth_Secret_SecretFilter {
     Or: [Auth_Secret_SecretFilter!]!
 }
 
-input Auth_Secret_StandardEntityRequest {
+input Core_SecretKey_SecretKeyInput {
+    Type: Core_SecretKey_Type!
+}
+
+input Core_SecretKey_SecretKeyFilter {
+    ID: IDCondition
+    Type: Core_SecretKey_TypeCondition
+    PublicKey: StringCondition
+    PrivateKeyFormat: Core_SecretKey_FormatCondition
+    PublicKeyFormat: Core_SecretKey_FormatCondition
+    CreatedAt: TimestampCondition
+    UpdatedAt: TimestampCondition
+    DeletedAt: TimestampCondition
+    And: [Core_SecretKey_SecretKeyFilter!]!
+    Or: [Core_SecretKey_SecretKeyFilter!]!
+}
+
+input Core_JobApplicant_StandardEntityRequest {
     ID: ID!
 }
 
@@ -375,11 +512,15 @@ input Core_TaskRun_StandardEntityRequest {
     ID: ID!
 }
 
-input Core_Task_StandardEntityRequest {
+input Core_SecretKey_StandardEntityRequest {
     ID: ID!
 }
 
-input User_User_StandardEntityRequest {
+input User_Team_StandardEntityRequest {
+    ID: ID!
+}
+
+input Core_SecretDecryptable_StandardEntityRequest {
     ID: ID!
 }
 
@@ -387,7 +528,15 @@ input Core_File_StandardEntityRequest {
     ID: ID!
 }
 
-input User_Team_StandardEntityRequest {
+input Core_Task_StandardEntityRequest {
+    ID: ID!
+}
+
+input Auth_Secret_StandardEntityRequest {
+    ID: ID!
+}
+
+input User_User_StandardEntityRequest {
     ID: ID!
 }
 
@@ -449,10 +598,10 @@ input User_Team_TeamFilter {
     Or: [User_Team_TeamFilter!]!
 }
 
-input User_Team_UpdateRequest {
-    Object: User_Team_TeamInput!
-    Fields: [User_Team_TeamField!]!
-    ExcludeFields: [User_Team_TeamField!]!
+input Core_SecretKey_UpdateRequest {
+    Object: Core_SecretKey_SecretKeyInput!
+    Fields: [Core_SecretKey_SecretKeyField!]!
+    ExcludeFields: [Core_SecretKey_SecretKeyField!]!
 }
 
 input Core_File_UpdateRequest {
@@ -461,10 +610,16 @@ input Core_File_UpdateRequest {
     ExcludeFields: [Core_File_FileField!]!
 }
 
-input Auth_Secret_UpdateRequest {
-    Object: Auth_Secret_SecretInput!
-    Fields: [Auth_Secret_SecretField!]!
-    ExcludeFields: [Auth_Secret_SecretField!]!
+input Core_TaskRun_UpdateRequest {
+    Object: Core_TaskRun_TaskRunInput!
+    Fields: [Core_TaskRun_TaskRunField!]!
+    ExcludeFields: [Core_TaskRun_TaskRunField!]!
+}
+
+input User_Team_UpdateRequest {
+    Object: User_Team_TeamInput!
+    Fields: [User_Team_TeamField!]!
+    ExcludeFields: [User_Team_TeamField!]!
 }
 
 input Core_Task_UpdateRequest {
@@ -473,16 +628,28 @@ input Core_Task_UpdateRequest {
     ExcludeFields: [Core_Task_TaskField!]!
 }
 
-input Core_TaskRun_UpdateRequest {
-    Object: Core_TaskRun_TaskRunInput!
-    Fields: [Core_TaskRun_TaskRunField!]!
-    ExcludeFields: [Core_TaskRun_TaskRunField!]!
+input Core_SecretDecryptable_UpdateRequest {
+    Object: Core_SecretDecryptable_SecretDecryptableInput!
+    Fields: [Core_SecretDecryptable_SecretDecryptableField!]!
+    ExcludeFields: [Core_SecretDecryptable_SecretDecryptableField!]!
 }
 
 input User_User_UpdateRequest {
     Object: User_User_UserInput!
     Fields: [User_User_UserField!]!
     ExcludeFields: [User_User_UserField!]!
+}
+
+input Core_JobApplicant_UpdateRequest {
+    Object: Core_JobApplicant_JobApplicantInput!
+    Fields: [Core_JobApplicant_JobApplicantField!]!
+    ExcludeFields: [Core_JobApplicant_JobApplicantField!]!
+}
+
+input Auth_Secret_UpdateRequest {
+    Object: Auth_Secret_SecretInput!
+    Fields: [Auth_Secret_SecretField!]!
+    ExcludeFields: [Auth_Secret_SecretField!]!
 }
 
 input User_User_UserInput {
@@ -589,6 +756,36 @@ type Core_File {
     DeletedAt: Timestamp
 }
 
+type Core_JobApplicant {
+    ID: ID!
+    Name: String!
+    UserID: ID!
+    ResumeID: ID!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
+type Core_JobApplicant_ListResponse {
+    Items: [Core_JobApplicant!]!
+    Count: Int!
+}
+
+type User_User_ListResponse {
+    Items: [User_User!]!
+    Count: Int!
+}
+
+type Core_File_ListResponse {
+    Items: [Core_File!]!
+    Count: Int!
+}
+
+type User_Team_ListResponse {
+    Items: [User_Team!]!
+    Count: Int!
+}
+
 type Core_TaskRun_ListResponse {
     Items: [Core_TaskRun!]!
     Count: Int!
@@ -599,23 +796,18 @@ type Core_Task_ListResponse {
     Count: Int!
 }
 
-type User_User_ListResponse {
-    Items: [User_User!]!
-    Count: Int!
-}
-
-type User_Team_ListResponse {
-    Items: [User_Team!]!
-    Count: Int!
-}
-
-type Core_File_ListResponse {
-    Items: [Core_File!]!
-    Count: Int!
-}
-
 type Auth_Secret_ListResponse {
     Items: [Auth_Secret!]!
+    Count: Int!
+}
+
+type Core_SecretKey_ListResponse {
+    Items: [Core_SecretKey!]!
+    Count: Int!
+}
+
+type Core_SecretDecryptable_ListResponse {
+    Items: [Core_SecretDecryptable!]!
     Count: Int!
 }
 
@@ -664,28 +856,77 @@ type Auth_Secret {
     DeletedAt: Timestamp
 }
 
-type Core_Task_StandardEntityResponse {
-    Object: Core_Task!
+type Core_SecretDecryptable {
+    ID: ID!
+    RawValue: String
+    EncryptedValue: String!
+    Salt: String!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+    SecretKeyID: ID!
+}
+
+type Core_SecretDecryptableAddRequest {
+    Value: String!
+    SecretKeyID: ID
+}
+
+type Core_SecretDecryptableAddRequestWithMeta {
+    ParentID: ID!
+    ID: ID!
+    Value: String!
+    SecretKeyID: ID
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
+}
+
+type Core_SecretKey {
+    ID: ID!
+    Type: Core_SecretKey_Type!
+    PublicKey: String!
+    PrivateKeyFormat: Core_SecretKey_Format!
+    PublicKeyFormat: Core_SecretKey_Format!
+    CreatedAt: Timestamp!
+    UpdatedAt: Timestamp!
+    DeletedAt: Timestamp
 }
 
 type Core_TaskRun_StandardEntityResponse {
     Object: Core_TaskRun!
 }
 
-type User_User_StandardEntityResponse {
-    Object: User_User!
+type Auth_Secret_StandardEntityResponse {
+    Object: Auth_Secret!
+}
+
+type Core_SecretDecryptable_StandardEntityResponse {
+    Object: Core_SecretDecryptable!
+}
+
+type Core_SecretKey_StandardEntityResponse {
+    Object: Core_SecretKey!
+}
+
+type Core_Task_StandardEntityResponse {
+    Object: Core_Task!
 }
 
 type Core_File_StandardEntityResponse {
     Object: Core_File!
 }
 
-type Auth_Secret_StandardEntityResponse {
-    Object: Auth_Secret!
-}
-
 type User_Team_StandardEntityResponse {
     Object: User_Team!
+}
+
+type User_User_StandardEntityResponse {
+    Object: User_User!
+}
+
+type Core_JobApplicant_StandardEntityResponse {
+    Object: Core_JobApplicant!
 }
 
 type Core_Task {
@@ -730,20 +971,32 @@ type User_Team_UpdateResponse {
     Object: User_Team!
 }
 
-type Core_Task_UpdateResponse {
-    Object: Core_Task!
+type Core_JobApplicant_UpdateResponse {
+    Object: Core_JobApplicant!
 }
 
-type Core_TaskRun_UpdateResponse {
-    Object: Core_TaskRun!
+type Core_Task_UpdateResponse {
+    Object: Core_Task!
 }
 
 type User_User_UpdateResponse {
     Object: User_User!
 }
 
+type Core_SecretKey_UpdateResponse {
+    Object: Core_SecretKey!
+}
+
+type Core_SecretDecryptable_UpdateResponse {
+    Object: Core_SecretDecryptable!
+}
+
 type Auth_Secret_UpdateResponse {
     Object: Auth_Secret!
+}
+
+type Core_TaskRun_UpdateResponse {
+    Object: Core_TaskRun!
 }
 
 type User_User {
@@ -844,7 +1097,10 @@ input Core_CronExpressionFieldCondition {
 }
 
 enum Core_EntityName {
+    JOB_APPLICANT
     FILE
+    SECRET_KEY
+    SECRET_DECRYPTABLE
     TASK
     TASK_RUN
 }
@@ -852,20 +1108,6 @@ enum Core_EntityName {
 input Core_EntityNameCondition {
     Op: FilterOperator!
     Values: [Core_EntityName!]!
-}
-
-enum EntityName {
-    AUTH__SECRET
-    CORE__FILE
-    CORE__TASK
-    CORE__TASK_RUN
-    USER__USER
-    USER__TEAM
-}
-
-input EntityNameCondition {
-    Op: FilterOperator!
-    Values: [EntityName!]!
 }
 
 enum User_EntityName {
@@ -887,6 +1129,23 @@ input Auth_EntityNameCondition {
     Values: [Auth_EntityName!]!
 }
 
+enum EntityName {
+    AUTH__SECRET
+    USER__USER
+    USER__TEAM
+    CORE__JOB_APPLICANT
+    CORE__FILE
+    CORE__SECRET_KEY
+    CORE__SECRET_DECRYPTABLE
+    CORE__TASK
+    CORE__TASK_RUN
+}
+
+input EntityNameCondition {
+    Op: FilterOperator!
+    Values: [EntityName!]!
+}
+
 enum Core_File_FileField {
     ID
     FILE_NAME
@@ -905,6 +1164,16 @@ input Core_File_FileFieldCondition {
     Values: [Core_File_FileField!]!
 }
 
+enum Core_SecretKey_Format {
+    PEM
+    OPEN_SSH
+}
+
+input Core_SecretKey_FormatCondition {
+    Op: FilterOperator!
+    Values: [Core_SecretKey_Format!]!
+}
+
 enum Gender {
     MALE
     FEMALE
@@ -916,92 +1185,45 @@ input GenderCondition {
     Values: [Gender!]!
 }
 
-enum Auth_Secret_MethodName {
+enum Core_JobApplicant_JobApplicantField {
+    ID
+    NAME
+    USER_ID
+    RESUME_ID
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input Core_JobApplicant_JobApplicantFieldCondition {
+    Op: FilterOperator!
+    Values: [Core_JobApplicant_JobApplicantField!]!
+}
+
+enum Auth_MethodName {
+    LOGIN_USER
+    REGISTER_USER
+    AUTHENTICATE_TOKEN
+}
+
+input Auth_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [Auth_MethodName!]!
+}
+
+enum Core_SecretDecryptable_MethodName {
     ADD
     UPDATE
     GET
     LIST
     QUERY_BY_TEXT
+    HOOK_CREATE_PRE
+    ACTION_DECRYPT
 }
 
-input Auth_Secret_MethodNameCondition {
+input Core_SecretDecryptable_MethodNameCondition {
     Op: FilterOperator!
-    Values: [Auth_Secret_MethodName!]!
-}
-
-enum User_Team_MethodName {
-    ADD
-    UPDATE
-    GET
-    LIST
-    QUERY_BY_TEXT
-}
-
-input User_Team_MethodNameCondition {
-    Op: FilterOperator!
-    Values: [User_Team_MethodName!]!
-}
-
-enum MethodName {
-    AUTH__LOGIN_USER
-    AUTH__REGISTER_USER
-    AUTH__AUTHENTICATE_TOKEN
-    CORE__FILE_UPLOAD
-    AUTH__SECRET__ADD
-    AUTH__SECRET__UPDATE
-    AUTH__SECRET__GET
-    AUTH__SECRET__LIST
-    AUTH__SECRET__QUERY_BY_TEXT
-    CORE__FILE__ADD
-    CORE__FILE__UPDATE
-    CORE__FILE__GET
-    CORE__FILE__LIST
-    CORE__FILE__QUERY_BY_TEXT
-    CORE__TASK__ADD
-    CORE__TASK__UPDATE
-    CORE__TASK__GET
-    CORE__TASK__LIST
-    CORE__TASK__QUERY_BY_TEXT
-    CORE__TASK_RUN__ADD
-    CORE__TASK_RUN__UPDATE
-    CORE__TASK_RUN__GET
-    CORE__TASK_RUN__LIST
-    CORE__TASK_RUN__QUERY_BY_TEXT
-    USER__USER__ADD
-    USER__USER__UPDATE
-    USER__USER__GET
-    USER__USER__LIST
-    USER__USER__QUERY_BY_TEXT
-    USER__TEAM__ADD
-    USER__TEAM__UPDATE
-    USER__TEAM__GET
-    USER__TEAM__LIST
-    USER__TEAM__QUERY_BY_TEXT
-    CORE__FILE__HOOK_CREATE_PRE
-    CORE__TASK__HOOK_SAVE_PRE
-    CORE__TASK_RUN__HOOK_CREATE_PRE
-    USER__USER__HOOK_INIT
-    CORE__TASK__ACTION_RUN
-    CORE__TASK_RUN__ACTION_RUN
-}
-
-input MethodNameCondition {
-    Op: FilterOperator!
-    Values: [MethodName!]!
-}
-
-enum User_User_MethodName {
-    ADD
-    UPDATE
-    GET
-    LIST
-    QUERY_BY_TEXT
-    HOOK_INIT
-}
-
-input User_User_MethodNameCondition {
-    Op: FilterOperator!
-    Values: [User_User_MethodName!]!
+    Values: [Core_SecretDecryptable_MethodName!]!
 }
 
 enum Core_TaskRun_MethodName {
@@ -1019,6 +1241,16 @@ input Core_TaskRun_MethodNameCondition {
     Values: [Core_TaskRun_MethodName!]!
 }
 
+enum Core_MethodName {
+    FILE_UPLOAD
+    SECRET_DECRYPTABE_ADD
+}
+
+input Core_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [Core_MethodName!]!
+}
+
 enum Core_Task_MethodName {
     ADD
     UPDATE
@@ -1032,6 +1264,116 @@ enum Core_Task_MethodName {
 input Core_Task_MethodNameCondition {
     Op: FilterOperator!
     Values: [Core_Task_MethodName!]!
+}
+
+enum Auth_Secret_MethodName {
+    ADD
+    UPDATE
+    GET
+    LIST
+    QUERY_BY_TEXT
+}
+
+input Auth_Secret_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [Auth_Secret_MethodName!]!
+}
+
+enum User_User_MethodName {
+    ADD
+    UPDATE
+    GET
+    LIST
+    QUERY_BY_TEXT
+    HOOK_INIT
+}
+
+input User_User_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [User_User_MethodName!]!
+}
+
+enum MethodName {
+    AUTH__LOGIN_USER
+    AUTH__REGISTER_USER
+    AUTH__AUTHENTICATE_TOKEN
+    CORE__FILE_UPLOAD
+    CORE__SECRET_DECRYPTABE_ADD
+    AUTH__SECRET__ADD
+    AUTH__SECRET__UPDATE
+    AUTH__SECRET__GET
+    AUTH__SECRET__LIST
+    AUTH__SECRET__QUERY_BY_TEXT
+    USER__USER__ADD
+    USER__USER__UPDATE
+    USER__USER__GET
+    USER__USER__LIST
+    USER__USER__QUERY_BY_TEXT
+    USER__TEAM__ADD
+    USER__TEAM__UPDATE
+    USER__TEAM__GET
+    USER__TEAM__LIST
+    USER__TEAM__QUERY_BY_TEXT
+    CORE__JOB_APPLICANT__ADD
+    CORE__JOB_APPLICANT__UPDATE
+    CORE__JOB_APPLICANT__GET
+    CORE__JOB_APPLICANT__LIST
+    CORE__JOB_APPLICANT__QUERY_BY_TEXT
+    CORE__FILE__ADD
+    CORE__FILE__UPDATE
+    CORE__FILE__GET
+    CORE__FILE__LIST
+    CORE__FILE__QUERY_BY_TEXT
+    CORE__SECRET_KEY__ADD
+    CORE__SECRET_KEY__UPDATE
+    CORE__SECRET_KEY__GET
+    CORE__SECRET_KEY__LIST
+    CORE__SECRET_KEY__QUERY_BY_TEXT
+    CORE__SECRET_DECRYPTABLE__ADD
+    CORE__SECRET_DECRYPTABLE__UPDATE
+    CORE__SECRET_DECRYPTABLE__GET
+    CORE__SECRET_DECRYPTABLE__LIST
+    CORE__SECRET_DECRYPTABLE__QUERY_BY_TEXT
+    CORE__TASK__ADD
+    CORE__TASK__UPDATE
+    CORE__TASK__GET
+    CORE__TASK__LIST
+    CORE__TASK__QUERY_BY_TEXT
+    CORE__TASK_RUN__ADD
+    CORE__TASK_RUN__UPDATE
+    CORE__TASK_RUN__GET
+    CORE__TASK_RUN__LIST
+    CORE__TASK_RUN__QUERY_BY_TEXT
+    USER__USER__HOOK_INIT
+    CORE__FILE__HOOK_CREATE_PRE
+    CORE__SECRET_KEY__HOOK_INIT
+    CORE__SECRET_KEY__HOOK_CREATE_PRE
+    CORE__SECRET_DECRYPTABLE__HOOK_CREATE_PRE
+    CORE__TASK__HOOK_SAVE_PRE
+    CORE__TASK_RUN__HOOK_CREATE_PRE
+    CORE__SECRET_DECRYPTABLE__ACTION_DECRYPT
+    CORE__TASK__ACTION_RUN
+    CORE__TASK_RUN__ACTION_RUN
+}
+
+input MethodNameCondition {
+    Op: FilterOperator!
+    Values: [MethodName!]!
+}
+
+enum Core_SecretKey_MethodName {
+    ADD
+    UPDATE
+    GET
+    LIST
+    QUERY_BY_TEXT
+    HOOK_INIT
+    HOOK_CREATE_PRE
+}
+
+input Core_SecretKey_MethodNameCondition {
+    Op: FilterOperator!
+    Values: [Core_SecretKey_MethodName!]!
 }
 
 enum Core_File_MethodName {
@@ -1048,24 +1390,30 @@ input Core_File_MethodNameCondition {
     Values: [Core_File_MethodName!]!
 }
 
-enum Core_MethodName {
-    FILE_UPLOAD
+enum Core_JobApplicant_MethodName {
+    ADD
+    UPDATE
+    GET
+    LIST
+    QUERY_BY_TEXT
 }
 
-input Core_MethodNameCondition {
+input Core_JobApplicant_MethodNameCondition {
     Op: FilterOperator!
-    Values: [Core_MethodName!]!
+    Values: [Core_JobApplicant_MethodName!]!
 }
 
-enum Auth_MethodName {
-    LOGIN_USER
-    REGISTER_USER
-    AUTHENTICATE_TOKEN
+enum User_Team_MethodName {
+    ADD
+    UPDATE
+    GET
+    LIST
+    QUERY_BY_TEXT
 }
 
-input Auth_MethodNameCondition {
+input User_Team_MethodNameCondition {
     Op: FilterOperator!
-    Values: [Auth_MethodName!]!
+    Values: [User_Team_MethodName!]!
 }
 
 enum PersonNameField {
@@ -1100,6 +1448,46 @@ input PhoneNumberFieldCondition {
     Values: [PhoneNumberField!]!
 }
 
+enum Core_SecretDecryptable_SecretDecryptableAction { # Decrypt the secret
+    DECRYPT
+}
+
+input Core_SecretDecryptable_SecretDecryptableActionCondition {
+    Op: FilterOperator!
+    Values: [Core_SecretDecryptable_SecretDecryptableAction!]!
+}
+
+enum Core_SecretDecryptableAddRequestField {
+    PARENT_ID
+    ID
+    VALUE
+    SECRET_KEY_ID
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input Core_SecretDecryptableAddRequestFieldCondition {
+    Op: FilterOperator!
+    Values: [Core_SecretDecryptableAddRequestField!]!
+}
+
+enum Core_SecretDecryptable_SecretDecryptableField {
+    ID
+    RAW_VALUE
+    ENCRYPTED_VALUE
+    SALT
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+    SECRET_KEY_ID
+}
+
+input Core_SecretDecryptable_SecretDecryptableFieldCondition {
+    Op: FilterOperator!
+    Values: [Core_SecretDecryptable_SecretDecryptableField!]!
+}
+
 enum Auth_Secret_SecretField {
     ID
     USER_ID
@@ -1116,10 +1504,26 @@ input Auth_Secret_SecretFieldCondition {
     Values: [Auth_Secret_SecretField!]!
 }
 
+enum Core_SecretKey_SecretKeyField {
+    ID
+    TYPE
+    PUBLIC_KEY
+    PRIVATE_KEY_FORMAT
+    PUBLIC_KEY_FORMAT
+    CREATED_AT
+    UPDATED_AT
+    DELETED_AT
+}
+
+input Core_SecretKey_SecretKeyFieldCondition {
+    Op: FilterOperator!
+    Values: [Core_SecretKey_SecretKeyField!]!
+}
+
 enum ServiceName {
     AUTH
-    CORE
     USER
+    CORE
 }
 
 input ServiceNameCondition {
@@ -1235,6 +1639,16 @@ enum Auth_Secret_Type {
 input Auth_Secret_TypeCondition {
     Op: FilterOperator!
     Values: [Auth_Secret_Type!]!
+}
+
+enum Core_SecretKey_Type {
+    ED_25519
+    RSA
+}
+
+input Core_SecretKey_TypeCondition {
+    Op: FilterOperator!
+    Values: [Core_SecretKey_Type!]!
 }
 
 enum User_User_UserField {

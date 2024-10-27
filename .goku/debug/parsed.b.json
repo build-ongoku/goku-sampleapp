@@ -624,11 +624,302 @@
    ]
   },
   {
+   "Name": "User",
+   "options": {
+    "frontend_options": {}
+   },
+   "entities": [
+    {
+     "name": "User",
+     "description": "",
+     "options": {},
+     "actions": null,
+     "associations": [
+      {
+       "relationship": "child_of",
+       "type": "many",
+       "entity": "$.service[User].entity[Team]",
+       "name": "Teams",
+       "other_association_name": "Users"
+      }
+     ],
+     "hooks": [
+      {
+       "type": "init",
+       "is_static": true
+      }
+     ],
+     "fields": [
+      {
+       "name": "Name",
+       "description": "",
+       "data_type": "PersonName",
+       "options": {
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Email",
+       "description": "",
+       "data_type": "Email",
+       "options": {
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Addresses",
+       "description": "",
+       "data_type": "Address",
+       "is_repeated": true,
+       "options": {
+        "is_optional": true,
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "PastTeamIDs",
+       "description": "",
+       "data_type": "User_Team",
+       "is_repeated": true,
+       "options": {
+        "is_optional": true,
+        "nested_options": {}
+       }
+      }
+     ],
+     "Types": [
+      {
+       "name": "User",
+       "description": "Main type for entity User",
+       "fields": [
+        {
+         "name": "Name",
+         "description": "",
+         "data_type": "PersonName",
+         "options": {
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        },
+        {
+         "name": "Email",
+         "description": "",
+         "data_type": "Email",
+         "options": {
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        },
+        {
+         "name": "Addresses",
+         "description": "",
+         "data_type": "Address",
+         "is_repeated": true,
+         "options": {
+          "is_optional": true,
+          "nested_options": {}
+         }
+        },
+        {
+         "name": "PastTeamIDs",
+         "description": "",
+         "data_type": "User_Team",
+         "is_repeated": true,
+         "options": {
+          "is_optional": true,
+          "nested_options": {}
+         }
+        }
+       ],
+       "options": {}
+      }
+     ],
+     "Enums": null,
+     "Methods": null
+    },
+    {
+     "name": "Team",
+     "description": "",
+     "options": {},
+     "actions": null,
+     "associations": [
+      {
+       "relationship": "parent_of",
+       "type": "many",
+       "entity": "$.service[User].entity[User]",
+       "name": "Users",
+       "other_association_name": "Teams"
+      }
+     ],
+     "hooks": null,
+     "fields": [
+      {
+       "name": "Name",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      }
+     ],
+     "Types": [
+      {
+       "name": "Team",
+       "description": "Main type for entity Team",
+       "fields": [
+        {
+         "name": "Name",
+         "description": "",
+         "data_type": "String",
+         "options": {
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        }
+       ],
+       "options": {}
+      }
+     ],
+     "Enums": null,
+     "Methods": null
+    }
+   ],
+   "Methods": null,
+   "Enums": null,
+   "Types": null
+  },
+  {
    "Name": "Core",
    "options": {
     "frontend_options": {}
    },
    "entities": [
+    {
+     "name": "JobApplicant",
+     "description": "",
+     "options": {},
+     "actions": null,
+     "associations": null,
+     "hooks": null,
+     "fields": [
+      {
+       "name": "Name",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "UserID",
+       "description": "",
+       "data_type": "Core_User",
+       "options": {
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "ResumeID",
+       "description": "",
+       "data_type": "File",
+       "options": {
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      }
+     ],
+     "Types": [
+      {
+       "name": "JobApplicant",
+       "description": "Main type for entity JobApplicant",
+       "fields": [
+        {
+         "name": "Name",
+         "description": "",
+         "data_type": "String",
+         "options": {
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        },
+        {
+         "name": "UserID",
+         "description": "",
+         "data_type": "Core_User",
+         "options": {
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        },
+        {
+         "name": "ResumeID",
+         "description": "",
+         "data_type": "File",
+         "options": {
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        }
+       ],
+       "options": {}
+      }
+     ],
+     "Enums": null,
+     "Methods": null
+    },
     {
      "name": "File",
      "description": "",
@@ -843,13 +1134,315 @@
      "Methods": null
     },
     {
+     "name": "SecretKey",
+     "description": "",
+     "options": {},
+     "actions": null,
+     "associations": [
+      {
+       "relationship": "parent_of",
+       "type": "many",
+       "entity": "$.service[Core].entity[SecretDecryptable]",
+       "name": "Secrets",
+       "other_association_name": "SecretKey"
+      }
+     ],
+     "hooks": [
+      {
+       "type": "init",
+       "is_static": true
+      },
+      {
+       "type": "create_pre",
+       "is_static": true
+      }
+     ],
+     "fields": [
+      {
+       "name": "Type",
+       "description": "",
+       "data_type": "Core_SecretKey_Type",
+       "options": {
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "PublicKey",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "is_set_internally": true,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "PrivateKeyFormat",
+       "description": "",
+       "data_type": "Core_SecretKey_Format",
+       "options": {
+        "is_set_internally": true,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "PublicKeyFormat",
+       "description": "",
+       "data_type": "Core_SecretKey_Format",
+       "options": {
+        "is_set_internally": true,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      }
+     ],
+     "Types": [
+      {
+       "name": "SecretKey",
+       "description": "Main type for entity SecretKey",
+       "fields": [
+        {
+         "name": "Type",
+         "description": "",
+         "data_type": "Core_SecretKey_Type",
+         "options": {
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        },
+        {
+         "name": "PublicKey",
+         "description": "",
+         "data_type": "String",
+         "options": {
+          "is_set_internally": true,
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        },
+        {
+         "name": "PrivateKeyFormat",
+         "description": "",
+         "data_type": "Core_SecretKey_Format",
+         "options": {
+          "is_set_internally": true,
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        },
+        {
+         "name": "PublicKeyFormat",
+         "description": "",
+         "data_type": "Core_SecretKey_Format",
+         "options": {
+          "is_set_internally": true,
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        }
+       ],
+       "options": {}
+      }
+     ],
+     "Enums": [
+      {
+       "name": "Type",
+       "values": [
+        {
+         "name": "Ed25519",
+         "description": "",
+         "id": 1,
+         "options": {}
+        },
+        {
+         "name": "RSA",
+         "description": "",
+         "id": 2,
+         "options": {}
+        }
+       ],
+       "options": {}
+      },
+      {
+       "name": "Format",
+       "values": [
+        {
+         "name": "PEM",
+         "description": "",
+         "id": 1,
+         "options": {}
+        },
+        {
+         "name": "OpenSSH",
+         "description": "",
+         "id": 2,
+         "options": {}
+        }
+       ],
+       "options": {}
+      }
+     ],
+     "Methods": null
+    },
+    {
+     "name": "SecretDecryptable",
+     "description": "A secret that we can decrypt and recover (unlike user passwords).",
+     "options": {},
+     "actions": [
+      {
+       "name": "Decrypt",
+       "description": "Decrypt the secret",
+       "is_static": true
+      }
+     ],
+     "associations": [
+      {
+       "relationship": "child_of",
+       "type": "one",
+       "entity": "$.service[Core].entity[SecretKey]",
+       "name": "SecretKey",
+       "other_association_name": "Secrets"
+      }
+     ],
+     "hooks": [
+      {
+       "type": "create_pre",
+       "is_static": true
+      }
+     ],
+     "fields": [
+      {
+       "name": "RawValue",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "is_optional": true,
+        "is_transient_input": true,
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "EncryptedValue",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "is_set_internally": true,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "Salt",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "is_set_internally": true,
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      }
+     ],
+     "Types": [
+      {
+       "name": "SecretDecryptable",
+       "description": "Main type for entity SecretDecryptable",
+       "fields": [
+        {
+         "name": "RawValue",
+         "description": "",
+         "data_type": "String",
+         "options": {
+          "is_optional": true,
+          "is_transient_input": true,
+          "nested_options": {}
+         }
+        },
+        {
+         "name": "EncryptedValue",
+         "description": "",
+         "data_type": "String",
+         "options": {
+          "is_set_internally": true,
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        },
+        {
+         "name": "Salt",
+         "description": "",
+         "data_type": "String",
+         "options": {
+          "is_set_internally": true,
+          "golang_tags": {
+           "validate": [
+            "required"
+           ]
+          },
+          "nested_options": {}
+         }
+        }
+       ],
+       "options": {}
+      }
+     ],
+     "Enums": null,
+     "Methods": null
+    },
+    {
      "name": "Task",
      "description": "Represents a scheduled call to a method",
      "options": {},
      "actions": [
       {
        "name": "Run",
-       "description": "Run the task"
+       "description": "Run the task",
+       "is_static": true
       }
      ],
      "associations": [
@@ -863,7 +1456,8 @@
      ],
      "hooks": [
       {
-       "type": "save_pre"
+       "type": "save_pre",
+       "is_static": true
       }
      ],
      "fields": [
@@ -1007,7 +1601,8 @@
      "actions": [
       {
        "name": "Run",
-       "description": "Run the task"
+       "description": "Run the task",
+       "is_static": true
       }
      ],
      "associations": [
@@ -1021,7 +1616,8 @@
      ],
      "hooks": [
       {
-       "type": "create_pre"
+       "type": "create_pre",
+       "is_static": true
       }
      ],
      "fields": [
@@ -1275,10 +1871,67 @@
        }
       }
      ]
+    },
+    {
+     "name": "SecretDecryptabeAdd",
+     "description": "Create a new secret",
+     "argument_type": "$.service[Core].type[SecretDecryptableAddRequest]",
+     "return_type": "$.service[Core].entity[SecretDecryptable].type[SecretDecryptable]",
+     "options": {
+      "type": "Mutation",
+      "is_direct_http_handler": false,
+      "is_static": true
+     },
+     "apis": [
+      {
+       "path": "secret/add",
+       "http_method": "POST",
+       "is_public": false,
+       "options": {
+        "success_status": 0,
+        "use_body_for_request": true,
+        "use_url_params_for_request": false
+       }
+      }
+     ]
     }
    ],
    "Enums": null,
    "Types": [
+    {
+     "name": "SecretDecryptableAddRequest",
+     "description": "",
+     "fields": [
+      {
+       "name": "Value",
+       "description": "",
+       "data_type": "String",
+       "options": {
+        "golang_tags": {
+         "validate": [
+          "required"
+         ]
+        },
+        "nested_options": {}
+       }
+      },
+      {
+       "name": "SecretKeyID",
+       "description": "",
+       "data_type": "ID",
+       "options": {
+        "is_optional": true,
+        "golang_tags": {
+         "validate": [
+          "uuid"
+         ]
+        },
+        "nested_options": {}
+       }
+      }
+     ],
+     "options": {}
+    },
     {
      "name": "CronExpression",
      "description": "",
@@ -1365,198 +2018,6 @@
      "options": {}
     }
    ]
-  },
-  {
-   "Name": "User",
-   "options": {
-    "frontend_options": {}
-   },
-   "entities": [
-    {
-     "name": "User",
-     "description": "",
-     "options": {},
-     "actions": null,
-     "associations": [
-      {
-       "relationship": "child_of",
-       "type": "many",
-       "entity": "$.service[User].entity[Team]",
-       "name": "Teams",
-       "other_association_name": "Users"
-      }
-     ],
-     "hooks": [
-      {
-       "type": "init",
-       "is_static": true
-      }
-     ],
-     "fields": [
-      {
-       "name": "Name",
-       "description": "",
-       "data_type": "PersonName",
-       "options": {
-        "golang_tags": {
-         "validate": [
-          "required"
-         ]
-        },
-        "nested_options": {}
-       }
-      },
-      {
-       "name": "Email",
-       "description": "",
-       "data_type": "Email",
-       "options": {
-        "golang_tags": {
-         "validate": [
-          "required"
-         ]
-        },
-        "nested_options": {}
-       }
-      },
-      {
-       "name": "Addresses",
-       "description": "",
-       "data_type": "Address",
-       "is_repeated": true,
-       "options": {
-        "is_optional": true,
-        "nested_options": {}
-       }
-      },
-      {
-       "name": "PastTeamIDs",
-       "description": "",
-       "data_type": "User_Team",
-       "is_repeated": true,
-       "options": {
-        "is_optional": true,
-        "nested_options": {}
-       }
-      }
-     ],
-     "Types": [
-      {
-       "name": "User",
-       "description": "Main type for entity User",
-       "fields": [
-        {
-         "name": "Name",
-         "description": "",
-         "data_type": "PersonName",
-         "options": {
-          "golang_tags": {
-           "validate": [
-            "required"
-           ]
-          },
-          "nested_options": {}
-         }
-        },
-        {
-         "name": "Email",
-         "description": "",
-         "data_type": "Email",
-         "options": {
-          "golang_tags": {
-           "validate": [
-            "required"
-           ]
-          },
-          "nested_options": {}
-         }
-        },
-        {
-         "name": "Addresses",
-         "description": "",
-         "data_type": "Address",
-         "is_repeated": true,
-         "options": {
-          "is_optional": true,
-          "nested_options": {}
-         }
-        },
-        {
-         "name": "PastTeamIDs",
-         "description": "",
-         "data_type": "User_Team",
-         "is_repeated": true,
-         "options": {
-          "is_optional": true,
-          "nested_options": {}
-         }
-        }
-       ],
-       "options": {}
-      }
-     ],
-     "Enums": null,
-     "Methods": null
-    },
-    {
-     "name": "Team",
-     "description": "",
-     "options": {},
-     "actions": null,
-     "associations": [
-      {
-       "relationship": "parent_of",
-       "type": "many",
-       "entity": "$.service[User].entity[User]",
-       "name": "Users",
-       "other_association_name": "Teams"
-      }
-     ],
-     "hooks": null,
-     "fields": [
-      {
-       "name": "Name",
-       "description": "",
-       "data_type": "String",
-       "options": {
-        "golang_tags": {
-         "validate": [
-          "required"
-         ]
-        },
-        "nested_options": {}
-       }
-      }
-     ],
-     "Types": [
-      {
-       "name": "Team",
-       "description": "Main type for entity Team",
-       "fields": [
-        {
-         "name": "Name",
-         "description": "",
-         "data_type": "String",
-         "options": {
-          "golang_tags": {
-           "validate": [
-            "required"
-           ]
-          },
-          "nested_options": {}
-         }
-        }
-       ],
-       "options": {}
-      }
-     ],
-     "Enums": null,
-     "Methods": null
-    }
-   ],
-   "Methods": null,
-   "Enums": null,
-   "Types": null
   }
  ]
 }

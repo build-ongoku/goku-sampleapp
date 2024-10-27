@@ -9,6 +9,9 @@ import (
 	svccore_client "sampleapp/backend/.goku/generated/service/core/client"
 	svccore_clientimpl "sampleapp/backend/.goku/generated/service/core/clientimpl"
 	svccore_entfile_clienthttp "sampleapp/backend/.goku/generated/service/core/entity/file/clienthttp"
+	svccore_entjobapplicant_clienthttp "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/clienthttp"
+	svccore_entsecretdecryptable_clienthttp "sampleapp/backend/.goku/generated/service/core/entity/secret_decryptable/clienthttp"
+	svccore_entsecretkey_clienthttp "sampleapp/backend/.goku/generated/service/core/entity/secret_key/clienthttp"
 	svccore_enttask_clienthttp "sampleapp/backend/.goku/generated/service/core/entity/task/clienthttp"
 	svccore_enttaskrun_clienthttp "sampleapp/backend/.goku/generated/service/core/entity/task_run/clienthttp"
 )
@@ -25,6 +28,27 @@ func NewClient(ctx context.Context, baseURL string) (svccore_client.Client, erro
 			return nil, fmt.Errorf("Create client for entity [File] : %w", err)
 		}
 		entitiesClientReq.FileClient = entityClient
+	}
+	{
+		entityClient, err := svccore_entjobapplicant_clienthttp.NewClient(ctx, baseURL)
+		if err != nil {
+			return nil, fmt.Errorf("Create client for entity [JobApplicant] : %w", err)
+		}
+		entitiesClientReq.JobApplicantClient = entityClient
+	}
+	{
+		entityClient, err := svccore_entsecretdecryptable_clienthttp.NewClient(ctx, baseURL)
+		if err != nil {
+			return nil, fmt.Errorf("Create client for entity [SecretDecryptable] : %w", err)
+		}
+		entitiesClientReq.SecretDecryptableClient = entityClient
+	}
+	{
+		entityClient, err := svccore_entsecretkey_clienthttp.NewClient(ctx, baseURL)
+		if err != nil {
+			return nil, fmt.Errorf("Create client for entity [SecretKey] : %w", err)
+		}
+		entitiesClientReq.SecretKeyClient = entityClient
 	}
 	{
 		entityClient, err := svccore_enttask_clienthttp.NewClient(ctx, baseURL)

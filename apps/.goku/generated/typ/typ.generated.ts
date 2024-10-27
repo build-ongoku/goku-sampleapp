@@ -59,7 +59,7 @@ export type Country = 'USA' | 'Canada' | 'Mexico' | never
 export type CountryCondition = GenericCondition<Country>
 
 // EntityName: <description of the enum>
-export type EntityName = 'Auth_Secret' | 'Core_File' | 'Core_Task' | 'Core_TaskRun' | 'User_User' | 'User_Team' | never
+export type EntityName = 'Auth_Secret' | 'User_User' | 'User_Team' | 'Core_JobApplicant' | 'Core_File' | 'Core_SecretKey' | 'Core_SecretDecryptable' | 'Core_Task' | 'Core_TaskRun' | never
 
 export type EntityNameCondition = GenericCondition<EntityName>
 
@@ -74,26 +74,12 @@ export type MethodName =
     | 'Auth_RegisterUser'
     | 'Auth_AuthenticateToken'
     | 'Core_FileUpload'
+    | 'Core_SecretDecryptabeAdd'
     | 'Auth_Secret_Add'
     | 'Auth_Secret_Update'
     | 'Auth_Secret_Get'
     | 'Auth_Secret_List'
     | 'Auth_Secret_QueryByText'
-    | 'Core_File_Add'
-    | 'Core_File_Update'
-    | 'Core_File_Get'
-    | 'Core_File_List'
-    | 'Core_File_QueryByText'
-    | 'Core_Task_Add'
-    | 'Core_Task_Update'
-    | 'Core_Task_Get'
-    | 'Core_Task_List'
-    | 'Core_Task_QueryByText'
-    | 'Core_TaskRun_Add'
-    | 'Core_TaskRun_Update'
-    | 'Core_TaskRun_Get'
-    | 'Core_TaskRun_List'
-    | 'Core_TaskRun_QueryByText'
     | 'User_User_Add'
     | 'User_User_Update'
     | 'User_User_Get'
@@ -104,10 +90,44 @@ export type MethodName =
     | 'User_Team_Get'
     | 'User_Team_List'
     | 'User_Team_QueryByText'
+    | 'Core_JobApplicant_Add'
+    | 'Core_JobApplicant_Update'
+    | 'Core_JobApplicant_Get'
+    | 'Core_JobApplicant_List'
+    | 'Core_JobApplicant_QueryByText'
+    | 'Core_File_Add'
+    | 'Core_File_Update'
+    | 'Core_File_Get'
+    | 'Core_File_List'
+    | 'Core_File_QueryByText'
+    | 'Core_SecretKey_Add'
+    | 'Core_SecretKey_Update'
+    | 'Core_SecretKey_Get'
+    | 'Core_SecretKey_List'
+    | 'Core_SecretKey_QueryByText'
+    | 'Core_SecretDecryptable_Add'
+    | 'Core_SecretDecryptable_Update'
+    | 'Core_SecretDecryptable_Get'
+    | 'Core_SecretDecryptable_List'
+    | 'Core_SecretDecryptable_QueryByText'
+    | 'Core_Task_Add'
+    | 'Core_Task_Update'
+    | 'Core_Task_Get'
+    | 'Core_Task_List'
+    | 'Core_Task_QueryByText'
+    | 'Core_TaskRun_Add'
+    | 'Core_TaskRun_Update'
+    | 'Core_TaskRun_Get'
+    | 'Core_TaskRun_List'
+    | 'Core_TaskRun_QueryByText'
+    | 'User_User_HookInit'
     | 'Core_File_HookCreatePre'
+    | 'Core_SecretKey_HookInit'
+    | 'Core_SecretKey_HookCreatePre'
+    | 'Core_SecretDecryptable_HookCreatePre'
     | 'Core_Task_HookSavePre'
     | 'Core_TaskRun_HookCreatePre'
-    | 'User_User_HookInit'
+    | 'Core_SecretDecryptable_ActionDecrypt'
     | 'Core_Task_ActionRun'
     | 'Core_TaskRun_ActionRun'
     | never
@@ -125,7 +145,7 @@ export type PhoneNumberField = 'ParentID' | 'ID' | 'CountryCode' | 'Number' | 'E
 export type PhoneNumberFieldCondition = GenericCondition<PhoneNumberField>
 
 // ServiceName: <description of the enum>
-export type ServiceName = 'Auth' | 'Core' | 'User' | never
+export type ServiceName = 'Auth' | 'User' | 'Core' | never
 
 export type ServiceNameCondition = GenericCondition<ServiceName>
 

@@ -5,7 +5,6 @@ import (
 	"crypto/rsa"
 	"fmt"
 	"net/http"
-	"ongoku/backend/src/lib/secret"
 	"os"
 	"path/filepath"
 
@@ -15,6 +14,7 @@ import (
 
 	app_client "sampleapp/backend/.goku/generated/client"
 	svccore_entsecretkey_typ "sampleapp/backend/.goku/generated/service/core/entity/secret_key/typ"
+	secretlib "sampleapp/backend/.goku/static/lib/secret"
 )
 
 type EntityType = svccore_entsecretkey_typ.SecretKey
@@ -24,7 +24,7 @@ func HookCreatePre(ctx context.Context, c app_client.Client, in EntityType) (Ent
 	// This generates an RSA key
 	if in.Type == svccore_entsecretkey_typ.Type_RSA {
 
-		pvtKey, pubKey, err := secret.GenerateRSAKeyPair(ctx)
+		pvtKey, pubKey, err := secretlib.GenerateRSAKeyPair(ctx)
 		if err != nil {
 			return in, fmt.Errorf("Generating a new SSH Key Pair: %w", err)
 		}
@@ -61,7 +61,7 @@ func GetPrivateKey(ctx context.Context, secretKey svccore_entsecretkey_typ.Secre
 		return nil, fmt.Errorf("Getting private key string: %w", err)
 	}
 	// Parse the private key
-	pvtKey, err := secret.ParsePEMPrivateKey(ctx, pvtKeyStr)
+	pvtKey, err := secretlib.ParsePEMPrivateKey(ctx, pvtKeyStr)
 	if err != nil {
 		return nil, fmt.Errorf("Parsing private key: %w", err)
 	}

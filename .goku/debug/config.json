@@ -1,5 +1,5 @@
 {
- "AppRootFromCurrDirPath": "sampleapp",
+ "AppRootFromCurrDirPath": ".",
  "AppName": "Sampleapp",
  "GoModuleName": "sampleapp/backend",
  "GokuVersionAtCreate": "v2024.10.23.150636",
@@ -20,6 +20,10 @@
   {
    "Name": "Task",
    "Version": "v1.0.0"
+  },
+  {
+   "Name": "Secret",
+   "Version": "v1.0.0"
   }
  ],
  "PrintDebugFiles": true,
@@ -37,17 +41,17 @@
  },
  "AppRootPath": {
   "FromApp": ".",
-  "FromCurrDir": "sampleapp",
+  "FromCurrDir": ".",
   "Full": "/Users/teejays/Development/goku-workspace/src/example/sampleapp"
  },
  "SchemaPath": {
   "FromApp": "goku_schema",
-  "FromCurrDir": "sampleapp/goku_schema",
+  "FromCurrDir": "goku_schema",
   "Full": "/Users/teejays/Development/goku-workspace/src/example/sampleapp/goku_schema"
  },
  "GoModulePath": {
   "FromApp": "backend",
-  "FromCurrDir": "sampleapp/backend",
+  "FromCurrDir": "backend",
   "Full": "/Users/teejays/Development/goku-workspace/src/example/sampleapp/backend"
  }
 }

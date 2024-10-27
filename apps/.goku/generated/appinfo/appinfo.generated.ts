@@ -39,10 +39,67 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+            },
+            associations: [],
+            actions: [],
+        },
+        {
+            namespace: {
                 service: 'auth',
                 entity: 'secret',
             },
             associations: [],
+            actions: [],
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+            },
+            associations: [
+                {
+                    relationship: 'child_of',
+                    type: 'one',
+                    entityNamespace: {
+                        service: 'core',
+                        entity: 'secret_key',
+                    },
+                    name: new Name('secret_key'),
+                    otherAssociationName: new Name('secrets'),
+                },
+            ],
+            actions: [
+                {
+                    name: new Name('decrypt'),
+                    methodNamespace: {
+                        service: 'core',
+                        entity: 'secret_decryptable',
+                        types: undefined,
+                        enum: undefined,
+                        method: 'action_decrypt',
+                    },
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+            },
+            associations: [
+                {
+                    relationship: 'parent_of',
+                    type: 'many',
+                    entityNamespace: {
+                        service: 'core',
+                        entity: 'secret_decryptable',
+                    },
+                    name: new Name('secrets'),
+                    otherAssociationName: new Name('secret_key'),
+                },
+            ],
             actions: [],
         },
         {
@@ -190,8 +247,8 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'user',
-                entity: 'user',
+                service: 'core',
+                entity: 'secret_decryptable',
                 types: ['add_request'],
                 enum: undefined,
                 method: undefined,
@@ -204,12 +261,12 @@ export const appReq: AppReq = {
                     isMetaField: false,
                     excludeFromForm: undefined,
                     dtype: {
-                        name: new Name('user__user'),
+                        name: new Name('core__secret_decryptable'),
                         kind: fieldkind.NestedKind,
                         namespace: {
-                            service: 'user',
-                            entity: 'user',
-                            types: ['user'],
+                            service: 'core',
+                            entity: 'secret_decryptable',
+                            types: ['secret_decryptable'],
                             enum: undefined,
                             method: undefined,
                         },
@@ -219,9 +276,141 @@ export const appReq: AppReq = {
             getEmptyObjectFunc: (appInfo: App) => {
                 // All nested types should be initialized with their empty instances
                 const objectTypeInfo = appInfo.getTypeInfo({
-                    service: 'user',
-                    entity: 'user',
-                    types: ['user'],
+                    service: 'core',
+                    entity: 'secret_decryptable',
+                    types: ['secret_decryptable'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['add_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__job_applicant'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'job_applicant',
+                            types: ['job_applicant'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'job_applicant',
+                    types: ['job_applicant'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task',
+                types: ['add_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__task'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'task',
+                            types: ['task'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'task',
+                    types: ['task'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['add_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_key'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: ['secret_key'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_key',
+                    types: ['secret_key'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -278,50 +467,6 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'user',
-                entity: 'team',
-                types: ['add_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('object'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('user__team'),
-                        kind: fieldkind.NestedKind,
-                        namespace: {
-                            service: 'user',
-                            entity: 'team',
-                            types: ['team'],
-                            enum: undefined,
-                            method: undefined,
-                        },
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-                const objectTypeInfo = appInfo.getTypeInfo({
-                    service: 'user',
-                    entity: 'team',
-                    types: ['team'],
-                    enum: undefined,
-                    method: undefined,
-                })
-
-                // Return the empty object
-                return {
-                    object: objectTypeInfo.getEmptyObject(appInfo),
-                }
-            },
-        },
-        {
-            namespace: {
                 service: 'core',
                 entity: 'task_run',
                 types: ['add_request'],
@@ -366,8 +511,8 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'core',
-                entity: 'task',
+                service: 'user',
+                entity: 'user',
                 types: ['add_request'],
                 enum: undefined,
                 method: undefined,
@@ -380,12 +525,12 @@ export const appReq: AppReq = {
                     isMetaField: false,
                     excludeFromForm: undefined,
                     dtype: {
-                        name: new Name('core__task'),
+                        name: new Name('user__user'),
                         kind: fieldkind.NestedKind,
                         namespace: {
-                            service: 'core',
-                            entity: 'task',
-                            types: ['task'],
+                            service: 'user',
+                            entity: 'user',
+                            types: ['user'],
                             enum: undefined,
                             method: undefined,
                         },
@@ -395,9 +540,53 @@ export const appReq: AppReq = {
             getEmptyObjectFunc: (appInfo: App) => {
                 // All nested types should be initialized with their empty instances
                 const objectTypeInfo = appInfo.getTypeInfo({
-                    service: 'core',
-                    entity: 'task',
-                    types: ['task'],
+                    service: 'user',
+                    entity: 'user',
+                    types: ['user'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'user',
+                entity: 'team',
+                types: ['add_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('user__team'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'user',
+                            entity: 'team',
+                            types: ['team'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'user',
+                    entity: 'team',
+                    types: ['team'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -1456,22 +1645,6 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'core',
-                entity: undefined,
-                types: ['entity_name_condition'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-
-                // Return the empty object
-                return {}
-            },
-        },
-        {
-            namespace: {
                 service: undefined,
                 entity: undefined,
                 types: ['entity_name_condition'],
@@ -1505,6 +1678,22 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'user',
+                entity: undefined,
+                types: ['entity_name_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
                 entity: undefined,
                 types: ['entity_name_condition'],
                 enum: undefined,
@@ -1903,6 +2092,22 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['format_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
                 service: undefined,
                 entity: undefined,
                 types: ['gender_condition'],
@@ -1919,8 +2124,8 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'user',
-                entity: 'user',
+                service: 'core',
+                entity: 'task',
                 types: ['get_request'],
                 enum: undefined,
                 method: undefined,
@@ -1981,8 +2186,70 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'auth',
+                entity: 'secret',
+                types: ['get_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id'),
+                        kind: fieldkind.IDKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
                 service: 'core',
                 entity: 'file',
+                types: ['get_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id'),
+                        kind: fieldkind.IDKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'user',
+                entity: 'user',
                 types: ['get_request'],
                 enum: undefined,
                 method: undefined,
@@ -2044,7 +2311,7 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
-                entity: 'task',
+                entity: 'job_applicant',
                 types: ['get_request'],
                 enum: undefined,
                 method: undefined,
@@ -2074,8 +2341,8 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'auth',
-                entity: 'secret',
+                service: 'core',
+                entity: 'secret_decryptable',
                 types: ['get_request'],
                 enum: undefined,
                 method: undefined,
@@ -2105,8 +2372,331 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'auth',
-                entity: 'secret',
+                service: 'core',
+                entity: 'secret_key',
+                types: ['get_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id'),
+                        kind: fieldkind.IDKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['job_applicant'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('id'),
+                        kind: fieldkind.IDKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('name'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('user_id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__user'),
+                        kind: fieldkind.ForeignEntityKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'user',
+                        },
+                    },
+                },
+                {
+                    name: new Name('resume_id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('file'),
+                        kind: fieldkind.FileKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'file',
+                        },
+                    },
+                },
+                {
+                    name: new Name('created_at'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('timestamp'),
+                        kind: fieldkind.TimestampKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('updated_at'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('timestamp'),
+                        kind: fieldkind.TimestampKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('deleted_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('timestamp'),
+                        kind: fieldkind.TimestampKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                    name: undefined,
+                    userID: undefined,
+                    resumeID: undefined,
+                    createdAt: undefined,
+                    updatedAt: undefined,
+                    deletedAt: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['job_applicant_field_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['job_applicant_filter'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('name'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('user_id'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('resume_id'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('created_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('updated_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('deleted_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('and'),
+                    isRepeated: true,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__job_applicant__job_applicant_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'job_applicant',
+                            types: ['job_applicant_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('or'),
+                    isRepeated: true,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__job_applicant__job_applicant_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'job_applicant',
+                            types: ['job_applicant_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const andTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'job_applicant',
+                    types: ['job_applicant_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+                const orTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'job_applicant',
+                    types: ['job_applicant_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                    name: undefined,
+                    userID: undefined,
+                    resumeID: undefined,
+                    createdAt: undefined,
+                    updatedAt: undefined,
+                    deletedAt: undefined,
+                    and: undefined,
+                    or: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
                 types: ['list_request'],
                 enum: undefined,
                 method: undefined,
@@ -2119,12 +2709,12 @@ export const appReq: AppReq = {
                     isMetaField: false,
                     excludeFromForm: undefined,
                     dtype: {
-                        name: new Name('auth__secret__secret_filter'),
+                        name: new Name('core__secret_decryptable__secret_decryptable_filter'),
                         kind: fieldkind.NestedKind,
                         namespace: {
-                            service: 'auth',
-                            entity: 'secret',
-                            types: ['secret_filter'],
+                            service: 'core',
+                            entity: 'secret_decryptable',
+                            types: ['secret_decryptable_filter'],
                             enum: undefined,
                             method: undefined,
                         },
@@ -2134,9 +2724,53 @@ export const appReq: AppReq = {
             getEmptyObjectFunc: (appInfo: App) => {
                 // All nested types should be initialized with their empty instances
                 const filterTypeInfo = appInfo.getTypeInfo({
-                    service: 'auth',
-                    entity: 'secret',
-                    types: ['secret_filter'],
+                    service: 'core',
+                    entity: 'secret_decryptable',
+                    types: ['secret_decryptable_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    filter: filterTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task',
+                types: ['list_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('filter'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__task__task_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'task',
+                            types: ['task_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const filterTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'task',
+                    types: ['task_filter'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -2181,6 +2815,50 @@ export const appReq: AppReq = {
                     service: 'user',
                     entity: 'team',
                     types: ['team_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    filter: filterTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['list_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('filter'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__job_applicant__job_applicant_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'job_applicant',
+                            types: ['job_applicant_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const filterTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'job_applicant',
+                    types: ['job_applicant_filter'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -2238,7 +2916,7 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
-                entity: 'file',
+                entity: 'secret_key',
                 types: ['list_request'],
                 enum: undefined,
                 method: undefined,
@@ -2251,12 +2929,12 @@ export const appReq: AppReq = {
                     isMetaField: false,
                     excludeFromForm: undefined,
                     dtype: {
-                        name: new Name('core__file__file_filter'),
+                        name: new Name('core__secret_key__secret_key_filter'),
                         kind: fieldkind.NestedKind,
                         namespace: {
                             service: 'core',
-                            entity: 'file',
-                            types: ['file_filter'],
+                            entity: 'secret_key',
+                            types: ['secret_key_filter'],
                             enum: undefined,
                             method: undefined,
                         },
@@ -2267,52 +2945,8 @@ export const appReq: AppReq = {
                 // All nested types should be initialized with their empty instances
                 const filterTypeInfo = appInfo.getTypeInfo({
                     service: 'core',
-                    entity: 'file',
-                    types: ['file_filter'],
-                    enum: undefined,
-                    method: undefined,
-                })
-
-                // Return the empty object
-                return {
-                    filter: filterTypeInfo.getEmptyObject(appInfo),
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'core',
-                entity: 'task',
-                types: ['list_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('filter'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('core__task__task_filter'),
-                        kind: fieldkind.NestedKind,
-                        namespace: {
-                            service: 'core',
-                            entity: 'task',
-                            types: ['task_filter'],
-                            enum: undefined,
-                            method: undefined,
-                        },
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-                const filterTypeInfo = appInfo.getTypeInfo({
-                    service: 'core',
-                    entity: 'task',
-                    types: ['task_filter'],
+                    entity: 'secret_key',
+                    types: ['secret_key_filter'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -2364,6 +2998,322 @@ export const appReq: AppReq = {
                 // Return the empty object
                 return {
                     filter: filterTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'auth',
+                entity: 'secret',
+                types: ['list_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('filter'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('auth__secret__secret_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'auth',
+                            entity: 'secret',
+                            types: ['secret_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const filterTypeInfo = appInfo.getTypeInfo({
+                    service: 'auth',
+                    entity: 'secret',
+                    types: ['secret_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    filter: filterTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'file',
+                types: ['list_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('filter'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__file__file_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'file',
+                            types: ['file_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const filterTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'file',
+                    types: ['file_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    filter: filterTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('items'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__job_applicant'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'job_applicant',
+                            types: ['job_applicant'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('count'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('number'),
+                        kind: fieldkind.NumberKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const itemsTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'job_applicant',
+                    types: ['job_applicant'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    items: undefined,
+                    count: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'user',
+                entity: 'user',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('items'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('user__user'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'user',
+                            entity: 'user',
+                            types: ['user'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('count'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('number'),
+                        kind: fieldkind.NumberKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const itemsTypeInfo = appInfo.getTypeInfo({
+                    service: 'user',
+                    entity: 'user',
+                    types: ['user'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    items: undefined,
+                    count: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'file',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('items'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__file'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'file',
+                            types: ['file'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('count'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('number'),
+                        kind: fieldkind.NumberKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const itemsTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'file',
+                    types: ['file'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    items: undefined,
+                    count: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'user',
+                entity: 'team',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('items'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('user__team'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'user',
+                            entity: 'team',
+                            types: ['team'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('count'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('number'),
+                        kind: fieldkind.NumberKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const itemsTypeInfo = appInfo.getTypeInfo({
+                    service: 'user',
+                    entity: 'team',
+                    types: ['team'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    items: undefined,
+                    count: undefined,
                 }
             },
         },
@@ -2483,177 +3433,6 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'user',
-                entity: 'user',
-                types: ['list_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('items'),
-                    isRepeated: true,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('user__user'),
-                        kind: fieldkind.NestedKind,
-                        namespace: {
-                            service: 'user',
-                            entity: 'user',
-                            types: ['user'],
-                            enum: undefined,
-                            method: undefined,
-                        },
-                    },
-                },
-                {
-                    name: new Name('count'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('number'),
-                        kind: fieldkind.NumberKind,
-                        namespace: undefined,
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-                const itemsTypeInfo = appInfo.getTypeInfo({
-                    service: 'user',
-                    entity: 'user',
-                    types: ['user'],
-                    enum: undefined,
-                    method: undefined,
-                })
-
-                // Return the empty object
-                return {
-                    items: undefined,
-                    count: undefined,
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'user',
-                entity: 'team',
-                types: ['list_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('items'),
-                    isRepeated: true,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('user__team'),
-                        kind: fieldkind.NestedKind,
-                        namespace: {
-                            service: 'user',
-                            entity: 'team',
-                            types: ['team'],
-                            enum: undefined,
-                            method: undefined,
-                        },
-                    },
-                },
-                {
-                    name: new Name('count'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('number'),
-                        kind: fieldkind.NumberKind,
-                        namespace: undefined,
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-                const itemsTypeInfo = appInfo.getTypeInfo({
-                    service: 'user',
-                    entity: 'team',
-                    types: ['team'],
-                    enum: undefined,
-                    method: undefined,
-                })
-
-                // Return the empty object
-                return {
-                    items: undefined,
-                    count: undefined,
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'core',
-                entity: 'file',
-                types: ['list_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('items'),
-                    isRepeated: true,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('core__file'),
-                        kind: fieldkind.NestedKind,
-                        namespace: {
-                            service: 'core',
-                            entity: 'file',
-                            types: ['file'],
-                            enum: undefined,
-                            method: undefined,
-                        },
-                    },
-                },
-                {
-                    name: new Name('count'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('number'),
-                        kind: fieldkind.NumberKind,
-                        namespace: undefined,
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-                const itemsTypeInfo = appInfo.getTypeInfo({
-                    service: 'core',
-                    entity: 'file',
-                    types: ['file'],
-                    enum: undefined,
-                    method: undefined,
-                })
-
-                // Return the empty object
-                return {
-                    items: undefined,
-                    count: undefined,
-                }
-            },
-        },
-        {
-            namespace: {
                 service: 'auth',
                 entity: 'secret',
                 types: ['list_response'],
@@ -2711,6 +3490,120 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('items'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_key'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: ['secret_key'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('count'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('number'),
+                        kind: fieldkind.NumberKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const itemsTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_key',
+                    types: ['secret_key'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    items: undefined,
+                    count: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('items'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_decryptable'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_decryptable',
+                            types: ['secret_decryptable'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('count'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('number'),
+                        kind: fieldkind.NumberKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const itemsTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_decryptable',
+                    types: ['secret_decryptable'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    items: undefined,
+                    count: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
                 service: 'auth',
                 entity: undefined,
                 types: ['login_request'],
@@ -2755,40 +3648,8 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: undefined,
-                entity: undefined,
-                types: ['method_name_condition'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-
-                // Return the empty object
-                return {}
-            },
-        },
-        {
-            namespace: {
                 service: 'core',
-                entity: 'file',
-                types: ['method_name_condition'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-
-                // Return the empty object
-                return {}
-            },
-        },
-        {
-            namespace: {
-                service: 'auth',
-                entity: 'secret',
+                entity: 'task_run',
                 types: ['method_name_condition'],
                 enum: undefined,
                 method: undefined,
@@ -2819,7 +3680,23 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'core',
+                service: 'auth',
+                entity: 'secret',
+                types: ['method_name_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: undefined,
                 entity: undefined,
                 types: ['method_name_condition'],
                 enum: undefined,
@@ -2852,7 +3729,7 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
-                entity: 'task_run',
+                entity: undefined,
                 types: ['method_name_condition'],
                 enum: undefined,
                 method: undefined,
@@ -2885,6 +3762,70 @@ export const appReq: AppReq = {
             namespace: {
                 service: 'user',
                 entity: 'team',
+                types: ['method_name_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'file',
+                types: ['method_name_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['method_name_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['method_name_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
                 types: ['method_name_condition'],
                 enum: undefined,
                 method: undefined,
@@ -3393,8 +4334,194 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'task_run',
+                types: ['query_by_text_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('query_text'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    queryText: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task',
+                types: ['query_by_text_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('query_text'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    queryText: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
                 service: 'auth',
                 entity: 'secret',
+                types: ['query_by_text_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('query_text'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    queryText: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['query_by_text_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('query_text'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    queryText: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'user',
+                entity: 'user',
+                types: ['query_by_text_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('query_text'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    queryText: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['query_by_text_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('query_text'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    queryText: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'user',
+                entity: 'team',
                 types: ['query_by_text_request'],
                 enum: undefined,
                 method: undefined,
@@ -3456,100 +4583,7 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
-                entity: 'task',
-                types: ['query_by_text_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('query_text'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('string'),
-                        kind: fieldkind.StringKind,
-                        namespace: undefined,
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-
-                // Return the empty object
-                return {
-                    queryText: undefined,
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'core',
-                entity: 'task_run',
-                types: ['query_by_text_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('query_text'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('string'),
-                        kind: fieldkind.StringKind,
-                        namespace: undefined,
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-
-                // Return the empty object
-                return {
-                    queryText: undefined,
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'user',
-                entity: 'team',
-                types: ['query_by_text_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('query_text'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('string'),
-                        kind: fieldkind.StringKind,
-                        namespace: undefined,
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-
-                // Return the empty object
-                return {
-                    queryText: undefined,
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'user',
-                entity: 'user',
+                entity: 'job_applicant',
                 types: ['query_by_text_request'],
                 enum: undefined,
                 method: undefined,
@@ -3793,6 +4827,558 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['secret_decryptable'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('id'),
+                        kind: fieldkind.IDKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('raw_value'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('encrypted_value'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('salt'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('created_at'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('timestamp'),
+                        kind: fieldkind.TimestampKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('updated_at'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('timestamp'),
+                        kind: fieldkind.TimestampKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('deleted_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('timestamp'),
+                        kind: fieldkind.TimestampKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('secret_key_id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_key'),
+                        kind: fieldkind.ForeignEntityKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                    rawValue: undefined,
+                    encryptedValue: undefined,
+                    salt: undefined,
+                    createdAt: undefined,
+                    updatedAt: undefined,
+                    deletedAt: undefined,
+                    secretKeyID: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['secret_decryptable_action_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: undefined,
+                types: ['secret_decryptable_add_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('value'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('secret_key_id'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id'),
+                        kind: fieldkind.IDKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    value: undefined,
+                    secretKeyID: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: undefined,
+                types: ['secret_decryptable_add_request_field_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: undefined,
+                types: ['secret_decryptable_add_request_filter'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('parent_id'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('value'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('secret_key_id'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('created_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('updated_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('deleted_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('and'),
+                    isRepeated: true,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_decryptable_add_request_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: undefined,
+                            types: ['secret_decryptable_add_request_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('or'),
+                    isRepeated: true,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_decryptable_add_request_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: undefined,
+                            types: ['secret_decryptable_add_request_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const andTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: undefined,
+                    types: ['secret_decryptable_add_request_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+                const orTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: undefined,
+                    types: ['secret_decryptable_add_request_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    parentID: undefined,
+                    id: undefined,
+                    value: undefined,
+                    secretKeyID: undefined,
+                    createdAt: undefined,
+                    updatedAt: undefined,
+                    deletedAt: undefined,
+                    and: undefined,
+                    or: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['secret_decryptable_field_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['secret_decryptable_filter'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('raw_value'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('encrypted_value'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('salt'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('created_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('updated_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('deleted_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('secret_key_id'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('and'),
+                    isRepeated: true,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_decryptable__secret_decryptable_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_decryptable',
+                            types: ['secret_decryptable_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('or'),
+                    isRepeated: true,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_decryptable__secret_decryptable_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_decryptable',
+                            types: ['secret_decryptable_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const andTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_decryptable',
+                    types: ['secret_decryptable_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+                const orTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_decryptable',
+                    types: ['secret_decryptable_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                    rawValue: undefined,
+                    encryptedValue: undefined,
+                    salt: undefined,
+                    createdAt: undefined,
+                    updatedAt: undefined,
+                    deletedAt: undefined,
+                    secretKeyID: undefined,
+                    and: undefined,
+                    or: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
                 service: 'auth',
                 entity: 'secret',
                 types: ['secret_field_condition'],
@@ -3996,6 +5582,375 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['secret_key'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('id'),
+                        kind: fieldkind.IDKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('type'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_key__type'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: undefined,
+                            enum: 'type',
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('public_key'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('string'),
+                        kind: fieldkind.StringKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('private_key_format'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('core__secret_key__format'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: undefined,
+                            enum: 'format',
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('public_key_format'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('core__secret_key__format'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: undefined,
+                            enum: 'format',
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('created_at'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('timestamp'),
+                        kind: fieldkind.TimestampKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('updated_at'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('timestamp'),
+                        kind: fieldkind.TimestampKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('deleted_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: true,
+                    excludeFromForm: true,
+                    dtype: {
+                        name: new Name('timestamp'),
+                        kind: fieldkind.TimestampKind,
+                        namespace: undefined,
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                    type: undefined,
+                    publicKey: undefined,
+                    privateKeyFormat: undefined,
+                    publicKeyFormat: undefined,
+                    createdAt: undefined,
+                    updatedAt: undefined,
+                    deletedAt: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['secret_key_field_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['secret_key_filter'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('id_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('type'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('type_condition'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: ['type_condition'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('public_key'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('string_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('private_key_format'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('format_condition'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: ['format_condition'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('public_key_format'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('format_condition'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: ['format_condition'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('created_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('updated_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('deleted_at'),
+                    isRepeated: false,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('timestamp_condition'),
+                        kind: fieldkind.ConditionKind,
+                        namespace: undefined,
+                    },
+                },
+                {
+                    name: new Name('and'),
+                    isRepeated: true,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_key__secret_key_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: ['secret_key_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('or'),
+                    isRepeated: true,
+                    isOptional: true,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_key__secret_key_filter'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: ['secret_key_filter'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const typeTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_key',
+                    types: ['type_condition'],
+                    enum: undefined,
+                    method: undefined,
+                })
+                const privateKeyFormatTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_key',
+                    types: ['format_condition'],
+                    enum: undefined,
+                    method: undefined,
+                })
+                const publicKeyFormatTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_key',
+                    types: ['format_condition'],
+                    enum: undefined,
+                    method: undefined,
+                })
+                const andTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_key',
+                    types: ['secret_key_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+                const orTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_key',
+                    types: ['secret_key_filter'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                    type: typeTypeInfo.getEmptyObject(appInfo),
+                    publicKey: undefined,
+                    privateKeyFormat: privateKeyFormatTypeInfo.getEmptyObject(appInfo),
+                    publicKeyFormat: publicKeyFormatTypeInfo.getEmptyObject(appInfo),
+                    createdAt: undefined,
+                    updatedAt: undefined,
+                    deletedAt: undefined,
+                    and: undefined,
+                    or: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
                 service: undefined,
                 entity: undefined,
                 types: ['service_name_condition'],
@@ -4012,8 +5967,8 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'auth',
-                entity: 'secret',
+                service: 'core',
+                entity: 'job_applicant',
                 types: ['standard_entity_request'],
                 enum: undefined,
                 method: undefined,
@@ -4026,11 +5981,11 @@ export const appReq: AppReq = {
                     isMetaField: false,
                     excludeFromForm: undefined,
                     dtype: {
-                        name: new Name('auth__secret'),
+                        name: new Name('core__job_applicant'),
                         kind: fieldkind.ForeignEntityKind,
                         namespace: {
-                            service: 'auth',
-                            entity: 'secret',
+                            service: 'core',
+                            entity: 'job_applicant',
                         },
                     },
                 },
@@ -4081,7 +6036,7 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
-                entity: 'task',
+                entity: 'secret_key',
                 types: ['standard_entity_request'],
                 enum: undefined,
                 method: undefined,
@@ -4094,79 +6049,11 @@ export const appReq: AppReq = {
                     isMetaField: false,
                     excludeFromForm: undefined,
                     dtype: {
-                        name: new Name('core__task'),
+                        name: new Name('core__secret_key'),
                         kind: fieldkind.ForeignEntityKind,
                         namespace: {
                             service: 'core',
-                            entity: 'task',
-                        },
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-
-                // Return the empty object
-                return {
-                    id: undefined,
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'user',
-                entity: 'user',
-                types: ['standard_entity_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('id'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('user__user'),
-                        kind: fieldkind.ForeignEntityKind,
-                        namespace: {
-                            service: 'user',
-                            entity: 'user',
-                        },
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-
-                // Return the empty object
-                return {
-                    id: undefined,
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'core',
-                entity: 'file',
-                types: ['standard_entity_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('id'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('core__file'),
-                        kind: fieldkind.ForeignEntityKind,
-                        namespace: {
-                            service: 'core',
-                            entity: 'file',
+                            entity: 'secret_key',
                         },
                     },
                 },
@@ -4217,6 +6104,352 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
+                entity: 'secret_decryptable',
+                types: ['standard_entity_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_decryptable'),
+                        kind: fieldkind.ForeignEntityKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_decryptable',
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'file',
+                types: ['standard_entity_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__file'),
+                        kind: fieldkind.ForeignEntityKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'file',
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task',
+                types: ['standard_entity_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__task'),
+                        kind: fieldkind.ForeignEntityKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'task',
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'auth',
+                entity: 'secret',
+                types: ['standard_entity_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('auth__secret'),
+                        kind: fieldkind.ForeignEntityKind,
+                        namespace: {
+                            service: 'auth',
+                            entity: 'secret',
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'user',
+                entity: 'user',
+                types: ['standard_entity_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('id'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('user__user'),
+                        kind: fieldkind.ForeignEntityKind,
+                        namespace: {
+                            service: 'user',
+                            entity: 'user',
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {
+                    id: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task_run',
+                types: ['standard_entity_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__task_run'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'task_run',
+                            types: ['task_run'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'task_run',
+                    types: ['task_run'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'auth',
+                entity: 'secret',
+                types: ['standard_entity_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('auth__secret'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'auth',
+                            entity: 'secret',
+                            types: ['secret'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'auth',
+                    entity: 'secret',
+                    types: ['secret'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['standard_entity_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_decryptable'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_decryptable',
+                            types: ['secret_decryptable'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_decryptable',
+                    types: ['secret_decryptable'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['standard_entity_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_key'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: ['secret_key'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_key',
+                    types: ['secret_key'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
                 entity: 'task',
                 types: ['standard_entity_response'],
                 enum: undefined,
@@ -4261,7 +6494,7 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
-                entity: 'task_run',
+                entity: 'file',
                 types: ['standard_entity_response'],
                 enum: undefined,
                 method: undefined,
@@ -4274,12 +6507,12 @@ export const appReq: AppReq = {
                     isMetaField: false,
                     excludeFromForm: undefined,
                     dtype: {
-                        name: new Name('core__task_run'),
+                        name: new Name('core__file'),
                         kind: fieldkind.NestedKind,
                         namespace: {
                             service: 'core',
-                            entity: 'task_run',
-                            types: ['task_run'],
+                            entity: 'file',
+                            types: ['file'],
                             enum: undefined,
                             method: undefined,
                         },
@@ -4290,8 +6523,52 @@ export const appReq: AppReq = {
                 // All nested types should be initialized with their empty instances
                 const objectTypeInfo = appInfo.getTypeInfo({
                     service: 'core',
-                    entity: 'task_run',
-                    types: ['task_run'],
+                    entity: 'file',
+                    types: ['file'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'user',
+                entity: 'team',
+                types: ['standard_entity_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('user__team'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'user',
+                            entity: 'team',
+                            types: ['team'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'user',
+                    entity: 'team',
+                    types: ['team'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -4349,7 +6626,7 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
-                entity: 'file',
+                entity: 'job_applicant',
                 types: ['standard_entity_response'],
                 enum: undefined,
                 method: undefined,
@@ -4362,12 +6639,12 @@ export const appReq: AppReq = {
                     isMetaField: false,
                     excludeFromForm: undefined,
                     dtype: {
-                        name: new Name('core__file'),
+                        name: new Name('core__job_applicant'),
                         kind: fieldkind.NestedKind,
                         namespace: {
                             service: 'core',
-                            entity: 'file',
-                            types: ['file'],
+                            entity: 'job_applicant',
+                            types: ['job_applicant'],
                             enum: undefined,
                             method: undefined,
                         },
@@ -4378,96 +6655,8 @@ export const appReq: AppReq = {
                 // All nested types should be initialized with their empty instances
                 const objectTypeInfo = appInfo.getTypeInfo({
                     service: 'core',
-                    entity: 'file',
-                    types: ['file'],
-                    enum: undefined,
-                    method: undefined,
-                })
-
-                // Return the empty object
-                return {
-                    object: objectTypeInfo.getEmptyObject(appInfo),
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'auth',
-                entity: 'secret',
-                types: ['standard_entity_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('object'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('auth__secret'),
-                        kind: fieldkind.NestedKind,
-                        namespace: {
-                            service: 'auth',
-                            entity: 'secret',
-                            types: ['secret'],
-                            enum: undefined,
-                            method: undefined,
-                        },
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-                const objectTypeInfo = appInfo.getTypeInfo({
-                    service: 'auth',
-                    entity: 'secret',
-                    types: ['secret'],
-                    enum: undefined,
-                    method: undefined,
-                })
-
-                // Return the empty object
-                return {
-                    object: objectTypeInfo.getEmptyObject(appInfo),
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'user',
-                entity: 'team',
-                types: ['standard_entity_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('object'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('user__team'),
-                        kind: fieldkind.NestedKind,
-                        namespace: {
-                            service: 'user',
-                            entity: 'team',
-                            types: ['team'],
-                            enum: undefined,
-                            method: undefined,
-                        },
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-                const objectTypeInfo = appInfo.getTypeInfo({
-                    service: 'user',
-                    entity: 'team',
-                    types: ['team'],
+                    entity: 'job_applicant',
+                    types: ['job_applicant'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -5598,8 +7787,24 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
-                service: 'user',
-                entity: 'team',
+                service: 'core',
+                entity: 'secret_key',
+                types: ['type_condition'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+
+                // Return the empty object
+                return {}
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
                 types: ['update_request'],
                 enum: undefined,
                 method: undefined,
@@ -5612,12 +7817,12 @@ export const appReq: AppReq = {
                     isMetaField: false,
                     excludeFromForm: undefined,
                     dtype: {
-                        name: new Name('user__team'),
+                        name: new Name('core__secret_key'),
                         kind: fieldkind.NestedKind,
                         namespace: {
-                            service: 'user',
-                            entity: 'team',
-                            types: ['team'],
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: ['secret_key'],
                             enum: undefined,
                             method: undefined,
                         },
@@ -5630,13 +7835,13 @@ export const appReq: AppReq = {
                     isMetaField: false,
                     excludeFromForm: undefined,
                     dtype: {
-                        name: new Name('user__team__team_field'),
+                        name: new Name('core__secret_key__secret_key_field'),
                         kind: fieldkind.EnumKind,
                         namespace: {
-                            service: 'user',
-                            entity: 'team',
+                            service: 'core',
+                            entity: 'secret_key',
                             types: undefined,
-                            enum: 'team_field',
+                            enum: 'secret_key_field',
                             method: undefined,
                         },
                     },
@@ -5648,13 +7853,13 @@ export const appReq: AppReq = {
                     isMetaField: false,
                     excludeFromForm: undefined,
                     dtype: {
-                        name: new Name('user__team__team_field'),
+                        name: new Name('core__secret_key__secret_key_field'),
                         kind: fieldkind.EnumKind,
                         namespace: {
-                            service: 'user',
-                            entity: 'team',
+                            service: 'core',
+                            entity: 'secret_key',
                             types: undefined,
-                            enum: 'team_field',
+                            enum: 'secret_key_field',
                             method: undefined,
                         },
                     },
@@ -5663,9 +7868,9 @@ export const appReq: AppReq = {
             getEmptyObjectFunc: (appInfo: App) => {
                 // All nested types should be initialized with their empty instances
                 const objectTypeInfo = appInfo.getTypeInfo({
-                    service: 'user',
-                    entity: 'team',
-                    types: ['team'],
+                    service: 'core',
+                    entity: 'secret_key',
+                    types: ['secret_key'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -5748,170 +7953,6 @@ export const appReq: AppReq = {
                     service: 'core',
                     entity: 'file',
                     types: ['file'],
-                    enum: undefined,
-                    method: undefined,
-                })
-
-                // Return the empty object
-                return {
-                    object: objectTypeInfo.getEmptyObject(appInfo),
-                    fields: undefined,
-                    excludeFields: undefined,
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'auth',
-                entity: 'secret',
-                types: ['update_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('object'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('auth__secret'),
-                        kind: fieldkind.NestedKind,
-                        namespace: {
-                            service: 'auth',
-                            entity: 'secret',
-                            types: ['secret'],
-                            enum: undefined,
-                            method: undefined,
-                        },
-                    },
-                },
-                {
-                    name: new Name('fields'),
-                    isRepeated: true,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('auth__secret__secret_field'),
-                        kind: fieldkind.EnumKind,
-                        namespace: {
-                            service: 'auth',
-                            entity: 'secret',
-                            types: undefined,
-                            enum: 'secret_field',
-                            method: undefined,
-                        },
-                    },
-                },
-                {
-                    name: new Name('exclude_fields'),
-                    isRepeated: true,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('auth__secret__secret_field'),
-                        kind: fieldkind.EnumKind,
-                        namespace: {
-                            service: 'auth',
-                            entity: 'secret',
-                            types: undefined,
-                            enum: 'secret_field',
-                            method: undefined,
-                        },
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-                const objectTypeInfo = appInfo.getTypeInfo({
-                    service: 'auth',
-                    entity: 'secret',
-                    types: ['secret'],
-                    enum: undefined,
-                    method: undefined,
-                })
-
-                // Return the empty object
-                return {
-                    object: objectTypeInfo.getEmptyObject(appInfo),
-                    fields: undefined,
-                    excludeFields: undefined,
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'core',
-                entity: 'task',
-                types: ['update_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('object'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('core__task'),
-                        kind: fieldkind.NestedKind,
-                        namespace: {
-                            service: 'core',
-                            entity: 'task',
-                            types: ['task'],
-                            enum: undefined,
-                            method: undefined,
-                        },
-                    },
-                },
-                {
-                    name: new Name('fields'),
-                    isRepeated: true,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('core__task__task_field'),
-                        kind: fieldkind.EnumKind,
-                        namespace: {
-                            service: 'core',
-                            entity: 'task',
-                            types: undefined,
-                            enum: 'task_field',
-                            method: undefined,
-                        },
-                    },
-                },
-                {
-                    name: new Name('exclude_fields'),
-                    isRepeated: true,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('core__task__task_field'),
-                        kind: fieldkind.EnumKind,
-                        namespace: {
-                            service: 'core',
-                            entity: 'task',
-                            types: undefined,
-                            enum: 'task_field',
-                            method: undefined,
-                        },
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-                const objectTypeInfo = appInfo.getTypeInfo({
-                    service: 'core',
-                    entity: 'task',
-                    types: ['task'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -6009,6 +8050,252 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'user',
+                entity: 'team',
+                types: ['update_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('user__team'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'user',
+                            entity: 'team',
+                            types: ['team'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('fields'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('user__team__team_field'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'user',
+                            entity: 'team',
+                            types: undefined,
+                            enum: 'team_field',
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('exclude_fields'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('user__team__team_field'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'user',
+                            entity: 'team',
+                            types: undefined,
+                            enum: 'team_field',
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'user',
+                    entity: 'team',
+                    types: ['team'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                    fields: undefined,
+                    excludeFields: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task',
+                types: ['update_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__task'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'task',
+                            types: ['task'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('fields'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__task__task_field'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'task',
+                            types: undefined,
+                            enum: 'task_field',
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('exclude_fields'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__task__task_field'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'task',
+                            types: undefined,
+                            enum: 'task_field',
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'task',
+                    types: ['task'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                    fields: undefined,
+                    excludeFields: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['update_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_decryptable'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_decryptable',
+                            types: ['secret_decryptable'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('fields'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_decryptable__secret_decryptable_field'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_decryptable',
+                            types: undefined,
+                            enum: 'secret_decryptable_field',
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('exclude_fields'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_decryptable__secret_decryptable_field'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_decryptable',
+                            types: undefined,
+                            enum: 'secret_decryptable_field',
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_decryptable',
+                    types: ['secret_decryptable'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                    fields: undefined,
+                    excludeFields: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'user',
                 entity: 'user',
                 types: ['update_request'],
                 enum: undefined,
@@ -6076,6 +8363,170 @@ export const appReq: AppReq = {
                     service: 'user',
                     entity: 'user',
                     types: ['user'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                    fields: undefined,
+                    excludeFields: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['update_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__job_applicant'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'job_applicant',
+                            types: ['job_applicant'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('fields'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__job_applicant__job_applicant_field'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'job_applicant',
+                            types: undefined,
+                            enum: 'job_applicant_field',
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('exclude_fields'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__job_applicant__job_applicant_field'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'job_applicant',
+                            types: undefined,
+                            enum: 'job_applicant_field',
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'job_applicant',
+                    types: ['job_applicant'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                    fields: undefined,
+                    excludeFields: undefined,
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'auth',
+                entity: 'secret',
+                types: ['update_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('auth__secret'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'auth',
+                            entity: 'secret',
+                            types: ['secret'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('fields'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('auth__secret__secret_field'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'auth',
+                            entity: 'secret',
+                            types: undefined,
+                            enum: 'secret_field',
+                            method: undefined,
+                        },
+                    },
+                },
+                {
+                    name: new Name('exclude_fields'),
+                    isRepeated: true,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('auth__secret__secret_field'),
+                        kind: fieldkind.EnumKind,
+                        namespace: {
+                            service: 'auth',
+                            entity: 'secret',
+                            types: undefined,
+                            enum: 'secret_field',
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'auth',
+                    entity: 'secret',
+                    types: ['secret'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -6179,6 +8630,50 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
+                entity: 'job_applicant',
+                types: ['update_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__job_applicant'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'job_applicant',
+                            types: ['job_applicant'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'job_applicant',
+                    types: ['job_applicant'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
                 entity: 'task',
                 types: ['update_response'],
                 enum: undefined,
@@ -6210,50 +8705,6 @@ export const appReq: AppReq = {
                     service: 'core',
                     entity: 'task',
                     types: ['task'],
-                    enum: undefined,
-                    method: undefined,
-                })
-
-                // Return the empty object
-                return {
-                    object: objectTypeInfo.getEmptyObject(appInfo),
-                }
-            },
-        },
-        {
-            namespace: {
-                service: 'core',
-                entity: 'task_run',
-                types: ['update_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            fields: [
-                {
-                    name: new Name('object'),
-                    isRepeated: false,
-                    isOptional: false,
-                    isMetaField: false,
-                    excludeFromForm: undefined,
-                    dtype: {
-                        name: new Name('core__task_run'),
-                        kind: fieldkind.NestedKind,
-                        namespace: {
-                            service: 'core',
-                            entity: 'task_run',
-                            types: ['task_run'],
-                            enum: undefined,
-                            method: undefined,
-                        },
-                    },
-                },
-            ],
-            getEmptyObjectFunc: (appInfo: App) => {
-                // All nested types should be initialized with their empty instances
-                const objectTypeInfo = appInfo.getTypeInfo({
-                    service: 'core',
-                    entity: 'task_run',
-                    types: ['task_run'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -6310,6 +8761,94 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['update_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_key'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_key',
+                            types: ['secret_key'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_key',
+                    types: ['secret_key'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['update_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__secret_decryptable'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'secret_decryptable',
+                            types: ['secret_decryptable'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'secret_decryptable',
+                    types: ['secret_decryptable'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
                 service: 'auth',
                 entity: 'secret',
                 types: ['update_response'],
@@ -6342,6 +8881,50 @@ export const appReq: AppReq = {
                     service: 'auth',
                     entity: 'secret',
                     types: ['secret'],
+                    enum: undefined,
+                    method: undefined,
+                })
+
+                // Return the empty object
+                return {
+                    object: objectTypeInfo.getEmptyObject(appInfo),
+                }
+            },
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task_run',
+                types: ['update_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            fields: [
+                {
+                    name: new Name('object'),
+                    isRepeated: false,
+                    isOptional: false,
+                    isMetaField: false,
+                    excludeFromForm: undefined,
+                    dtype: {
+                        name: new Name('core__task_run'),
+                        kind: fieldkind.NestedKind,
+                        namespace: {
+                            service: 'core',
+                            entity: 'task_run',
+                            types: ['task_run'],
+                            enum: undefined,
+                            method: undefined,
+                        },
+                    },
+                },
+            ],
+            getEmptyObjectFunc: (appInfo: App) => {
+                // All nested types should be initialized with their empty instances
+                const objectTypeInfo = appInfo.getTypeInfo({
+                    service: 'core',
+                    entity: 'task_run',
+                    types: ['task_run'],
                     enum: undefined,
                     method: undefined,
                 })
@@ -7117,68 +9700,39 @@ export const appReq: AppReq = {
             values: [
                 {
                     id: 1,
+                    value: 'JobApplicant',
+                    description: undefined,
+                    displayValue: 'Job Applicant',
+                },
+                {
+                    id: 2,
                     value: 'File',
                     description: undefined,
                     displayValue: 'File',
                 },
                 {
-                    id: 2,
+                    id: 3,
+                    value: 'SecretKey',
+                    description: undefined,
+                    displayValue: 'Secret Key',
+                },
+                {
+                    id: 4,
+                    value: 'SecretDecryptable',
+                    description: undefined,
+                    displayValue: 'Secret Decryptable',
+                },
+                {
+                    id: 5,
                     value: 'Task',
                     description: undefined,
                     displayValue: 'Task',
                 },
                 {
-                    id: 3,
+                    id: 6,
                     value: 'TaskRun',
                     description: undefined,
                     displayValue: 'Task Run',
-                },
-            ],
-        },
-        {
-            namespace: {
-                service: undefined,
-                entity: undefined,
-                types: undefined,
-                enum: 'entity_name',
-                method: undefined,
-            },
-            values: [
-                {
-                    id: 1,
-                    value: 'Auth_Secret',
-                    description: undefined,
-                    displayValue: 'Auth -  Secret',
-                },
-                {
-                    id: 2,
-                    value: 'Core_File',
-                    description: undefined,
-                    displayValue: 'Core -  File',
-                },
-                {
-                    id: 3,
-                    value: 'Core_Task',
-                    description: undefined,
-                    displayValue: 'Core -  Task',
-                },
-                {
-                    id: 4,
-                    value: 'Core_TaskRun',
-                    description: undefined,
-                    displayValue: 'Core -  Task Run',
-                },
-                {
-                    id: 5,
-                    value: 'User_User',
-                    description: undefined,
-                    displayValue: 'User -  User',
-                },
-                {
-                    id: 6,
-                    value: 'User_Team',
-                    description: undefined,
-                    displayValue: 'User -  Team',
                 },
             ],
         },
@@ -7219,6 +9773,71 @@ export const appReq: AppReq = {
                     value: 'Secret',
                     description: undefined,
                     displayValue: 'Secret',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: undefined,
+                entity: undefined,
+                types: undefined,
+                enum: 'entity_name',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'Auth_Secret',
+                    description: undefined,
+                    displayValue: 'Auth -  Secret',
+                },
+                {
+                    id: 2,
+                    value: 'User_User',
+                    description: undefined,
+                    displayValue: 'User -  User',
+                },
+                {
+                    id: 3,
+                    value: 'User_Team',
+                    description: undefined,
+                    displayValue: 'User -  Team',
+                },
+                {
+                    id: 4,
+                    value: 'Core_JobApplicant',
+                    description: undefined,
+                    displayValue: 'Core -  Job Applicant',
+                },
+                {
+                    id: 5,
+                    value: 'Core_File',
+                    description: undefined,
+                    displayValue: 'Core -  File',
+                },
+                {
+                    id: 6,
+                    value: 'Core_SecretKey',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Key',
+                },
+                {
+                    id: 7,
+                    value: 'Core_SecretDecryptable',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Decryptable',
+                },
+                {
+                    id: 8,
+                    value: 'Core_Task',
+                    description: undefined,
+                    displayValue: 'Core -  Task',
+                },
+                {
+                    id: 9,
+                    value: 'Core_TaskRun',
+                    description: undefined,
+                    displayValue: 'Core -  Task Run',
                 },
             ],
         },
@@ -7295,6 +9914,29 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: undefined,
+                enum: 'format',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'PEM',
+                    description: undefined,
+                    displayValue: 'PEM',
+                },
+                {
+                    id: 2,
+                    value: 'OpenSSH',
+                    description: undefined,
+                    displayValue: 'Open SSH',
+                },
+            ],
+        },
+        {
+            namespace: {
                 service: undefined,
                 entity: undefined,
                 types: undefined,
@@ -7324,8 +9966,831 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: undefined,
+                enum: 'job_applicant_field',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'ID',
+                    description: undefined,
+                    displayValue: 'ID',
+                },
+                {
+                    id: 2,
+                    value: 'Name',
+                    description: undefined,
+                    displayValue: 'Name',
+                },
+                {
+                    id: 3,
+                    value: 'UserID',
+                    description: undefined,
+                    displayValue: 'User ID',
+                },
+                {
+                    id: 4,
+                    value: 'ResumeID',
+                    description: undefined,
+                    displayValue: 'Resume ID',
+                },
+                {
+                    id: 5,
+                    value: 'CreatedAt',
+                    description: undefined,
+                    displayValue: 'Created At',
+                },
+                {
+                    id: 6,
+                    value: 'UpdatedAt',
+                    description: undefined,
+                    displayValue: 'Updated At',
+                },
+                {
+                    id: 7,
+                    value: 'DeletedAt',
+                    description: undefined,
+                    displayValue: 'Deleted At',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'auth',
+                entity: undefined,
+                types: undefined,
+                enum: 'method_name',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'LoginUser',
+                    description: undefined,
+                    displayValue: 'Login User',
+                },
+                {
+                    id: 2,
+                    value: 'RegisterUser',
+                    description: undefined,
+                    displayValue: 'Register User',
+                },
+                {
+                    id: 3,
+                    value: 'AuthenticateToken',
+                    description: undefined,
+                    displayValue: 'Authenticate Token',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: undefined,
+                enum: 'method_name',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'Add',
+                    description: undefined,
+                    displayValue: 'Add',
+                },
+                {
+                    id: 2,
+                    value: 'Update',
+                    description: undefined,
+                    displayValue: 'Update',
+                },
+                {
+                    id: 3,
+                    value: 'Get',
+                    description: undefined,
+                    displayValue: 'Get',
+                },
+                {
+                    id: 4,
+                    value: 'List',
+                    description: undefined,
+                    displayValue: 'List',
+                },
+                {
+                    id: 5,
+                    value: 'QueryByText',
+                    description: undefined,
+                    displayValue: 'Query By Text',
+                },
+                {
+                    id: 6,
+                    value: 'HookCreatePre',
+                    description: undefined,
+                    displayValue: 'Hook Create Pre',
+                },
+                {
+                    id: 7,
+                    value: 'ActionDecrypt',
+                    description: undefined,
+                    displayValue: 'Action Decrypt',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task_run',
+                types: undefined,
+                enum: 'method_name',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'Add',
+                    description: undefined,
+                    displayValue: 'Add',
+                },
+                {
+                    id: 2,
+                    value: 'Update',
+                    description: undefined,
+                    displayValue: 'Update',
+                },
+                {
+                    id: 3,
+                    value: 'Get',
+                    description: undefined,
+                    displayValue: 'Get',
+                },
+                {
+                    id: 4,
+                    value: 'List',
+                    description: undefined,
+                    displayValue: 'List',
+                },
+                {
+                    id: 5,
+                    value: 'QueryByText',
+                    description: undefined,
+                    displayValue: 'Query By Text',
+                },
+                {
+                    id: 6,
+                    value: 'HookCreatePre',
+                    description: undefined,
+                    displayValue: 'Hook Create Pre',
+                },
+                {
+                    id: 7,
+                    value: 'ActionRun',
+                    description: undefined,
+                    displayValue: 'Action Run',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: undefined,
+                types: undefined,
+                enum: 'method_name',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'FileUpload',
+                    description: undefined,
+                    displayValue: 'File Upload',
+                },
+                {
+                    id: 2,
+                    value: 'SecretDecryptabeAdd',
+                    description: undefined,
+                    displayValue: 'Secret Decryptabe Add',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task',
+                types: undefined,
+                enum: 'method_name',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'Add',
+                    description: undefined,
+                    displayValue: 'Add',
+                },
+                {
+                    id: 2,
+                    value: 'Update',
+                    description: undefined,
+                    displayValue: 'Update',
+                },
+                {
+                    id: 3,
+                    value: 'Get',
+                    description: undefined,
+                    displayValue: 'Get',
+                },
+                {
+                    id: 4,
+                    value: 'List',
+                    description: undefined,
+                    displayValue: 'List',
+                },
+                {
+                    id: 5,
+                    value: 'QueryByText',
+                    description: undefined,
+                    displayValue: 'Query By Text',
+                },
+                {
+                    id: 6,
+                    value: 'HookSavePre',
+                    description: undefined,
+                    displayValue: 'Hook Save Pre',
+                },
+                {
+                    id: 7,
+                    value: 'ActionRun',
+                    description: undefined,
+                    displayValue: 'Action Run',
+                },
+            ],
+        },
+        {
+            namespace: {
                 service: 'auth',
                 entity: 'secret',
+                types: undefined,
+                enum: 'method_name',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'Add',
+                    description: undefined,
+                    displayValue: 'Add',
+                },
+                {
+                    id: 2,
+                    value: 'Update',
+                    description: undefined,
+                    displayValue: 'Update',
+                },
+                {
+                    id: 3,
+                    value: 'Get',
+                    description: undefined,
+                    displayValue: 'Get',
+                },
+                {
+                    id: 4,
+                    value: 'List',
+                    description: undefined,
+                    displayValue: 'List',
+                },
+                {
+                    id: 5,
+                    value: 'QueryByText',
+                    description: undefined,
+                    displayValue: 'Query By Text',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'user',
+                entity: 'user',
+                types: undefined,
+                enum: 'method_name',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'Add',
+                    description: undefined,
+                    displayValue: 'Add',
+                },
+                {
+                    id: 2,
+                    value: 'Update',
+                    description: undefined,
+                    displayValue: 'Update',
+                },
+                {
+                    id: 3,
+                    value: 'Get',
+                    description: undefined,
+                    displayValue: 'Get',
+                },
+                {
+                    id: 4,
+                    value: 'List',
+                    description: undefined,
+                    displayValue: 'List',
+                },
+                {
+                    id: 5,
+                    value: 'QueryByText',
+                    description: undefined,
+                    displayValue: 'Query By Text',
+                },
+                {
+                    id: 6,
+                    value: 'HookInit',
+                    description: undefined,
+                    displayValue: 'Hook Init',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: undefined,
+                entity: undefined,
+                types: undefined,
+                enum: 'method_name',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'Auth_LoginUser',
+                    description: undefined,
+                    displayValue: 'Auth -  Login User',
+                },
+                {
+                    id: 2,
+                    value: 'Auth_RegisterUser',
+                    description: undefined,
+                    displayValue: 'Auth -  Register User',
+                },
+                {
+                    id: 3,
+                    value: 'Auth_AuthenticateToken',
+                    description: undefined,
+                    displayValue: 'Auth -  Authenticate Token',
+                },
+                {
+                    id: 4,
+                    value: 'Core_FileUpload',
+                    description: undefined,
+                    displayValue: 'Core -  File Upload',
+                },
+                {
+                    id: 5,
+                    value: 'Core_SecretDecryptabeAdd',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Decryptabe Add',
+                },
+                {
+                    id: 6,
+                    value: 'Auth_Secret_Add',
+                    description: undefined,
+                    displayValue: 'Auth -  Secret -  Add',
+                },
+                {
+                    id: 7,
+                    value: 'Auth_Secret_Update',
+                    description: undefined,
+                    displayValue: 'Auth -  Secret -  Update',
+                },
+                {
+                    id: 8,
+                    value: 'Auth_Secret_Get',
+                    description: undefined,
+                    displayValue: 'Auth -  Secret -  Get',
+                },
+                {
+                    id: 9,
+                    value: 'Auth_Secret_List',
+                    description: undefined,
+                    displayValue: 'Auth -  Secret -  List',
+                },
+                {
+                    id: 10,
+                    value: 'Auth_Secret_QueryByText',
+                    description: undefined,
+                    displayValue: 'Auth -  Secret -  Query By Text',
+                },
+                {
+                    id: 11,
+                    value: 'User_User_Add',
+                    description: undefined,
+                    displayValue: 'User -  User -  Add',
+                },
+                {
+                    id: 12,
+                    value: 'User_User_Update',
+                    description: undefined,
+                    displayValue: 'User -  User -  Update',
+                },
+                {
+                    id: 13,
+                    value: 'User_User_Get',
+                    description: undefined,
+                    displayValue: 'User -  User -  Get',
+                },
+                {
+                    id: 14,
+                    value: 'User_User_List',
+                    description: undefined,
+                    displayValue: 'User -  User -  List',
+                },
+                {
+                    id: 15,
+                    value: 'User_User_QueryByText',
+                    description: undefined,
+                    displayValue: 'User -  User -  Query By Text',
+                },
+                {
+                    id: 16,
+                    value: 'User_Team_Add',
+                    description: undefined,
+                    displayValue: 'User -  Team -  Add',
+                },
+                {
+                    id: 17,
+                    value: 'User_Team_Update',
+                    description: undefined,
+                    displayValue: 'User -  Team -  Update',
+                },
+                {
+                    id: 18,
+                    value: 'User_Team_Get',
+                    description: undefined,
+                    displayValue: 'User -  Team -  Get',
+                },
+                {
+                    id: 19,
+                    value: 'User_Team_List',
+                    description: undefined,
+                    displayValue: 'User -  Team -  List',
+                },
+                {
+                    id: 20,
+                    value: 'User_Team_QueryByText',
+                    description: undefined,
+                    displayValue: 'User -  Team -  Query By Text',
+                },
+                {
+                    id: 21,
+                    value: 'Core_JobApplicant_Add',
+                    description: undefined,
+                    displayValue: 'Core -  Job Applicant -  Add',
+                },
+                {
+                    id: 22,
+                    value: 'Core_JobApplicant_Update',
+                    description: undefined,
+                    displayValue: 'Core -  Job Applicant -  Update',
+                },
+                {
+                    id: 23,
+                    value: 'Core_JobApplicant_Get',
+                    description: undefined,
+                    displayValue: 'Core -  Job Applicant -  Get',
+                },
+                {
+                    id: 24,
+                    value: 'Core_JobApplicant_List',
+                    description: undefined,
+                    displayValue: 'Core -  Job Applicant -  List',
+                },
+                {
+                    id: 25,
+                    value: 'Core_JobApplicant_QueryByText',
+                    description: undefined,
+                    displayValue: 'Core -  Job Applicant -  Query By Text',
+                },
+                {
+                    id: 26,
+                    value: 'Core_File_Add',
+                    description: undefined,
+                    displayValue: 'Core -  File -  Add',
+                },
+                {
+                    id: 27,
+                    value: 'Core_File_Update',
+                    description: undefined,
+                    displayValue: 'Core -  File -  Update',
+                },
+                {
+                    id: 28,
+                    value: 'Core_File_Get',
+                    description: undefined,
+                    displayValue: 'Core -  File -  Get',
+                },
+                {
+                    id: 29,
+                    value: 'Core_File_List',
+                    description: undefined,
+                    displayValue: 'Core -  File -  List',
+                },
+                {
+                    id: 30,
+                    value: 'Core_File_QueryByText',
+                    description: undefined,
+                    displayValue: 'Core -  File -  Query By Text',
+                },
+                {
+                    id: 31,
+                    value: 'Core_SecretKey_Add',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Key -  Add',
+                },
+                {
+                    id: 32,
+                    value: 'Core_SecretKey_Update',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Key -  Update',
+                },
+                {
+                    id: 33,
+                    value: 'Core_SecretKey_Get',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Key -  Get',
+                },
+                {
+                    id: 34,
+                    value: 'Core_SecretKey_List',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Key -  List',
+                },
+                {
+                    id: 35,
+                    value: 'Core_SecretKey_QueryByText',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Key -  Query By Text',
+                },
+                {
+                    id: 36,
+                    value: 'Core_SecretDecryptable_Add',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Decryptable -  Add',
+                },
+                {
+                    id: 37,
+                    value: 'Core_SecretDecryptable_Update',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Decryptable -  Update',
+                },
+                {
+                    id: 38,
+                    value: 'Core_SecretDecryptable_Get',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Decryptable -  Get',
+                },
+                {
+                    id: 39,
+                    value: 'Core_SecretDecryptable_List',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Decryptable -  List',
+                },
+                {
+                    id: 40,
+                    value: 'Core_SecretDecryptable_QueryByText',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Decryptable -  Query By Text',
+                },
+                {
+                    id: 41,
+                    value: 'Core_Task_Add',
+                    description: undefined,
+                    displayValue: 'Core -  Task -  Add',
+                },
+                {
+                    id: 42,
+                    value: 'Core_Task_Update',
+                    description: undefined,
+                    displayValue: 'Core -  Task -  Update',
+                },
+                {
+                    id: 43,
+                    value: 'Core_Task_Get',
+                    description: undefined,
+                    displayValue: 'Core -  Task -  Get',
+                },
+                {
+                    id: 44,
+                    value: 'Core_Task_List',
+                    description: undefined,
+                    displayValue: 'Core -  Task -  List',
+                },
+                {
+                    id: 45,
+                    value: 'Core_Task_QueryByText',
+                    description: undefined,
+                    displayValue: 'Core -  Task -  Query By Text',
+                },
+                {
+                    id: 46,
+                    value: 'Core_TaskRun_Add',
+                    description: undefined,
+                    displayValue: 'Core -  Task Run -  Add',
+                },
+                {
+                    id: 47,
+                    value: 'Core_TaskRun_Update',
+                    description: undefined,
+                    displayValue: 'Core -  Task Run -  Update',
+                },
+                {
+                    id: 48,
+                    value: 'Core_TaskRun_Get',
+                    description: undefined,
+                    displayValue: 'Core -  Task Run -  Get',
+                },
+                {
+                    id: 49,
+                    value: 'Core_TaskRun_List',
+                    description: undefined,
+                    displayValue: 'Core -  Task Run -  List',
+                },
+                {
+                    id: 50,
+                    value: 'Core_TaskRun_QueryByText',
+                    description: undefined,
+                    displayValue: 'Core -  Task Run -  Query By Text',
+                },
+                {
+                    id: 51,
+                    value: 'User_User_HookInit',
+                    description: undefined,
+                    displayValue: 'User -  User -  Hook Init',
+                },
+                {
+                    id: 52,
+                    value: 'Core_File_HookCreatePre',
+                    description: undefined,
+                    displayValue: 'Core -  File -  Hook Create Pre',
+                },
+                {
+                    id: 53,
+                    value: 'Core_SecretKey_HookInit',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Key -  Hook Init',
+                },
+                {
+                    id: 54,
+                    value: 'Core_SecretKey_HookCreatePre',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Key -  Hook Create Pre',
+                },
+                {
+                    id: 55,
+                    value: 'Core_SecretDecryptable_HookCreatePre',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Decryptable -  Hook Create Pre',
+                },
+                {
+                    id: 56,
+                    value: 'Core_Task_HookSavePre',
+                    description: undefined,
+                    displayValue: 'Core -  Task -  Hook Save Pre',
+                },
+                {
+                    id: 57,
+                    value: 'Core_TaskRun_HookCreatePre',
+                    description: undefined,
+                    displayValue: 'Core -  Task Run -  Hook Create Pre',
+                },
+                {
+                    id: 58,
+                    value: 'Core_SecretDecryptable_ActionDecrypt',
+                    description: undefined,
+                    displayValue: 'Core -  Secret Decryptable -  Action Decrypt',
+                },
+                {
+                    id: 59,
+                    value: 'Core_Task_ActionRun',
+                    description: undefined,
+                    displayValue: 'Core -  Task -  Action Run',
+                },
+                {
+                    id: 60,
+                    value: 'Core_TaskRun_ActionRun',
+                    description: undefined,
+                    displayValue: 'Core -  Task Run -  Action Run',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: undefined,
+                enum: 'method_name',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'Add',
+                    description: undefined,
+                    displayValue: 'Add',
+                },
+                {
+                    id: 2,
+                    value: 'Update',
+                    description: undefined,
+                    displayValue: 'Update',
+                },
+                {
+                    id: 3,
+                    value: 'Get',
+                    description: undefined,
+                    displayValue: 'Get',
+                },
+                {
+                    id: 4,
+                    value: 'List',
+                    description: undefined,
+                    displayValue: 'List',
+                },
+                {
+                    id: 5,
+                    value: 'QueryByText',
+                    description: undefined,
+                    displayValue: 'Query By Text',
+                },
+                {
+                    id: 6,
+                    value: 'HookInit',
+                    description: undefined,
+                    displayValue: 'Hook Init',
+                },
+                {
+                    id: 7,
+                    value: 'HookCreatePre',
+                    description: undefined,
+                    displayValue: 'Hook Create Pre',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'file',
+                types: undefined,
+                enum: 'method_name',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'Add',
+                    description: undefined,
+                    displayValue: 'Add',
+                },
+                {
+                    id: 2,
+                    value: 'Update',
+                    description: undefined,
+                    displayValue: 'Update',
+                },
+                {
+                    id: 3,
+                    value: 'Get',
+                    description: undefined,
+                    displayValue: 'Get',
+                },
+                {
+                    id: 4,
+                    value: 'List',
+                    description: undefined,
+                    displayValue: 'List',
+                },
+                {
+                    id: 5,
+                    value: 'QueryByText',
+                    description: undefined,
+                    displayValue: 'Query By Text',
+                },
+                {
+                    id: 6,
+                    value: 'HookCreatePre',
+                    description: undefined,
+                    displayValue: 'Hook Create Pre',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
                 types: undefined,
                 enum: 'method_name',
                 method: undefined,
@@ -7401,503 +10866,6 @@ export const appReq: AppReq = {
                     value: 'QueryByText',
                     description: undefined,
                     displayValue: 'Query By Text',
-                },
-            ],
-        },
-        {
-            namespace: {
-                service: undefined,
-                entity: undefined,
-                types: undefined,
-                enum: 'method_name',
-                method: undefined,
-            },
-            values: [
-                {
-                    id: 1,
-                    value: 'Auth_LoginUser',
-                    description: undefined,
-                    displayValue: 'Auth -  Login User',
-                },
-                {
-                    id: 2,
-                    value: 'Auth_RegisterUser',
-                    description: undefined,
-                    displayValue: 'Auth -  Register User',
-                },
-                {
-                    id: 3,
-                    value: 'Auth_AuthenticateToken',
-                    description: undefined,
-                    displayValue: 'Auth -  Authenticate Token',
-                },
-                {
-                    id: 4,
-                    value: 'Core_FileUpload',
-                    description: undefined,
-                    displayValue: 'Core -  File Upload',
-                },
-                {
-                    id: 5,
-                    value: 'Auth_Secret_Add',
-                    description: undefined,
-                    displayValue: 'Auth -  Secret -  Add',
-                },
-                {
-                    id: 6,
-                    value: 'Auth_Secret_Update',
-                    description: undefined,
-                    displayValue: 'Auth -  Secret -  Update',
-                },
-                {
-                    id: 7,
-                    value: 'Auth_Secret_Get',
-                    description: undefined,
-                    displayValue: 'Auth -  Secret -  Get',
-                },
-                {
-                    id: 8,
-                    value: 'Auth_Secret_List',
-                    description: undefined,
-                    displayValue: 'Auth -  Secret -  List',
-                },
-                {
-                    id: 9,
-                    value: 'Auth_Secret_QueryByText',
-                    description: undefined,
-                    displayValue: 'Auth -  Secret -  Query By Text',
-                },
-                {
-                    id: 10,
-                    value: 'Core_File_Add',
-                    description: undefined,
-                    displayValue: 'Core -  File -  Add',
-                },
-                {
-                    id: 11,
-                    value: 'Core_File_Update',
-                    description: undefined,
-                    displayValue: 'Core -  File -  Update',
-                },
-                {
-                    id: 12,
-                    value: 'Core_File_Get',
-                    description: undefined,
-                    displayValue: 'Core -  File -  Get',
-                },
-                {
-                    id: 13,
-                    value: 'Core_File_List',
-                    description: undefined,
-                    displayValue: 'Core -  File -  List',
-                },
-                {
-                    id: 14,
-                    value: 'Core_File_QueryByText',
-                    description: undefined,
-                    displayValue: 'Core -  File -  Query By Text',
-                },
-                {
-                    id: 15,
-                    value: 'Core_Task_Add',
-                    description: undefined,
-                    displayValue: 'Core -  Task -  Add',
-                },
-                {
-                    id: 16,
-                    value: 'Core_Task_Update',
-                    description: undefined,
-                    displayValue: 'Core -  Task -  Update',
-                },
-                {
-                    id: 17,
-                    value: 'Core_Task_Get',
-                    description: undefined,
-                    displayValue: 'Core -  Task -  Get',
-                },
-                {
-                    id: 18,
-                    value: 'Core_Task_List',
-                    description: undefined,
-                    displayValue: 'Core -  Task -  List',
-                },
-                {
-                    id: 19,
-                    value: 'Core_Task_QueryByText',
-                    description: undefined,
-                    displayValue: 'Core -  Task -  Query By Text',
-                },
-                {
-                    id: 20,
-                    value: 'Core_TaskRun_Add',
-                    description: undefined,
-                    displayValue: 'Core -  Task Run -  Add',
-                },
-                {
-                    id: 21,
-                    value: 'Core_TaskRun_Update',
-                    description: undefined,
-                    displayValue: 'Core -  Task Run -  Update',
-                },
-                {
-                    id: 22,
-                    value: 'Core_TaskRun_Get',
-                    description: undefined,
-                    displayValue: 'Core -  Task Run -  Get',
-                },
-                {
-                    id: 23,
-                    value: 'Core_TaskRun_List',
-                    description: undefined,
-                    displayValue: 'Core -  Task Run -  List',
-                },
-                {
-                    id: 24,
-                    value: 'Core_TaskRun_QueryByText',
-                    description: undefined,
-                    displayValue: 'Core -  Task Run -  Query By Text',
-                },
-                {
-                    id: 25,
-                    value: 'User_User_Add',
-                    description: undefined,
-                    displayValue: 'User -  User -  Add',
-                },
-                {
-                    id: 26,
-                    value: 'User_User_Update',
-                    description: undefined,
-                    displayValue: 'User -  User -  Update',
-                },
-                {
-                    id: 27,
-                    value: 'User_User_Get',
-                    description: undefined,
-                    displayValue: 'User -  User -  Get',
-                },
-                {
-                    id: 28,
-                    value: 'User_User_List',
-                    description: undefined,
-                    displayValue: 'User -  User -  List',
-                },
-                {
-                    id: 29,
-                    value: 'User_User_QueryByText',
-                    description: undefined,
-                    displayValue: 'User -  User -  Query By Text',
-                },
-                {
-                    id: 30,
-                    value: 'User_Team_Add',
-                    description: undefined,
-                    displayValue: 'User -  Team -  Add',
-                },
-                {
-                    id: 31,
-                    value: 'User_Team_Update',
-                    description: undefined,
-                    displayValue: 'User -  Team -  Update',
-                },
-                {
-                    id: 32,
-                    value: 'User_Team_Get',
-                    description: undefined,
-                    displayValue: 'User -  Team -  Get',
-                },
-                {
-                    id: 33,
-                    value: 'User_Team_List',
-                    description: undefined,
-                    displayValue: 'User -  Team -  List',
-                },
-                {
-                    id: 34,
-                    value: 'User_Team_QueryByText',
-                    description: undefined,
-                    displayValue: 'User -  Team -  Query By Text',
-                },
-                {
-                    id: 35,
-                    value: 'Core_File_HookCreatePre',
-                    description: undefined,
-                    displayValue: 'Core -  File -  Hook Create Pre',
-                },
-                {
-                    id: 36,
-                    value: 'Core_Task_HookSavePre',
-                    description: undefined,
-                    displayValue: 'Core -  Task -  Hook Save Pre',
-                },
-                {
-                    id: 37,
-                    value: 'Core_TaskRun_HookCreatePre',
-                    description: undefined,
-                    displayValue: 'Core -  Task Run -  Hook Create Pre',
-                },
-                {
-                    id: 38,
-                    value: 'User_User_HookInit',
-                    description: undefined,
-                    displayValue: 'User -  User -  Hook Init',
-                },
-                {
-                    id: 39,
-                    value: 'Core_Task_ActionRun',
-                    description: undefined,
-                    displayValue: 'Core -  Task -  Action Run',
-                },
-                {
-                    id: 40,
-                    value: 'Core_TaskRun_ActionRun',
-                    description: undefined,
-                    displayValue: 'Core -  Task Run -  Action Run',
-                },
-            ],
-        },
-        {
-            namespace: {
-                service: 'user',
-                entity: 'user',
-                types: undefined,
-                enum: 'method_name',
-                method: undefined,
-            },
-            values: [
-                {
-                    id: 1,
-                    value: 'Add',
-                    description: undefined,
-                    displayValue: 'Add',
-                },
-                {
-                    id: 2,
-                    value: 'Update',
-                    description: undefined,
-                    displayValue: 'Update',
-                },
-                {
-                    id: 3,
-                    value: 'Get',
-                    description: undefined,
-                    displayValue: 'Get',
-                },
-                {
-                    id: 4,
-                    value: 'List',
-                    description: undefined,
-                    displayValue: 'List',
-                },
-                {
-                    id: 5,
-                    value: 'QueryByText',
-                    description: undefined,
-                    displayValue: 'Query By Text',
-                },
-                {
-                    id: 6,
-                    value: 'HookInit',
-                    description: undefined,
-                    displayValue: 'Hook Init',
-                },
-            ],
-        },
-        {
-            namespace: {
-                service: 'core',
-                entity: 'task_run',
-                types: undefined,
-                enum: 'method_name',
-                method: undefined,
-            },
-            values: [
-                {
-                    id: 1,
-                    value: 'Add',
-                    description: undefined,
-                    displayValue: 'Add',
-                },
-                {
-                    id: 2,
-                    value: 'Update',
-                    description: undefined,
-                    displayValue: 'Update',
-                },
-                {
-                    id: 3,
-                    value: 'Get',
-                    description: undefined,
-                    displayValue: 'Get',
-                },
-                {
-                    id: 4,
-                    value: 'List',
-                    description: undefined,
-                    displayValue: 'List',
-                },
-                {
-                    id: 5,
-                    value: 'QueryByText',
-                    description: undefined,
-                    displayValue: 'Query By Text',
-                },
-                {
-                    id: 6,
-                    value: 'HookCreatePre',
-                    description: undefined,
-                    displayValue: 'Hook Create Pre',
-                },
-                {
-                    id: 7,
-                    value: 'ActionRun',
-                    description: undefined,
-                    displayValue: 'Action Run',
-                },
-            ],
-        },
-        {
-            namespace: {
-                service: 'core',
-                entity: 'task',
-                types: undefined,
-                enum: 'method_name',
-                method: undefined,
-            },
-            values: [
-                {
-                    id: 1,
-                    value: 'Add',
-                    description: undefined,
-                    displayValue: 'Add',
-                },
-                {
-                    id: 2,
-                    value: 'Update',
-                    description: undefined,
-                    displayValue: 'Update',
-                },
-                {
-                    id: 3,
-                    value: 'Get',
-                    description: undefined,
-                    displayValue: 'Get',
-                },
-                {
-                    id: 4,
-                    value: 'List',
-                    description: undefined,
-                    displayValue: 'List',
-                },
-                {
-                    id: 5,
-                    value: 'QueryByText',
-                    description: undefined,
-                    displayValue: 'Query By Text',
-                },
-                {
-                    id: 6,
-                    value: 'HookSavePre',
-                    description: undefined,
-                    displayValue: 'Hook Save Pre',
-                },
-                {
-                    id: 7,
-                    value: 'ActionRun',
-                    description: undefined,
-                    displayValue: 'Action Run',
-                },
-            ],
-        },
-        {
-            namespace: {
-                service: 'core',
-                entity: 'file',
-                types: undefined,
-                enum: 'method_name',
-                method: undefined,
-            },
-            values: [
-                {
-                    id: 1,
-                    value: 'Add',
-                    description: undefined,
-                    displayValue: 'Add',
-                },
-                {
-                    id: 2,
-                    value: 'Update',
-                    description: undefined,
-                    displayValue: 'Update',
-                },
-                {
-                    id: 3,
-                    value: 'Get',
-                    description: undefined,
-                    displayValue: 'Get',
-                },
-                {
-                    id: 4,
-                    value: 'List',
-                    description: undefined,
-                    displayValue: 'List',
-                },
-                {
-                    id: 5,
-                    value: 'QueryByText',
-                    description: undefined,
-                    displayValue: 'Query By Text',
-                },
-                {
-                    id: 6,
-                    value: 'HookCreatePre',
-                    description: undefined,
-                    displayValue: 'Hook Create Pre',
-                },
-            ],
-        },
-        {
-            namespace: {
-                service: 'core',
-                entity: undefined,
-                types: undefined,
-                enum: 'method_name',
-                method: undefined,
-            },
-            values: [
-                {
-                    id: 1,
-                    value: 'FileUpload',
-                    description: undefined,
-                    displayValue: 'File Upload',
-                },
-            ],
-        },
-        {
-            namespace: {
-                service: 'auth',
-                entity: undefined,
-                types: undefined,
-                enum: 'method_name',
-                method: undefined,
-            },
-            values: [
-                {
-                    id: 1,
-                    value: 'LoginUser',
-                    description: undefined,
-                    displayValue: 'Login User',
-                },
-                {
-                    id: 2,
-                    value: 'RegisterUser',
-                    description: undefined,
-                    displayValue: 'Register User',
-                },
-                {
-                    id: 3,
-                    value: 'AuthenticateToken',
-                    description: undefined,
-                    displayValue: 'Authenticate Token',
                 },
             ],
         },
@@ -8021,6 +10989,135 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: undefined,
+                enum: 'secret_decryptable_action',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'Decrypt',
+                    description: 'Decrypt the secret',
+                    displayValue: 'Decrypt',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: undefined,
+                types: undefined,
+                enum: 'secret_decryptable_add_request_field',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'ParentID',
+                    description: undefined,
+                    displayValue: 'Parent ID',
+                },
+                {
+                    id: 2,
+                    value: 'ID',
+                    description: undefined,
+                    displayValue: 'ID',
+                },
+                {
+                    id: 3,
+                    value: 'Value',
+                    description: undefined,
+                    displayValue: 'Value',
+                },
+                {
+                    id: 4,
+                    value: 'SecretKeyID',
+                    description: undefined,
+                    displayValue: 'Secret Key ID',
+                },
+                {
+                    id: 5,
+                    value: 'CreatedAt',
+                    description: undefined,
+                    displayValue: 'Created At',
+                },
+                {
+                    id: 6,
+                    value: 'UpdatedAt',
+                    description: undefined,
+                    displayValue: 'Updated At',
+                },
+                {
+                    id: 7,
+                    value: 'DeletedAt',
+                    description: undefined,
+                    displayValue: 'Deleted At',
+                },
+            ],
+        },
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: undefined,
+                enum: 'secret_decryptable_field',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'ID',
+                    description: undefined,
+                    displayValue: 'ID',
+                },
+                {
+                    id: 2,
+                    value: 'RawValue',
+                    description: undefined,
+                    displayValue: 'Raw Value',
+                },
+                {
+                    id: 3,
+                    value: 'EncryptedValue',
+                    description: undefined,
+                    displayValue: 'Encrypted Value',
+                },
+                {
+                    id: 4,
+                    value: 'Salt',
+                    description: undefined,
+                    displayValue: 'Salt',
+                },
+                {
+                    id: 5,
+                    value: 'CreatedAt',
+                    description: undefined,
+                    displayValue: 'Created At',
+                },
+                {
+                    id: 6,
+                    value: 'UpdatedAt',
+                    description: undefined,
+                    displayValue: 'Updated At',
+                },
+                {
+                    id: 7,
+                    value: 'DeletedAt',
+                    description: undefined,
+                    displayValue: 'Deleted At',
+                },
+                {
+                    id: 8,
+                    value: 'SecretKeyID',
+                    description: undefined,
+                    displayValue: 'Secret Key ID',
+                },
+            ],
+        },
+        {
+            namespace: {
                 service: 'auth',
                 entity: 'secret',
                 types: undefined,
@@ -8080,6 +11177,65 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: undefined,
+                enum: 'secret_key_field',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'ID',
+                    description: undefined,
+                    displayValue: 'ID',
+                },
+                {
+                    id: 2,
+                    value: 'Type',
+                    description: undefined,
+                    displayValue: 'Type',
+                },
+                {
+                    id: 3,
+                    value: 'PublicKey',
+                    description: undefined,
+                    displayValue: 'Public Key',
+                },
+                {
+                    id: 4,
+                    value: 'PrivateKeyFormat',
+                    description: undefined,
+                    displayValue: 'Private Key Format',
+                },
+                {
+                    id: 5,
+                    value: 'PublicKeyFormat',
+                    description: undefined,
+                    displayValue: 'Public Key Format',
+                },
+                {
+                    id: 6,
+                    value: 'CreatedAt',
+                    description: undefined,
+                    displayValue: 'Created At',
+                },
+                {
+                    id: 7,
+                    value: 'UpdatedAt',
+                    description: undefined,
+                    displayValue: 'Updated At',
+                },
+                {
+                    id: 8,
+                    value: 'DeletedAt',
+                    description: undefined,
+                    displayValue: 'Deleted At',
+                },
+            ],
+        },
+        {
+            namespace: {
                 service: undefined,
                 entity: undefined,
                 types: undefined,
@@ -8095,15 +11251,15 @@ export const appReq: AppReq = {
                 },
                 {
                     id: 2,
-                    value: 'Core',
-                    description: undefined,
-                    displayValue: 'Core',
-                },
-                {
-                    id: 3,
                     value: 'User',
                     description: undefined,
                     displayValue: 'User',
+                },
+                {
+                    id: 3,
+                    value: 'Core',
+                    description: undefined,
+                    displayValue: 'Core',
                 },
             ],
         },
@@ -8436,6 +11592,29 @@ export const appReq: AppReq = {
         },
         {
             namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: undefined,
+                enum: 'type',
+                method: undefined,
+            },
+            values: [
+                {
+                    id: 1,
+                    value: 'Ed25519',
+                    description: undefined,
+                    displayValue: 'Ed 25519',
+                },
+                {
+                    id: 2,
+                    value: 'RSA',
+                    description: undefined,
+                    displayValue: 'RSA',
+                },
+            ],
+        },
+        {
+            namespace: {
                 service: 'user',
                 entity: 'user',
                 types: undefined,
@@ -8618,6 +11797,37 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
+                entity: 'secret_decryptable',
+                types: undefined,
+                enum: undefined,
+                method: 'action_decrypt',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['standard_entity_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['standard_entity_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'POST',
+                    path: '/decrypt',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
                 entity: 'task',
                 types: undefined,
                 enum: undefined,
@@ -8672,6 +11882,37 @@ export const appReq: AppReq = {
                 {
                     method: 'POST',
                     path: '/run',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: undefined,
+                enum: undefined,
+                method: 'add',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['add_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['job_applicant'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'POST',
+                    path: '',
                     version: 1, // hard coded for now
                 },
             ],
@@ -8741,37 +11982,6 @@ export const appReq: AppReq = {
 
         {
             namespace: {
-                service: 'user',
-                entity: 'user',
-                types: undefined,
-                enum: undefined,
-                method: 'add',
-            },
-            requestTypeNamespace: {
-                service: 'user',
-                entity: 'user',
-                types: ['add_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            responseTypeNamespace: {
-                service: 'user',
-                entity: 'user',
-                types: ['user'],
-                enum: undefined,
-                method: undefined,
-            },
-            apis: [
-                {
-                    method: 'POST',
-                    path: '',
-                    version: 1, // hard coded for now
-                },
-            ],
-        },
-
-        {
-            namespace: {
                 service: 'core',
                 entity: 'task_run',
                 types: undefined,
@@ -8804,37 +12014,6 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
-                entity: 'task',
-                types: undefined,
-                enum: undefined,
-                method: 'add',
-            },
-            requestTypeNamespace: {
-                service: 'core',
-                entity: 'task',
-                types: ['add_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            responseTypeNamespace: {
-                service: 'core',
-                entity: 'task',
-                types: ['task'],
-                enum: undefined,
-                method: undefined,
-            },
-            apis: [
-                {
-                    method: 'POST',
-                    path: '',
-                    version: 1, // hard coded for now
-                },
-            ],
-        },
-
-        {
-            namespace: {
-                service: 'core',
                 entity: 'file',
                 types: undefined,
                 enum: undefined,
@@ -8851,6 +12030,130 @@ export const appReq: AppReq = {
                 service: 'core',
                 entity: 'file',
                 types: ['file'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'POST',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: undefined,
+                enum: undefined,
+                method: 'add',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['add_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['secret_decryptable'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'POST',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: undefined,
+                enum: undefined,
+                method: 'add',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['add_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['secret_key'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'POST',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'user',
+                entity: 'user',
+                types: undefined,
+                enum: undefined,
+                method: 'add',
+            },
+            requestTypeNamespace: {
+                service: 'user',
+                entity: 'user',
+                types: ['add_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'user',
+                entity: 'user',
+                types: ['user'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'POST',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task',
+                types: undefined,
+                enum: undefined,
+                method: 'add',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'task',
+                types: ['add_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'task',
+                types: ['task'],
                 enum: undefined,
                 method: undefined,
             },
@@ -8922,6 +12225,37 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
+                entity: 'secret_decryptable',
+                types: undefined,
+                enum: undefined,
+                method: 'get',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['get_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['secret_decryptable'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
                 entity: 'task',
                 types: undefined,
                 enum: undefined,
@@ -8952,23 +12286,23 @@ export const appReq: AppReq = {
 
         {
             namespace: {
-                service: 'user',
-                entity: 'user',
+                service: 'core',
+                entity: 'task_run',
                 types: undefined,
                 enum: undefined,
                 method: 'get',
             },
             requestTypeNamespace: {
-                service: 'user',
-                entity: 'user',
+                service: 'core',
+                entity: 'task_run',
                 types: ['get_request'],
                 enum: undefined,
                 method: undefined,
             },
             responseTypeNamespace: {
-                service: 'user',
-                entity: 'user',
-                types: ['user'],
+                service: 'core',
+                entity: 'task_run',
+                types: ['task_run'],
                 enum: undefined,
                 method: undefined,
             },
@@ -9000,6 +12334,99 @@ export const appReq: AppReq = {
                 service: 'user',
                 entity: 'team',
                 types: ['team'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: undefined,
+                enum: undefined,
+                method: 'get',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['get_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['job_applicant'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: undefined,
+                enum: undefined,
+                method: 'get',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['get_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['secret_key'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'user',
+                entity: 'user',
+                types: undefined,
+                enum: undefined,
+                method: 'get',
+            },
+            requestTypeNamespace: {
+                service: 'user',
+                entity: 'user',
+                types: ['get_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'user',
+                entity: 'user',
+                types: ['user'],
                 enum: undefined,
                 method: undefined,
             },
@@ -9076,37 +12503,6 @@ export const appReq: AppReq = {
 
         {
             namespace: {
-                service: 'core',
-                entity: 'task_run',
-                types: undefined,
-                enum: undefined,
-                method: 'get',
-            },
-            requestTypeNamespace: {
-                service: 'core',
-                entity: 'task_run',
-                types: ['get_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            responseTypeNamespace: {
-                service: 'core',
-                entity: 'task_run',
-                types: ['task_run'],
-                enum: undefined,
-                method: undefined,
-            },
-            apis: [
-                {
-                    method: 'GET',
-                    path: '',
-                    version: 1, // hard coded for now
-                },
-            ],
-        },
-
-        {
-            namespace: {
                 service: 'user',
                 entity: 'user',
                 types: undefined,
@@ -9139,6 +12535,130 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
+                entity: 'file',
+                types: undefined,
+                enum: undefined,
+                method: 'list',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'file',
+                types: ['list_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'file',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '/list',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: undefined,
+                enum: undefined,
+                method: 'list',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['list_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '/list',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task_run',
+                types: undefined,
+                enum: undefined,
+                method: 'list',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'task_run',
+                types: ['list_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'task_run',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '/list',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: undefined,
+                enum: undefined,
+                method: 'list',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['list_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '/list',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
                 entity: 'task',
                 types: undefined,
                 enum: undefined,
@@ -9154,6 +12674,37 @@ export const appReq: AppReq = {
             responseTypeNamespace: {
                 service: 'core',
                 entity: 'task',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '/list',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: undefined,
+                enum: undefined,
+                method: 'list',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['list_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
                 types: ['list_response'],
                 enum: undefined,
                 method: undefined,
@@ -9216,68 +12767,6 @@ export const appReq: AppReq = {
             responseTypeNamespace: {
                 service: 'auth',
                 entity: 'secret',
-                types: ['list_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            apis: [
-                {
-                    method: 'GET',
-                    path: '/list',
-                    version: 1, // hard coded for now
-                },
-            ],
-        },
-
-        {
-            namespace: {
-                service: 'core',
-                entity: 'task_run',
-                types: undefined,
-                enum: undefined,
-                method: 'list',
-            },
-            requestTypeNamespace: {
-                service: 'core',
-                entity: 'task_run',
-                types: ['list_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            responseTypeNamespace: {
-                service: 'core',
-                entity: 'task_run',
-                types: ['list_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            apis: [
-                {
-                    method: 'GET',
-                    path: '/list',
-                    version: 1, // hard coded for now
-                },
-            ],
-        },
-
-        {
-            namespace: {
-                service: 'core',
-                entity: 'file',
-                types: undefined,
-                enum: undefined,
-                method: 'list',
-            },
-            requestTypeNamespace: {
-                service: 'core',
-                entity: 'file',
-                types: ['list_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            responseTypeNamespace: {
-                service: 'core',
-                entity: 'file',
                 types: ['list_response'],
                 enum: undefined,
                 method: undefined,
@@ -9324,68 +12813,6 @@ export const appReq: AppReq = {
 
         {
             namespace: {
-                service: 'auth',
-                entity: 'secret',
-                types: undefined,
-                enum: undefined,
-                method: 'query_by_text',
-            },
-            requestTypeNamespace: {
-                service: 'auth',
-                entity: 'secret',
-                types: ['query_by_text_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            responseTypeNamespace: {
-                service: 'auth',
-                entity: 'secret',
-                types: ['list_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            apis: [
-                {
-                    method: 'GET',
-                    path: '/query_by_text',
-                    version: 1, // hard coded for now
-                },
-            ],
-        },
-
-        {
-            namespace: {
-                service: 'user',
-                entity: 'user',
-                types: undefined,
-                enum: undefined,
-                method: 'query_by_text',
-            },
-            requestTypeNamespace: {
-                service: 'user',
-                entity: 'user',
-                types: ['query_by_text_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            responseTypeNamespace: {
-                service: 'user',
-                entity: 'user',
-                types: ['list_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            apis: [
-                {
-                    method: 'GET',
-                    path: '/query_by_text',
-                    version: 1, // hard coded for now
-                },
-            ],
-        },
-
-        {
-            namespace: {
                 service: 'core',
                 entity: 'file',
                 types: undefined,
@@ -9449,6 +12876,68 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
+                entity: 'secret_decryptable',
+                types: undefined,
+                enum: undefined,
+                method: 'query_by_text',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['query_by_text_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '/query_by_text',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'auth',
+                entity: 'secret',
+                types: undefined,
+                enum: undefined,
+                method: 'query_by_text',
+            },
+            requestTypeNamespace: {
+                service: 'auth',
+                entity: 'secret',
+                types: ['query_by_text_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'auth',
+                entity: 'secret',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '/query_by_text',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
                 entity: 'task',
                 types: undefined,
                 enum: undefined,
@@ -9464,6 +12953,68 @@ export const appReq: AppReq = {
             responseTypeNamespace: {
                 service: 'core',
                 entity: 'task',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '/query_by_text',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: undefined,
+                enum: undefined,
+                method: 'query_by_text',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['query_by_text_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '/query_by_text',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'user',
+                entity: 'user',
+                types: undefined,
+                enum: undefined,
+                method: 'query_by_text',
+            },
+            requestTypeNamespace: {
+                service: 'user',
+                entity: 'user',
+                types: ['query_by_text_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'user',
+                entity: 'user',
                 types: ['list_response'],
                 enum: undefined,
                 method: undefined,
@@ -9495,6 +13046,37 @@ export const appReq: AppReq = {
             responseTypeNamespace: {
                 service: 'user',
                 entity: 'team',
+                types: ['list_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'GET',
+                    path: '/query_by_text',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: undefined,
+                enum: undefined,
+                method: 'query_by_text',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['query_by_text_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'job_applicant',
                 types: ['list_response'],
                 enum: undefined,
                 method: undefined,
@@ -9542,91 +13124,29 @@ export const appReq: AppReq = {
         {
             namespace: {
                 service: 'core',
-                entity: 'task_run',
+                entity: undefined,
                 types: undefined,
                 enum: undefined,
-                method: 'update',
+                method: 'secret_decryptabe_add',
             },
             requestTypeNamespace: {
                 service: 'core',
-                entity: 'task_run',
-                types: ['update_request'],
+                entity: undefined,
+                types: ['secret_decryptable_add_request'],
                 enum: undefined,
                 method: undefined,
             },
             responseTypeNamespace: {
                 service: 'core',
-                entity: 'task_run',
-                types: ['update_response'],
+                entity: 'secret_decryptable',
+                types: ['secret_decryptable'],
                 enum: undefined,
                 method: undefined,
             },
             apis: [
                 {
-                    method: 'PUT',
-                    path: '',
-                    version: 1, // hard coded for now
-                },
-            ],
-        },
-
-        {
-            namespace: {
-                service: 'user',
-                entity: 'team',
-                types: undefined,
-                enum: undefined,
-                method: 'update',
-            },
-            requestTypeNamespace: {
-                service: 'user',
-                entity: 'team',
-                types: ['update_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            responseTypeNamespace: {
-                service: 'user',
-                entity: 'team',
-                types: ['update_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            apis: [
-                {
-                    method: 'PUT',
-                    path: '',
-                    version: 1, // hard coded for now
-                },
-            ],
-        },
-
-        {
-            namespace: {
-                service: 'user',
-                entity: 'user',
-                types: undefined,
-                enum: undefined,
-                method: 'update',
-            },
-            requestTypeNamespace: {
-                service: 'user',
-                entity: 'user',
-                types: ['update_request'],
-                enum: undefined,
-                method: undefined,
-            },
-            responseTypeNamespace: {
-                service: 'user',
-                entity: 'user',
-                types: ['update_response'],
-                enum: undefined,
-                method: undefined,
-            },
-            apis: [
-                {
-                    method: 'PUT',
-                    path: '',
+                    method: 'POST',
+                    path: 'secret/add',
                     version: 1, // hard coded for now
                 },
             ],
@@ -9681,6 +13201,192 @@ export const appReq: AppReq = {
             responseTypeNamespace: {
                 service: 'core',
                 entity: 'file',
+                types: ['update_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'PUT',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: undefined,
+                enum: undefined,
+                method: 'update',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['update_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'job_applicant',
+                types: ['update_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'PUT',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: undefined,
+                enum: undefined,
+                method: 'update',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['update_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'secret_key',
+                types: ['update_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'PUT',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'user',
+                entity: 'team',
+                types: undefined,
+                enum: undefined,
+                method: 'update',
+            },
+            requestTypeNamespace: {
+                service: 'user',
+                entity: 'team',
+                types: ['update_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'user',
+                entity: 'team',
+                types: ['update_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'PUT',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'task_run',
+                types: undefined,
+                enum: undefined,
+                method: 'update',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'task_run',
+                types: ['update_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'task_run',
+                types: ['update_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'PUT',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'user',
+                entity: 'user',
+                types: undefined,
+                enum: undefined,
+                method: 'update',
+            },
+            requestTypeNamespace: {
+                service: 'user',
+                entity: 'user',
+                types: ['update_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'user',
+                entity: 'user',
+                types: ['update_response'],
+                enum: undefined,
+                method: undefined,
+            },
+            apis: [
+                {
+                    method: 'PUT',
+                    path: '',
+                    version: 1, // hard coded for now
+                },
+            ],
+        },
+
+        {
+            namespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: undefined,
+                enum: undefined,
+                method: 'update',
+            },
+            requestTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
+                types: ['update_request'],
+                enum: undefined,
+                method: undefined,
+            },
+            responseTypeNamespace: {
+                service: 'core',
+                entity: 'secret_decryptable',
                 types: ['update_response'],
                 enum: undefined,
                 method: undefined,
@@ -11244,33 +14950,51 @@ const enumReqs: EnumReq[] = [
             },
             {
                 id: 2,
-                value: 'Core_File',
-                description: undefined,
-                displayValue: 'Core -  File',
-            },
-            {
-                id: 3,
-                value: 'Core_Task',
-                description: undefined,
-                displayValue: 'Core -  Task',
-            },
-            {
-                id: 4,
-                value: 'Core_TaskRun',
-                description: undefined,
-                displayValue: 'Core -  Task Run',
-            },
-            {
-                id: 5,
                 value: 'User_User',
                 description: undefined,
                 displayValue: 'User -  User',
             },
             {
-                id: 6,
+                id: 3,
                 value: 'User_Team',
                 description: undefined,
                 displayValue: 'User -  Team',
+            },
+            {
+                id: 4,
+                value: 'Core_JobApplicant',
+                description: undefined,
+                displayValue: 'Core -  Job Applicant',
+            },
+            {
+                id: 5,
+                value: 'Core_File',
+                description: undefined,
+                displayValue: 'Core -  File',
+            },
+            {
+                id: 6,
+                value: 'Core_SecretKey',
+                description: undefined,
+                displayValue: 'Core -  Secret Key',
+            },
+            {
+                id: 7,
+                value: 'Core_SecretDecryptable',
+                description: undefined,
+                displayValue: 'Core -  Secret Decryptable',
+            },
+            {
+                id: 8,
+                value: 'Core_Task',
+                description: undefined,
+                displayValue: 'Core -  Task',
+            },
+            {
+                id: 9,
+                value: 'Core_TaskRun',
+                description: undefined,
+                displayValue: 'Core -  Task Run',
             },
         ],
     },
@@ -11338,216 +15062,336 @@ const enumReqs: EnumReq[] = [
             },
             {
                 id: 5,
+                value: 'Core_SecretDecryptabeAdd',
+                description: undefined,
+                displayValue: 'Core -  Secret Decryptabe Add',
+            },
+            {
+                id: 6,
                 value: 'Auth_Secret_Add',
                 description: undefined,
                 displayValue: 'Auth -  Secret -  Add',
             },
             {
-                id: 6,
+                id: 7,
                 value: 'Auth_Secret_Update',
                 description: undefined,
                 displayValue: 'Auth -  Secret -  Update',
             },
             {
-                id: 7,
+                id: 8,
                 value: 'Auth_Secret_Get',
                 description: undefined,
                 displayValue: 'Auth -  Secret -  Get',
             },
             {
-                id: 8,
+                id: 9,
                 value: 'Auth_Secret_List',
                 description: undefined,
                 displayValue: 'Auth -  Secret -  List',
             },
             {
-                id: 9,
+                id: 10,
                 value: 'Auth_Secret_QueryByText',
                 description: undefined,
                 displayValue: 'Auth -  Secret -  Query By Text',
             },
             {
-                id: 10,
-                value: 'Core_File_Add',
-                description: undefined,
-                displayValue: 'Core -  File -  Add',
-            },
-            {
                 id: 11,
-                value: 'Core_File_Update',
-                description: undefined,
-                displayValue: 'Core -  File -  Update',
-            },
-            {
-                id: 12,
-                value: 'Core_File_Get',
-                description: undefined,
-                displayValue: 'Core -  File -  Get',
-            },
-            {
-                id: 13,
-                value: 'Core_File_List',
-                description: undefined,
-                displayValue: 'Core -  File -  List',
-            },
-            {
-                id: 14,
-                value: 'Core_File_QueryByText',
-                description: undefined,
-                displayValue: 'Core -  File -  Query By Text',
-            },
-            {
-                id: 15,
-                value: 'Core_Task_Add',
-                description: undefined,
-                displayValue: 'Core -  Task -  Add',
-            },
-            {
-                id: 16,
-                value: 'Core_Task_Update',
-                description: undefined,
-                displayValue: 'Core -  Task -  Update',
-            },
-            {
-                id: 17,
-                value: 'Core_Task_Get',
-                description: undefined,
-                displayValue: 'Core -  Task -  Get',
-            },
-            {
-                id: 18,
-                value: 'Core_Task_List',
-                description: undefined,
-                displayValue: 'Core -  Task -  List',
-            },
-            {
-                id: 19,
-                value: 'Core_Task_QueryByText',
-                description: undefined,
-                displayValue: 'Core -  Task -  Query By Text',
-            },
-            {
-                id: 20,
-                value: 'Core_TaskRun_Add',
-                description: undefined,
-                displayValue: 'Core -  Task Run -  Add',
-            },
-            {
-                id: 21,
-                value: 'Core_TaskRun_Update',
-                description: undefined,
-                displayValue: 'Core -  Task Run -  Update',
-            },
-            {
-                id: 22,
-                value: 'Core_TaskRun_Get',
-                description: undefined,
-                displayValue: 'Core -  Task Run -  Get',
-            },
-            {
-                id: 23,
-                value: 'Core_TaskRun_List',
-                description: undefined,
-                displayValue: 'Core -  Task Run -  List',
-            },
-            {
-                id: 24,
-                value: 'Core_TaskRun_QueryByText',
-                description: undefined,
-                displayValue: 'Core -  Task Run -  Query By Text',
-            },
-            {
-                id: 25,
                 value: 'User_User_Add',
                 description: undefined,
                 displayValue: 'User -  User -  Add',
             },
             {
-                id: 26,
+                id: 12,
                 value: 'User_User_Update',
                 description: undefined,
                 displayValue: 'User -  User -  Update',
             },
             {
-                id: 27,
+                id: 13,
                 value: 'User_User_Get',
                 description: undefined,
                 displayValue: 'User -  User -  Get',
             },
             {
-                id: 28,
+                id: 14,
                 value: 'User_User_List',
                 description: undefined,
                 displayValue: 'User -  User -  List',
             },
             {
-                id: 29,
+                id: 15,
                 value: 'User_User_QueryByText',
                 description: undefined,
                 displayValue: 'User -  User -  Query By Text',
             },
             {
-                id: 30,
+                id: 16,
                 value: 'User_Team_Add',
                 description: undefined,
                 displayValue: 'User -  Team -  Add',
             },
             {
-                id: 31,
+                id: 17,
                 value: 'User_Team_Update',
                 description: undefined,
                 displayValue: 'User -  Team -  Update',
             },
             {
-                id: 32,
+                id: 18,
                 value: 'User_Team_Get',
                 description: undefined,
                 displayValue: 'User -  Team -  Get',
             },
             {
-                id: 33,
+                id: 19,
                 value: 'User_Team_List',
                 description: undefined,
                 displayValue: 'User -  Team -  List',
             },
             {
-                id: 34,
+                id: 20,
                 value: 'User_Team_QueryByText',
                 description: undefined,
                 displayValue: 'User -  Team -  Query By Text',
             },
             {
-                id: 35,
-                value: 'Core_File_HookCreatePre',
+                id: 21,
+                value: 'Core_JobApplicant_Add',
                 description: undefined,
-                displayValue: 'Core -  File -  Hook Create Pre',
+                displayValue: 'Core -  Job Applicant -  Add',
+            },
+            {
+                id: 22,
+                value: 'Core_JobApplicant_Update',
+                description: undefined,
+                displayValue: 'Core -  Job Applicant -  Update',
+            },
+            {
+                id: 23,
+                value: 'Core_JobApplicant_Get',
+                description: undefined,
+                displayValue: 'Core -  Job Applicant -  Get',
+            },
+            {
+                id: 24,
+                value: 'Core_JobApplicant_List',
+                description: undefined,
+                displayValue: 'Core -  Job Applicant -  List',
+            },
+            {
+                id: 25,
+                value: 'Core_JobApplicant_QueryByText',
+                description: undefined,
+                displayValue: 'Core -  Job Applicant -  Query By Text',
+            },
+            {
+                id: 26,
+                value: 'Core_File_Add',
+                description: undefined,
+                displayValue: 'Core -  File -  Add',
+            },
+            {
+                id: 27,
+                value: 'Core_File_Update',
+                description: undefined,
+                displayValue: 'Core -  File -  Update',
+            },
+            {
+                id: 28,
+                value: 'Core_File_Get',
+                description: undefined,
+                displayValue: 'Core -  File -  Get',
+            },
+            {
+                id: 29,
+                value: 'Core_File_List',
+                description: undefined,
+                displayValue: 'Core -  File -  List',
+            },
+            {
+                id: 30,
+                value: 'Core_File_QueryByText',
+                description: undefined,
+                displayValue: 'Core -  File -  Query By Text',
+            },
+            {
+                id: 31,
+                value: 'Core_SecretKey_Add',
+                description: undefined,
+                displayValue: 'Core -  Secret Key -  Add',
+            },
+            {
+                id: 32,
+                value: 'Core_SecretKey_Update',
+                description: undefined,
+                displayValue: 'Core -  Secret Key -  Update',
+            },
+            {
+                id: 33,
+                value: 'Core_SecretKey_Get',
+                description: undefined,
+                displayValue: 'Core -  Secret Key -  Get',
+            },
+            {
+                id: 34,
+                value: 'Core_SecretKey_List',
+                description: undefined,
+                displayValue: 'Core -  Secret Key -  List',
+            },
+            {
+                id: 35,
+                value: 'Core_SecretKey_QueryByText',
+                description: undefined,
+                displayValue: 'Core -  Secret Key -  Query By Text',
             },
             {
                 id: 36,
-                value: 'Core_Task_HookSavePre',
+                value: 'Core_SecretDecryptable_Add',
                 description: undefined,
-                displayValue: 'Core -  Task -  Hook Save Pre',
+                displayValue: 'Core -  Secret Decryptable -  Add',
             },
             {
                 id: 37,
-                value: 'Core_TaskRun_HookCreatePre',
+                value: 'Core_SecretDecryptable_Update',
                 description: undefined,
-                displayValue: 'Core -  Task Run -  Hook Create Pre',
+                displayValue: 'Core -  Secret Decryptable -  Update',
             },
             {
                 id: 38,
+                value: 'Core_SecretDecryptable_Get',
+                description: undefined,
+                displayValue: 'Core -  Secret Decryptable -  Get',
+            },
+            {
+                id: 39,
+                value: 'Core_SecretDecryptable_List',
+                description: undefined,
+                displayValue: 'Core -  Secret Decryptable -  List',
+            },
+            {
+                id: 40,
+                value: 'Core_SecretDecryptable_QueryByText',
+                description: undefined,
+                displayValue: 'Core -  Secret Decryptable -  Query By Text',
+            },
+            {
+                id: 41,
+                value: 'Core_Task_Add',
+                description: undefined,
+                displayValue: 'Core -  Task -  Add',
+            },
+            {
+                id: 42,
+                value: 'Core_Task_Update',
+                description: undefined,
+                displayValue: 'Core -  Task -  Update',
+            },
+            {
+                id: 43,
+                value: 'Core_Task_Get',
+                description: undefined,
+                displayValue: 'Core -  Task -  Get',
+            },
+            {
+                id: 44,
+                value: 'Core_Task_List',
+                description: undefined,
+                displayValue: 'Core -  Task -  List',
+            },
+            {
+                id: 45,
+                value: 'Core_Task_QueryByText',
+                description: undefined,
+                displayValue: 'Core -  Task -  Query By Text',
+            },
+            {
+                id: 46,
+                value: 'Core_TaskRun_Add',
+                description: undefined,
+                displayValue: 'Core -  Task Run -  Add',
+            },
+            {
+                id: 47,
+                value: 'Core_TaskRun_Update',
+                description: undefined,
+                displayValue: 'Core -  Task Run -  Update',
+            },
+            {
+                id: 48,
+                value: 'Core_TaskRun_Get',
+                description: undefined,
+                displayValue: 'Core -  Task Run -  Get',
+            },
+            {
+                id: 49,
+                value: 'Core_TaskRun_List',
+                description: undefined,
+                displayValue: 'Core -  Task Run -  List',
+            },
+            {
+                id: 50,
+                value: 'Core_TaskRun_QueryByText',
+                description: undefined,
+                displayValue: 'Core -  Task Run -  Query By Text',
+            },
+            {
+                id: 51,
                 value: 'User_User_HookInit',
                 description: undefined,
                 displayValue: 'User -  User -  Hook Init',
             },
             {
-                id: 39,
+                id: 52,
+                value: 'Core_File_HookCreatePre',
+                description: undefined,
+                displayValue: 'Core -  File -  Hook Create Pre',
+            },
+            {
+                id: 53,
+                value: 'Core_SecretKey_HookInit',
+                description: undefined,
+                displayValue: 'Core -  Secret Key -  Hook Init',
+            },
+            {
+                id: 54,
+                value: 'Core_SecretKey_HookCreatePre',
+                description: undefined,
+                displayValue: 'Core -  Secret Key -  Hook Create Pre',
+            },
+            {
+                id: 55,
+                value: 'Core_SecretDecryptable_HookCreatePre',
+                description: undefined,
+                displayValue: 'Core -  Secret Decryptable -  Hook Create Pre',
+            },
+            {
+                id: 56,
+                value: 'Core_Task_HookSavePre',
+                description: undefined,
+                displayValue: 'Core -  Task -  Hook Save Pre',
+            },
+            {
+                id: 57,
+                value: 'Core_TaskRun_HookCreatePre',
+                description: undefined,
+                displayValue: 'Core -  Task Run -  Hook Create Pre',
+            },
+            {
+                id: 58,
+                value: 'Core_SecretDecryptable_ActionDecrypt',
+                description: undefined,
+                displayValue: 'Core -  Secret Decryptable -  Action Decrypt',
+            },
+            {
+                id: 59,
                 value: 'Core_Task_ActionRun',
                 description: undefined,
                 displayValue: 'Core -  Task -  Action Run',
             },
             {
-                id: 40,
+                id: 60,
                 value: 'Core_TaskRun_ActionRun',
                 description: undefined,
                 displayValue: 'Core -  Task Run -  Action Run',
@@ -11689,15 +15533,15 @@ const enumReqs: EnumReq[] = [
             },
             {
                 id: 2,
-                value: 'Core',
-                description: undefined,
-                displayValue: 'Core',
-            },
-            {
-                id: 3,
                 value: 'User',
                 description: undefined,
                 displayValue: 'User',
+            },
+            {
+                id: 3,
+                value: 'Core',
+                description: undefined,
+                displayValue: 'Core',
             },
         ],
     },

@@ -30,10 +30,11 @@ app:
               other_association_name: task
           hooks:
             - type: save_pre
-              # is_static: true
+              is_static: true
           actions:
             - name: run
               description: Run the task
+              is_static: true
 
         - name: TaskRun
           description: Represents a run of a scheduled task
@@ -62,7 +63,8 @@ app:
               name: task
           hooks:
             - type: create_pre
-              # is_static: true
+              is_static: true
           actions:
             - name: run
               description: Run the task
+              is_static: true

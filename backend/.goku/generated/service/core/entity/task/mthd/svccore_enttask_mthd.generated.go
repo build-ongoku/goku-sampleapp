@@ -11,7 +11,7 @@ import (
 	svccore_enttask_clientimpl "sampleapp/backend/.goku/generated/service/core/entity/task/clientimpl"
 	svccore_enttask_dal "sampleapp/backend/.goku/generated/service/core/entity/task/dal"
 	svccore_enttask_typ "sampleapp/backend/.goku/generated/service/core/entity/task/typ"
-	custom_svccore_enttask_mthd "sampleapp/backend/src/service/core/task/mthd"
+	sttc_svccore_enttask_mthd "sampleapp/backend/.goku/static/service/core/task/mthd"
 )
 
 var llog = log.GetLogger().WithHeading("Methods")
@@ -50,7 +50,8 @@ func (c customClient) ActionRun(ctx context.Context, req svccore_enttask_typ.Sta
 	// Fetch the app client and make it available under the custom client
 	otherC := c.getClientFn(ctx)
 	c.Client = otherC
-	resp, err = custom_svccore_enttask_mthd.ActionRun(ctx, c, req)
+
+	resp, err = sttc_svccore_enttask_mthd.ActionRun(ctx, c, req)
 	if err != nil {
 		return resp, err
 	}
@@ -70,7 +71,8 @@ func (c customClient) HookSavePre(ctx context.Context, req svccore_enttask_typ.T
 	// Fetch the app client and make it available under the custom client
 	otherC := c.getClientFn(ctx)
 	c.Client = otherC
-	resp, err = custom_svccore_enttask_mthd.HookSavePre(ctx, c, req)
+
+	resp, err = sttc_svccore_enttask_mthd.HookSavePre(ctx, c, req)
 	if err != nil {
 		return resp, err
 	}

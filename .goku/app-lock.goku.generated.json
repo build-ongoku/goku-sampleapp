@@ -8,22 +8,42 @@
     ],
     "entities": [
         { "name": "File", "description": "", "options": {}, "actions": null, "associations": null, "hooks": [{ "type": "create_pre", "is_static": true }] },
+        { "name": "JobApplicant", "description": "", "options": {}, "actions": null, "associations": null, "hooks": null },
         { "name": "Secret", "description": "A secret is a credential that is used to authenticate a user", "options": {}, "actions": null, "associations": null, "hooks": null },
+        {
+            "name": "SecretDecryptable",
+            "description": "A secret that we can decrypt and recover (unlike user passwords).",
+            "options": {},
+            "actions": [{ "name": "Decrypt", "description": "Decrypt the secret", "is_static": true }],
+            "associations": [{ "relationship": "child_of", "type": "one", "entity": "$.service[Core].entity[SecretKey]", "name": "SecretKey", "other_association_name": "Secrets" }],
+            "hooks": [{ "type": "create_pre", "is_static": true }]
+        },
+        {
+            "name": "SecretKey",
+            "description": "",
+            "options": {},
+            "actions": null,
+            "associations": [{ "relationship": "parent_of", "type": "many", "entity": "$.service[Core].entity[SecretDecryptable]", "name": "Secrets", "other_association_name": "SecretKey" }],
+            "hooks": [
+                { "type": "init", "is_static": true },
+                { "type": "create_pre", "is_static": true }
+            ]
+        },
         {
             "name": "Task",
             "description": "Represents a scheduled call to a method",
             "options": {},
-            "actions": [{ "name": "Run", "description": "Run the task" }],
+            "actions": [{ "name": "Run", "description": "Run the task", "is_static": true }],
             "associations": [{ "relationship": "parent_of", "type": "many", "entity": "$.service[Core].entity[TaskRun]", "name": "TaskRuns", "other_association_name": "Task" }],
-            "hooks": [{ "type": "save_pre" }]
+            "hooks": [{ "type": "save_pre", "is_static": true }]
         },
         {
             "name": "TaskRun",
             "description": "Represents a run of a scheduled task",
             "options": {},
-            "actions": [{ "name": "Run", "description": "Run the task" }],
+            "actions": [{ "name": "Run", "description": "Run the task", "is_static": true }],
             "associations": [{ "relationship": "child_of", "type": "one", "entity": "$.service[Core].entity[Task]", "name": "Task", "other_association_name": "" }],
-            "hooks": [{ "type": "create_pre" }]
+            "hooks": [{ "type": "create_pre", "is_static": true }]
         },
         {
             "name": "Team",
@@ -44,11 +64,14 @@
     ],
     "types": [
         { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_File", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "User_User", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Auth_Secret", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "User_Team", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_TaskRun", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_SecretDecryptable", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_JobApplicant", "options": { "nested_options": {} } }], "options": {} },
         { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_Task", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_SecretKey", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Auth_Secret", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_TaskRun", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "User_User", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "AddRequest", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "User_Team", "options": { "nested_options": {} } }], "options": {} },
         {
             "name": "Address",
             "description": "",
@@ -214,6 +237,7 @@
             ],
             "options": {}
         },
+        { "name": "FormatCondition", "description": "", "fields": null, "options": {} },
         { "name": "GenderCondition", "description": "", "fields": null, "options": {} },
         { "name": "GetRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "ID", "options": { "nested_options": {} } }], "options": {} },
         { "name": "GetRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "ID", "options": { "nested_options": {} } }], "options": {} },
@@ -221,15 +245,118 @@
         { "name": "GetRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "ID", "options": { "nested_options": {} } }], "options": {} },
         { "name": "GetRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "ID", "options": { "nested_options": {} } }], "options": {} },
         { "name": "GetRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "ID", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "ListRequest", "description": "", "fields": [{ "name": "Filter", "description": "", "data_type": "Auth_Secret_SecretFilter", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "ListRequest", "description": "", "fields": [{ "name": "Filter", "description": "", "data_type": "User_Team_TeamFilter", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "ListRequest", "description": "", "fields": [{ "name": "Filter", "description": "", "data_type": "User_User_UserFilter", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "ListRequest", "description": "", "fields": [{ "name": "Filter", "description": "", "data_type": "Core_File_FileFilter", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "GetRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "ID", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "GetRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "ID", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "GetRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "ID", "options": { "nested_options": {} } }], "options": {} },
+        {
+            "name": "JobApplicant",
+            "description": "Main type for entity JobApplicant",
+            "fields": [
+                {
+                    "name": "ID",
+                    "description": "",
+                    "data_type": "ID",
+                    "options": { "is_primary_key": true, "is_meta_field": true, "is_immutable": true, "is_set_internally": true, "nested_options": {} }
+                },
+                { "name": "Name", "description": "", "data_type": "String", "options": { "golang_tags": { "validate": ["required"] }, "nested_options": {} } },
+                { "name": "UserID", "description": "", "data_type": "Core_User", "options": { "golang_tags": { "validate": ["required"] }, "nested_options": {} } },
+                { "name": "ResumeID", "description": "", "data_type": "File", "options": { "golang_tags": { "validate": ["required"] }, "nested_options": {} } },
+                { "name": "CreatedAt", "description": "", "data_type": "Timestamp", "options": { "is_meta_field": true, "is_immutable": true, "is_set_internally": true, "nested_options": {} } },
+                {
+                    "name": "UpdatedAt",
+                    "description": "",
+                    "data_type": "Timestamp",
+                    "options": { "is_meta_field": true, "is_set_internally_by_dal": true, "is_set_internally": true, "nested_options": {} }
+                },
+                {
+                    "name": "DeletedAt",
+                    "description": "",
+                    "data_type": "Timestamp",
+                    "options": { "is_optional": true, "is_meta_field": true, "is_set_internally_by_dal": true, "is_set_internally": true, "nested_options": {} }
+                }
+            ],
+            "options": {}
+        },
+        { "name": "JobApplicantFieldCondition", "description": "", "fields": null, "options": {} },
+        {
+            "name": "JobApplicantFilter",
+            "description": "",
+            "fields": [
+                { "name": "ID", "description": "", "data_type": "IDCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "Name", "description": "", "data_type": "StringCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "UserID", "description": "", "data_type": "IDCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "ResumeID", "description": "", "data_type": "IDCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "CreatedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "UpdatedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "DeletedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "And", "description": "", "data_type": "Core_JobApplicant_JobApplicantFilter", "is_repeated": true, "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "Or", "description": "", "data_type": "Core_JobApplicant_JobApplicantFilter", "is_repeated": true, "options": { "is_optional": true, "nested_options": {} } }
+            ],
+            "options": {}
+        },
+        {
+            "name": "ListRequest",
+            "description": "",
+            "fields": [{ "name": "Filter", "description": "", "data_type": "Core_SecretDecryptable_SecretDecryptableFilter", "options": { "nested_options": {} } }],
+            "options": {}
+        },
         { "name": "ListRequest", "description": "", "fields": [{ "name": "Filter", "description": "", "data_type": "Core_Task_TaskFilter", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "ListRequest", "description": "", "fields": [{ "name": "Filter", "description": "", "data_type": "User_Team_TeamFilter", "options": { "nested_options": {} } }], "options": {} },
+        {
+            "name": "ListRequest",
+            "description": "",
+            "fields": [{ "name": "Filter", "description": "", "data_type": "Core_JobApplicant_JobApplicantFilter", "options": { "nested_options": {} } }],
+            "options": {}
+        },
+        { "name": "ListRequest", "description": "", "fields": [{ "name": "Filter", "description": "", "data_type": "User_User_UserFilter", "options": { "nested_options": {} } }], "options": {} },
+        {
+            "name": "ListRequest",
+            "description": "",
+            "fields": [{ "name": "Filter", "description": "", "data_type": "Core_SecretKey_SecretKeyFilter", "options": { "nested_options": {} } }],
+            "options": {}
+        },
         {
             "name": "ListRequest",
             "description": "",
             "fields": [{ "name": "Filter", "description": "", "data_type": "Core_TaskRun_TaskRunFilter", "options": { "nested_options": {} } }],
+            "options": {}
+        },
+        { "name": "ListRequest", "description": "", "fields": [{ "name": "Filter", "description": "", "data_type": "Auth_Secret_SecretFilter", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "ListRequest", "description": "", "fields": [{ "name": "Filter", "description": "", "data_type": "Core_File_FileFilter", "options": { "nested_options": {} } }], "options": {} },
+        {
+            "name": "ListResponse",
+            "description": "",
+            "fields": [
+                { "name": "Items", "description": "", "data_type": "Core_JobApplicant", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "Count", "description": "", "data_type": "Number", "options": { "nested_options": {} } }
+            ],
+            "options": {}
+        },
+        {
+            "name": "ListResponse",
+            "description": "",
+            "fields": [
+                { "name": "Items", "description": "", "data_type": "User_User", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "Count", "description": "", "data_type": "Number", "options": { "nested_options": {} } }
+            ],
+            "options": {}
+        },
+        {
+            "name": "ListResponse",
+            "description": "",
+            "fields": [
+                { "name": "Items", "description": "", "data_type": "Core_File", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "Count", "description": "", "data_type": "Number", "options": { "nested_options": {} } }
+            ],
+            "options": {}
+        },
+        {
+            "name": "ListResponse",
+            "description": "",
+            "fields": [
+                { "name": "Items", "description": "", "data_type": "User_Team", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "Count", "description": "", "data_type": "Number", "options": { "nested_options": {} } }
+            ],
             "options": {}
         },
         {
@@ -254,34 +381,25 @@
             "name": "ListResponse",
             "description": "",
             "fields": [
-                { "name": "Items", "description": "", "data_type": "User_User", "is_repeated": true, "options": { "nested_options": {} } },
-                { "name": "Count", "description": "", "data_type": "Number", "options": { "nested_options": {} } }
-            ],
-            "options": {}
-        },
-        {
-            "name": "ListResponse",
-            "description": "",
-            "fields": [
-                { "name": "Items", "description": "", "data_type": "User_Team", "is_repeated": true, "options": { "nested_options": {} } },
-                { "name": "Count", "description": "", "data_type": "Number", "options": { "nested_options": {} } }
-            ],
-            "options": {}
-        },
-        {
-            "name": "ListResponse",
-            "description": "",
-            "fields": [
-                { "name": "Items", "description": "", "data_type": "Core_File", "is_repeated": true, "options": { "nested_options": {} } },
-                { "name": "Count", "description": "", "data_type": "Number", "options": { "nested_options": {} } }
-            ],
-            "options": {}
-        },
-        {
-            "name": "ListResponse",
-            "description": "",
-            "fields": [
                 { "name": "Items", "description": "", "data_type": "Auth_Secret", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "Count", "description": "", "data_type": "Number", "options": { "nested_options": {} } }
+            ],
+            "options": {}
+        },
+        {
+            "name": "ListResponse",
+            "description": "",
+            "fields": [
+                { "name": "Items", "description": "", "data_type": "Core_SecretKey", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "Count", "description": "", "data_type": "Number", "options": { "nested_options": {} } }
+            ],
+            "options": {}
+        },
+        {
+            "name": "ListResponse",
+            "description": "",
+            "fields": [
+                { "name": "Items", "description": "", "data_type": "Core_SecretDecryptable", "is_repeated": true, "options": { "nested_options": {} } },
                 { "name": "Count", "description": "", "data_type": "Number", "options": { "nested_options": {} } }
             ],
             "options": {}
@@ -295,6 +413,9 @@
             ],
             "options": { "is_request_type": true }
         },
+        { "name": "MethodNameCondition", "description": "", "fields": null, "options": {} },
+        { "name": "MethodNameCondition", "description": "", "fields": null, "options": {} },
+        { "name": "MethodNameCondition", "description": "", "fields": null, "options": {} },
         { "name": "MethodNameCondition", "description": "", "fields": null, "options": {} },
         { "name": "MethodNameCondition", "description": "", "fields": null, "options": {} },
         { "name": "MethodNameCondition", "description": "", "fields": null, "options": {} },
@@ -366,6 +487,9 @@
         { "name": "QueryByTextRequest", "description": "", "fields": [{ "name": "QueryText", "description": "", "data_type": "String", "options": { "nested_options": {} } }], "options": {} },
         { "name": "QueryByTextRequest", "description": "", "fields": [{ "name": "QueryText", "description": "", "data_type": "String", "options": { "nested_options": {} } }], "options": {} },
         { "name": "QueryByTextRequest", "description": "", "fields": [{ "name": "QueryText", "description": "", "data_type": "String", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "QueryByTextRequest", "description": "", "fields": [{ "name": "QueryText", "description": "", "data_type": "String", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "QueryByTextRequest", "description": "", "fields": [{ "name": "QueryText", "description": "", "data_type": "String", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "QueryByTextRequest", "description": "", "fields": [{ "name": "QueryText", "description": "", "data_type": "String", "options": { "nested_options": {} } }], "options": {} },
         {
             "name": "RegisterUserRequest",
             "description": "",
@@ -407,6 +531,81 @@
             ],
             "options": {}
         },
+        {
+            "name": "SecretDecryptable",
+            "description": "Main type for entity SecretDecryptable",
+            "fields": [
+                {
+                    "name": "ID",
+                    "description": "",
+                    "data_type": "ID",
+                    "options": { "is_primary_key": true, "is_meta_field": true, "is_immutable": true, "is_set_internally": true, "nested_options": {} }
+                },
+                { "name": "RawValue", "description": "", "data_type": "String", "options": { "is_optional": true, "is_transient_input": true, "nested_options": {} } },
+                { "name": "EncryptedValue", "description": "", "data_type": "String", "options": { "is_set_internally": true, "golang_tags": { "validate": ["required"] }, "nested_options": {} } },
+                { "name": "Salt", "description": "", "data_type": "String", "options": { "is_set_internally": true, "golang_tags": { "validate": ["required"] }, "nested_options": {} } },
+                { "name": "CreatedAt", "description": "", "data_type": "Timestamp", "options": { "is_meta_field": true, "is_immutable": true, "is_set_internally": true, "nested_options": {} } },
+                {
+                    "name": "UpdatedAt",
+                    "description": "",
+                    "data_type": "Timestamp",
+                    "options": { "is_meta_field": true, "is_set_internally_by_dal": true, "is_set_internally": true, "nested_options": {} }
+                },
+                {
+                    "name": "DeletedAt",
+                    "description": "",
+                    "data_type": "Timestamp",
+                    "options": { "is_optional": true, "is_meta_field": true, "is_set_internally_by_dal": true, "is_set_internally": true, "nested_options": {} }
+                },
+                { "name": "SecretKeyID", "description": "", "data_type": "Core_SecretKey", "options": { "nested_options": {} } }
+            ],
+            "options": {}
+        },
+        { "name": "SecretDecryptableActionCondition", "description": "", "fields": null, "options": {} },
+        {
+            "name": "SecretDecryptableAddRequest",
+            "description": "",
+            "fields": [
+                { "name": "Value", "description": "", "data_type": "String", "options": { "golang_tags": { "validate": ["required"] }, "nested_options": {} } },
+                { "name": "SecretKeyID", "description": "", "data_type": "ID", "options": { "is_optional": true, "golang_tags": { "validate": ["uuid"] }, "nested_options": {} } }
+            ],
+            "options": {}
+        },
+        { "name": "SecretDecryptableAddRequestFieldCondition", "description": "", "fields": null, "options": {} },
+        {
+            "name": "SecretDecryptableAddRequestFilter",
+            "description": "",
+            "fields": [
+                { "name": "ParentID", "description": "", "data_type": "IDCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "ID", "description": "", "data_type": "IDCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "Value", "description": "", "data_type": "StringCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "SecretKeyID", "description": "", "data_type": "IDCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "CreatedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "UpdatedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "DeletedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "And", "description": "", "data_type": "Core_SecretDecryptableAddRequestFilter", "is_repeated": true, "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "Or", "description": "", "data_type": "Core_SecretDecryptableAddRequestFilter", "is_repeated": true, "options": { "is_optional": true, "nested_options": {} } }
+            ],
+            "options": {}
+        },
+        { "name": "SecretDecryptableFieldCondition", "description": "", "fields": null, "options": {} },
+        {
+            "name": "SecretDecryptableFilter",
+            "description": "",
+            "fields": [
+                { "name": "ID", "description": "", "data_type": "IDCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "RawValue", "description": "", "data_type": "StringCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "EncryptedValue", "description": "", "data_type": "StringCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "Salt", "description": "", "data_type": "StringCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "CreatedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "UpdatedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "DeletedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "SecretKeyID", "description": "", "data_type": "IDCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "And", "description": "", "data_type": "Core_SecretDecryptable_SecretDecryptableFilter", "is_repeated": true, "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "Or", "description": "", "data_type": "Core_SecretDecryptable_SecretDecryptableFilter", "is_repeated": true, "options": { "is_optional": true, "nested_options": {} } }
+            ],
+            "options": {}
+        },
         { "name": "SecretFieldCondition", "description": "", "fields": null, "options": {} },
         {
             "name": "SecretFilter",
@@ -425,19 +624,98 @@
             ],
             "options": {}
         },
+        {
+            "name": "SecretKey",
+            "description": "Main type for entity SecretKey",
+            "fields": [
+                {
+                    "name": "ID",
+                    "description": "",
+                    "data_type": "ID",
+                    "options": { "is_primary_key": true, "is_meta_field": true, "is_immutable": true, "is_set_internally": true, "nested_options": {} }
+                },
+                { "name": "Type", "description": "", "data_type": "Core_SecretKey_Type", "options": { "golang_tags": { "validate": ["required"] }, "nested_options": {} } },
+                { "name": "PublicKey", "description": "", "data_type": "String", "options": { "is_set_internally": true, "golang_tags": { "validate": ["required"] }, "nested_options": {} } },
+                {
+                    "name": "PrivateKeyFormat",
+                    "description": "",
+                    "data_type": "Core_SecretKey_Format",
+                    "options": { "is_set_internally": true, "golang_tags": { "validate": ["required"] }, "nested_options": {} }
+                },
+                {
+                    "name": "PublicKeyFormat",
+                    "description": "",
+                    "data_type": "Core_SecretKey_Format",
+                    "options": { "is_set_internally": true, "golang_tags": { "validate": ["required"] }, "nested_options": {} }
+                },
+                { "name": "CreatedAt", "description": "", "data_type": "Timestamp", "options": { "is_meta_field": true, "is_immutable": true, "is_set_internally": true, "nested_options": {} } },
+                {
+                    "name": "UpdatedAt",
+                    "description": "",
+                    "data_type": "Timestamp",
+                    "options": { "is_meta_field": true, "is_set_internally_by_dal": true, "is_set_internally": true, "nested_options": {} }
+                },
+                {
+                    "name": "DeletedAt",
+                    "description": "",
+                    "data_type": "Timestamp",
+                    "options": { "is_optional": true, "is_meta_field": true, "is_set_internally_by_dal": true, "is_set_internally": true, "nested_options": {} }
+                }
+            ],
+            "options": {}
+        },
+        { "name": "SecretKeyFieldCondition", "description": "", "fields": null, "options": {} },
+        {
+            "name": "SecretKeyFilter",
+            "description": "",
+            "fields": [
+                { "name": "ID", "description": "", "data_type": "IDCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "Type", "description": "", "data_type": "TypeCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "PublicKey", "description": "", "data_type": "StringCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "PrivateKeyFormat", "description": "", "data_type": "FormatCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "PublicKeyFormat", "description": "", "data_type": "FormatCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "CreatedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "UpdatedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "DeletedAt", "description": "", "data_type": "TimestampCondition", "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "And", "description": "", "data_type": "Core_SecretKey_SecretKeyFilter", "is_repeated": true, "options": { "is_optional": true, "nested_options": {} } },
+                { "name": "Or", "description": "", "data_type": "Core_SecretKey_SecretKeyFilter", "is_repeated": true, "options": { "is_optional": true, "nested_options": {} } }
+            ],
+            "options": {}
+        },
         { "name": "ServiceNameCondition", "description": "", "fields": null, "options": {} },
-        { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "Auth_Secret", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "Core_JobApplicant", "options": { "nested_options": {} } }], "options": {} },
         { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "Core_TaskRun", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "Core_Task", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "User_User", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "Core_File", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "Core_SecretKey", "options": { "nested_options": {} } }], "options": {} },
         { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "User_Team", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "StandardEntityResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_Task", "options": { "nested_options": {} } }], "options": {} },
+        {
+            "name": "StandardEntityRequest",
+            "description": "",
+            "fields": [{ "name": "ID", "description": "", "data_type": "Core_SecretDecryptable", "options": { "nested_options": {} } }],
+            "options": {}
+        },
+        { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "Core_File", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "Core_Task", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "Auth_Secret", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "StandardEntityRequest", "description": "", "fields": [{ "name": "ID", "description": "", "data_type": "User_User", "options": { "nested_options": {} } }], "options": {} },
         { "name": "StandardEntityResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_TaskRun", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "StandardEntityResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "User_User", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "StandardEntityResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_File", "options": { "nested_options": {} } }], "options": {} },
         { "name": "StandardEntityResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Auth_Secret", "options": { "nested_options": {} } }], "options": {} },
+        {
+            "name": "StandardEntityResponse",
+            "description": "",
+            "fields": [{ "name": "Object", "description": "", "data_type": "Core_SecretDecryptable", "options": { "nested_options": {} } }],
+            "options": {}
+        },
+        { "name": "StandardEntityResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_SecretKey", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "StandardEntityResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_Task", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "StandardEntityResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_File", "options": { "nested_options": {} } }], "options": {} },
         { "name": "StandardEntityResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "User_Team", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "StandardEntityResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "User_User", "options": { "nested_options": {} } }], "options": {} },
+        {
+            "name": "StandardEntityResponse",
+            "description": "",
+            "fields": [{ "name": "Object", "description": "", "data_type": "Core_JobApplicant", "options": { "nested_options": {} } }],
+            "options": {}
+        },
         { "name": "StatusCondition", "description": "", "fields": null, "options": {} },
         { "name": "StorageClientCondition", "description": "", "fields": null, "options": {} },
         {
@@ -600,13 +878,14 @@
         },
         { "name": "TriggeredByCondition", "description": "", "fields": null, "options": {} },
         { "name": "TypeCondition", "description": "", "fields": null, "options": {} },
+        { "name": "TypeCondition", "description": "", "fields": null, "options": {} },
         {
             "name": "UpdateRequest",
             "description": "",
             "fields": [
-                { "name": "Object", "description": "", "data_type": "User_Team", "options": { "nested_options": {} } },
-                { "name": "Fields", "description": "", "data_type": "User_Team_TeamField", "is_repeated": true, "options": { "nested_options": {} } },
-                { "name": "ExcludeFields", "description": "", "data_type": "User_Team_TeamField", "is_repeated": true, "options": { "nested_options": {} } }
+                { "name": "Object", "description": "", "data_type": "Core_SecretKey", "options": { "nested_options": {} } },
+                { "name": "Fields", "description": "", "data_type": "Core_SecretKey_SecretKeyField", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "ExcludeFields", "description": "", "data_type": "Core_SecretKey_SecretKeyField", "is_repeated": true, "options": { "nested_options": {} } }
             ],
             "options": {}
         },
@@ -624,9 +903,19 @@
             "name": "UpdateRequest",
             "description": "",
             "fields": [
-                { "name": "Object", "description": "", "data_type": "Auth_Secret", "options": { "nested_options": {} } },
-                { "name": "Fields", "description": "", "data_type": "Auth_Secret_SecretField", "is_repeated": true, "options": { "nested_options": {} } },
-                { "name": "ExcludeFields", "description": "", "data_type": "Auth_Secret_SecretField", "is_repeated": true, "options": { "nested_options": {} } }
+                { "name": "Object", "description": "", "data_type": "Core_TaskRun", "options": { "nested_options": {} } },
+                { "name": "Fields", "description": "", "data_type": "Core_TaskRun_TaskRunField", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "ExcludeFields", "description": "", "data_type": "Core_TaskRun_TaskRunField", "is_repeated": true, "options": { "nested_options": {} } }
+            ],
+            "options": {}
+        },
+        {
+            "name": "UpdateRequest",
+            "description": "",
+            "fields": [
+                { "name": "Object", "description": "", "data_type": "User_Team", "options": { "nested_options": {} } },
+                { "name": "Fields", "description": "", "data_type": "User_Team_TeamField", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "ExcludeFields", "description": "", "data_type": "User_Team_TeamField", "is_repeated": true, "options": { "nested_options": {} } }
             ],
             "options": {}
         },
@@ -644,9 +933,9 @@
             "name": "UpdateRequest",
             "description": "",
             "fields": [
-                { "name": "Object", "description": "", "data_type": "Core_TaskRun", "options": { "nested_options": {} } },
-                { "name": "Fields", "description": "", "data_type": "Core_TaskRun_TaskRunField", "is_repeated": true, "options": { "nested_options": {} } },
-                { "name": "ExcludeFields", "description": "", "data_type": "Core_TaskRun_TaskRunField", "is_repeated": true, "options": { "nested_options": {} } }
+                { "name": "Object", "description": "", "data_type": "Core_SecretDecryptable", "options": { "nested_options": {} } },
+                { "name": "Fields", "description": "", "data_type": "Core_SecretDecryptable_SecretDecryptableField", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "ExcludeFields", "description": "", "data_type": "Core_SecretDecryptable_SecretDecryptableField", "is_repeated": true, "options": { "nested_options": {} } }
             ],
             "options": {}
         },
@@ -660,12 +949,35 @@
             ],
             "options": {}
         },
+        {
+            "name": "UpdateRequest",
+            "description": "",
+            "fields": [
+                { "name": "Object", "description": "", "data_type": "Core_JobApplicant", "options": { "nested_options": {} } },
+                { "name": "Fields", "description": "", "data_type": "Core_JobApplicant_JobApplicantField", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "ExcludeFields", "description": "", "data_type": "Core_JobApplicant_JobApplicantField", "is_repeated": true, "options": { "nested_options": {} } }
+            ],
+            "options": {}
+        },
+        {
+            "name": "UpdateRequest",
+            "description": "",
+            "fields": [
+                { "name": "Object", "description": "", "data_type": "Auth_Secret", "options": { "nested_options": {} } },
+                { "name": "Fields", "description": "", "data_type": "Auth_Secret_SecretField", "is_repeated": true, "options": { "nested_options": {} } },
+                { "name": "ExcludeFields", "description": "", "data_type": "Auth_Secret_SecretField", "is_repeated": true, "options": { "nested_options": {} } }
+            ],
+            "options": {}
+        },
         { "name": "UpdateResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_File", "options": { "nested_options": {} } }], "options": {} },
         { "name": "UpdateResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "User_Team", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "UpdateResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_JobApplicant", "options": { "nested_options": {} } }], "options": {} },
         { "name": "UpdateResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_Task", "options": { "nested_options": {} } }], "options": {} },
-        { "name": "UpdateResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_TaskRun", "options": { "nested_options": {} } }], "options": {} },
         { "name": "UpdateResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "User_User", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "UpdateResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_SecretKey", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "UpdateResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_SecretDecryptable", "options": { "nested_options": {} } }], "options": {} },
         { "name": "UpdateResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Auth_Secret", "options": { "nested_options": {} } }], "options": {} },
+        { "name": "UpdateResponse", "description": "", "fields": [{ "name": "Object", "description": "", "data_type": "Core_TaskRun", "options": { "nested_options": {} } }], "options": {} },
         {
             "name": "User",
             "description": "Main type for entity User",
@@ -797,21 +1109,12 @@
         {
             "name": "EntityName",
             "values": [
-                { "name": "File", "description": "", "id": 1, "options": {} },
-                { "name": "Task", "description": "", "id": 2, "options": {} },
-                { "name": "TaskRun", "description": "", "id": 3, "options": {} }
-            ],
-            "options": {}
-        },
-        {
-            "name": "EntityName",
-            "values": [
-                { "name": "Auth_Secret", "description": "", "id": 1, "options": {} },
-                { "name": "Core_File", "description": "", "id": 2, "options": {} },
-                { "name": "Core_Task", "description": "", "id": 3, "options": {} },
-                { "name": "Core_TaskRun", "description": "", "id": 4, "options": {} },
-                { "name": "User_User", "description": "", "id": 5, "options": {} },
-                { "name": "User_Team", "description": "", "id": 6, "options": {} }
+                { "name": "JobApplicant", "description": "", "id": 1, "options": {} },
+                { "name": "File", "description": "", "id": 2, "options": {} },
+                { "name": "SecretKey", "description": "", "id": 3, "options": {} },
+                { "name": "SecretDecryptable", "description": "", "id": 4, "options": {} },
+                { "name": "Task", "description": "", "id": 5, "options": {} },
+                { "name": "TaskRun", "description": "", "id": 6, "options": {} }
             ],
             "options": {}
         },
@@ -824,6 +1127,21 @@
             "options": {}
         },
         { "name": "EntityName", "values": [{ "name": "Secret", "description": "", "id": 1, "options": {} }], "options": {} },
+        {
+            "name": "EntityName",
+            "values": [
+                { "name": "Auth_Secret", "description": "", "id": 1, "options": {} },
+                { "name": "User_User", "description": "", "id": 2, "options": {} },
+                { "name": "User_Team", "description": "", "id": 3, "options": {} },
+                { "name": "Core_JobApplicant", "description": "", "id": 4, "options": {} },
+                { "name": "Core_File", "description": "", "id": 5, "options": {} },
+                { "name": "Core_SecretKey", "description": "", "id": 6, "options": {} },
+                { "name": "Core_SecretDecryptable", "description": "", "id": 7, "options": {} },
+                { "name": "Core_Task", "description": "", "id": 8, "options": {} },
+                { "name": "Core_TaskRun", "description": "", "id": 9, "options": {} }
+            ],
+            "options": {}
+        },
         {
             "name": "FileField",
             "values": [
@@ -841,6 +1159,14 @@
             "options": {}
         },
         {
+            "name": "Format",
+            "values": [
+                { "name": "PEM", "description": "", "id": 1, "options": {} },
+                { "name": "OpenSSH", "description": "", "id": 2, "options": {} }
+            ],
+            "options": {}
+        },
+        {
             "name": "Gender",
             "values": [
                 { "name": "Male", "description": "", "id": 1, "options": {} },
@@ -850,70 +1176,24 @@
             "options": {}
         },
         {
-            "name": "MethodName",
+            "name": "JobApplicantField",
             "values": [
-                { "name": "Add", "description": "", "id": 1, "options": {} },
-                { "name": "Update", "description": "", "id": 2, "options": {} },
-                { "name": "Get", "description": "", "id": 3, "options": {} },
-                { "name": "List", "description": "", "id": 4, "options": {} },
-                { "name": "QueryByText", "description": "", "id": 5, "options": {} }
+                { "name": "ID", "description": "", "id": 1, "options": {} },
+                { "name": "Name", "description": "", "id": 2, "options": {} },
+                { "name": "UserID", "description": "", "id": 3, "options": {} },
+                { "name": "ResumeID", "description": "", "id": 4, "options": {} },
+                { "name": "CreatedAt", "description": "", "id": 5, "options": {} },
+                { "name": "UpdatedAt", "description": "", "id": 6, "options": {} },
+                { "name": "DeletedAt", "description": "", "id": 7, "options": {} }
             ],
             "options": {}
         },
         {
             "name": "MethodName",
             "values": [
-                { "name": "Add", "description": "", "id": 1, "options": {} },
-                { "name": "Update", "description": "", "id": 2, "options": {} },
-                { "name": "Get", "description": "", "id": 3, "options": {} },
-                { "name": "List", "description": "", "id": 4, "options": {} },
-                { "name": "QueryByText", "description": "", "id": 5, "options": {} }
-            ],
-            "options": {}
-        },
-        {
-            "name": "MethodName",
-            "values": [
-                { "name": "Auth_LoginUser", "description": "", "id": 1, "options": {} },
-                { "name": "Auth_RegisterUser", "description": "", "id": 2, "options": {} },
-                { "name": "Auth_AuthenticateToken", "description": "", "id": 3, "options": {} },
-                { "name": "Core_FileUpload", "description": "", "id": 4, "options": {} },
-                { "name": "Auth_Secret_Add", "description": "", "id": 5, "options": {} },
-                { "name": "Auth_Secret_Update", "description": "", "id": 6, "options": {} },
-                { "name": "Auth_Secret_Get", "description": "", "id": 7, "options": {} },
-                { "name": "Auth_Secret_List", "description": "", "id": 8, "options": {} },
-                { "name": "Auth_Secret_QueryByText", "description": "", "id": 9, "options": {} },
-                { "name": "Core_File_Add", "description": "", "id": 10, "options": {} },
-                { "name": "Core_File_Update", "description": "", "id": 11, "options": {} },
-                { "name": "Core_File_Get", "description": "", "id": 12, "options": {} },
-                { "name": "Core_File_List", "description": "", "id": 13, "options": {} },
-                { "name": "Core_File_QueryByText", "description": "", "id": 14, "options": {} },
-                { "name": "Core_Task_Add", "description": "", "id": 15, "options": {} },
-                { "name": "Core_Task_Update", "description": "", "id": 16, "options": {} },
-                { "name": "Core_Task_Get", "description": "", "id": 17, "options": {} },
-                { "name": "Core_Task_List", "description": "", "id": 18, "options": {} },
-                { "name": "Core_Task_QueryByText", "description": "", "id": 19, "options": {} },
-                { "name": "Core_TaskRun_Add", "description": "", "id": 20, "options": {} },
-                { "name": "Core_TaskRun_Update", "description": "", "id": 21, "options": {} },
-                { "name": "Core_TaskRun_Get", "description": "", "id": 22, "options": {} },
-                { "name": "Core_TaskRun_List", "description": "", "id": 23, "options": {} },
-                { "name": "Core_TaskRun_QueryByText", "description": "", "id": 24, "options": {} },
-                { "name": "User_User_Add", "description": "", "id": 25, "options": {} },
-                { "name": "User_User_Update", "description": "", "id": 26, "options": {} },
-                { "name": "User_User_Get", "description": "", "id": 27, "options": {} },
-                { "name": "User_User_List", "description": "", "id": 28, "options": {} },
-                { "name": "User_User_QueryByText", "description": "", "id": 29, "options": {} },
-                { "name": "User_Team_Add", "description": "", "id": 30, "options": {} },
-                { "name": "User_Team_Update", "description": "", "id": 31, "options": {} },
-                { "name": "User_Team_Get", "description": "", "id": 32, "options": {} },
-                { "name": "User_Team_List", "description": "", "id": 33, "options": {} },
-                { "name": "User_Team_QueryByText", "description": "", "id": 34, "options": {} },
-                { "name": "Core_File_HookCreatePre", "description": "", "id": 35, "options": {} },
-                { "name": "Core_Task_HookSavePre", "description": "", "id": 36, "options": {} },
-                { "name": "Core_TaskRun_HookCreatePre", "description": "", "id": 37, "options": {} },
-                { "name": "User_User_HookInit", "description": "", "id": 38, "options": {} },
-                { "name": "Core_Task_ActionRun", "description": "", "id": 39, "options": {} },
-                { "name": "Core_TaskRun_ActionRun", "description": "", "id": 40, "options": {} }
+                { "name": "LoginUser", "description": "", "id": 1, "options": {} },
+                { "name": "RegisterUser", "description": "", "id": 2, "options": {} },
+                { "name": "AuthenticateToken", "description": "", "id": 3, "options": {} }
             ],
             "options": {}
         },
@@ -925,7 +1205,8 @@
                 { "name": "Get", "description": "", "id": 3, "options": {} },
                 { "name": "List", "description": "", "id": 4, "options": {} },
                 { "name": "QueryByText", "description": "", "id": 5, "options": {} },
-                { "name": "HookInit", "description": "", "id": 6, "options": {} }
+                { "name": "HookCreatePre", "description": "", "id": 6, "options": {} },
+                { "name": "ActionDecrypt", "description": "", "id": 7, "options": {} }
             ],
             "options": {}
         },
@@ -939,6 +1220,14 @@
                 { "name": "QueryByText", "description": "", "id": 5, "options": {} },
                 { "name": "HookCreatePre", "description": "", "id": 6, "options": {} },
                 { "name": "ActionRun", "description": "", "id": 7, "options": {} }
+            ],
+            "options": {}
+        },
+        {
+            "name": "MethodName",
+            "values": [
+                { "name": "FileUpload", "description": "", "id": 1, "options": {} },
+                { "name": "SecretDecryptabeAdd", "description": "", "id": 2, "options": {} }
             ],
             "options": {}
         },
@@ -962,18 +1251,132 @@
                 { "name": "Update", "description": "", "id": 2, "options": {} },
                 { "name": "Get", "description": "", "id": 3, "options": {} },
                 { "name": "List", "description": "", "id": 4, "options": {} },
+                { "name": "QueryByText", "description": "", "id": 5, "options": {} }
+            ],
+            "options": {}
+        },
+        {
+            "name": "MethodName",
+            "values": [
+                { "name": "Add", "description": "", "id": 1, "options": {} },
+                { "name": "Update", "description": "", "id": 2, "options": {} },
+                { "name": "Get", "description": "", "id": 3, "options": {} },
+                { "name": "List", "description": "", "id": 4, "options": {} },
+                { "name": "QueryByText", "description": "", "id": 5, "options": {} },
+                { "name": "HookInit", "description": "", "id": 6, "options": {} }
+            ],
+            "options": {}
+        },
+        {
+            "name": "MethodName",
+            "values": [
+                { "name": "Auth_LoginUser", "description": "", "id": 1, "options": {} },
+                { "name": "Auth_RegisterUser", "description": "", "id": 2, "options": {} },
+                { "name": "Auth_AuthenticateToken", "description": "", "id": 3, "options": {} },
+                { "name": "Core_FileUpload", "description": "", "id": 4, "options": {} },
+                { "name": "Core_SecretDecryptabeAdd", "description": "", "id": 5, "options": {} },
+                { "name": "Auth_Secret_Add", "description": "", "id": 6, "options": {} },
+                { "name": "Auth_Secret_Update", "description": "", "id": 7, "options": {} },
+                { "name": "Auth_Secret_Get", "description": "", "id": 8, "options": {} },
+                { "name": "Auth_Secret_List", "description": "", "id": 9, "options": {} },
+                { "name": "Auth_Secret_QueryByText", "description": "", "id": 10, "options": {} },
+                { "name": "User_User_Add", "description": "", "id": 11, "options": {} },
+                { "name": "User_User_Update", "description": "", "id": 12, "options": {} },
+                { "name": "User_User_Get", "description": "", "id": 13, "options": {} },
+                { "name": "User_User_List", "description": "", "id": 14, "options": {} },
+                { "name": "User_User_QueryByText", "description": "", "id": 15, "options": {} },
+                { "name": "User_Team_Add", "description": "", "id": 16, "options": {} },
+                { "name": "User_Team_Update", "description": "", "id": 17, "options": {} },
+                { "name": "User_Team_Get", "description": "", "id": 18, "options": {} },
+                { "name": "User_Team_List", "description": "", "id": 19, "options": {} },
+                { "name": "User_Team_QueryByText", "description": "", "id": 20, "options": {} },
+                { "name": "Core_JobApplicant_Add", "description": "", "id": 21, "options": {} },
+                { "name": "Core_JobApplicant_Update", "description": "", "id": 22, "options": {} },
+                { "name": "Core_JobApplicant_Get", "description": "", "id": 23, "options": {} },
+                { "name": "Core_JobApplicant_List", "description": "", "id": 24, "options": {} },
+                { "name": "Core_JobApplicant_QueryByText", "description": "", "id": 25, "options": {} },
+                { "name": "Core_File_Add", "description": "", "id": 26, "options": {} },
+                { "name": "Core_File_Update", "description": "", "id": 27, "options": {} },
+                { "name": "Core_File_Get", "description": "", "id": 28, "options": {} },
+                { "name": "Core_File_List", "description": "", "id": 29, "options": {} },
+                { "name": "Core_File_QueryByText", "description": "", "id": 30, "options": {} },
+                { "name": "Core_SecretKey_Add", "description": "", "id": 31, "options": {} },
+                { "name": "Core_SecretKey_Update", "description": "", "id": 32, "options": {} },
+                { "name": "Core_SecretKey_Get", "description": "", "id": 33, "options": {} },
+                { "name": "Core_SecretKey_List", "description": "", "id": 34, "options": {} },
+                { "name": "Core_SecretKey_QueryByText", "description": "", "id": 35, "options": {} },
+                { "name": "Core_SecretDecryptable_Add", "description": "", "id": 36, "options": {} },
+                { "name": "Core_SecretDecryptable_Update", "description": "", "id": 37, "options": {} },
+                { "name": "Core_SecretDecryptable_Get", "description": "", "id": 38, "options": {} },
+                { "name": "Core_SecretDecryptable_List", "description": "", "id": 39, "options": {} },
+                { "name": "Core_SecretDecryptable_QueryByText", "description": "", "id": 40, "options": {} },
+                { "name": "Core_Task_Add", "description": "", "id": 41, "options": {} },
+                { "name": "Core_Task_Update", "description": "", "id": 42, "options": {} },
+                { "name": "Core_Task_Get", "description": "", "id": 43, "options": {} },
+                { "name": "Core_Task_List", "description": "", "id": 44, "options": {} },
+                { "name": "Core_Task_QueryByText", "description": "", "id": 45, "options": {} },
+                { "name": "Core_TaskRun_Add", "description": "", "id": 46, "options": {} },
+                { "name": "Core_TaskRun_Update", "description": "", "id": 47, "options": {} },
+                { "name": "Core_TaskRun_Get", "description": "", "id": 48, "options": {} },
+                { "name": "Core_TaskRun_List", "description": "", "id": 49, "options": {} },
+                { "name": "Core_TaskRun_QueryByText", "description": "", "id": 50, "options": {} },
+                { "name": "User_User_HookInit", "description": "", "id": 51, "options": {} },
+                { "name": "Core_File_HookCreatePre", "description": "", "id": 52, "options": {} },
+                { "name": "Core_SecretKey_HookInit", "description": "", "id": 53, "options": {} },
+                { "name": "Core_SecretKey_HookCreatePre", "description": "", "id": 54, "options": {} },
+                { "name": "Core_SecretDecryptable_HookCreatePre", "description": "", "id": 55, "options": {} },
+                { "name": "Core_Task_HookSavePre", "description": "", "id": 56, "options": {} },
+                { "name": "Core_TaskRun_HookCreatePre", "description": "", "id": 57, "options": {} },
+                { "name": "Core_SecretDecryptable_ActionDecrypt", "description": "", "id": 58, "options": {} },
+                { "name": "Core_Task_ActionRun", "description": "", "id": 59, "options": {} },
+                { "name": "Core_TaskRun_ActionRun", "description": "", "id": 60, "options": {} }
+            ],
+            "options": {}
+        },
+        {
+            "name": "MethodName",
+            "values": [
+                { "name": "Add", "description": "", "id": 1, "options": {} },
+                { "name": "Update", "description": "", "id": 2, "options": {} },
+                { "name": "Get", "description": "", "id": 3, "options": {} },
+                { "name": "List", "description": "", "id": 4, "options": {} },
+                { "name": "QueryByText", "description": "", "id": 5, "options": {} },
+                { "name": "HookInit", "description": "", "id": 6, "options": {} },
+                { "name": "HookCreatePre", "description": "", "id": 7, "options": {} }
+            ],
+            "options": {}
+        },
+        {
+            "name": "MethodName",
+            "values": [
+                { "name": "Add", "description": "", "id": 1, "options": {} },
+                { "name": "Update", "description": "", "id": 2, "options": {} },
+                { "name": "Get", "description": "", "id": 3, "options": {} },
+                { "name": "List", "description": "", "id": 4, "options": {} },
                 { "name": "QueryByText", "description": "", "id": 5, "options": {} },
                 { "name": "HookCreatePre", "description": "", "id": 6, "options": {} }
             ],
             "options": {}
         },
-        { "name": "MethodName", "values": [{ "name": "FileUpload", "description": "", "id": 1, "options": {} }], "options": {} },
         {
             "name": "MethodName",
             "values": [
-                { "name": "LoginUser", "description": "", "id": 1, "options": {} },
-                { "name": "RegisterUser", "description": "", "id": 2, "options": {} },
-                { "name": "AuthenticateToken", "description": "", "id": 3, "options": {} }
+                { "name": "Add", "description": "", "id": 1, "options": {} },
+                { "name": "Update", "description": "", "id": 2, "options": {} },
+                { "name": "Get", "description": "", "id": 3, "options": {} },
+                { "name": "List", "description": "", "id": 4, "options": {} },
+                { "name": "QueryByText", "description": "", "id": 5, "options": {} }
+            ],
+            "options": {}
+        },
+        {
+            "name": "MethodName",
+            "values": [
+                { "name": "Add", "description": "", "id": 1, "options": {} },
+                { "name": "Update", "description": "", "id": 2, "options": {} },
+                { "name": "Get", "description": "", "id": 3, "options": {} },
+                { "name": "List", "description": "", "id": 4, "options": {} },
+                { "name": "QueryByText", "description": "", "id": 5, "options": {} }
             ],
             "options": {}
         },
@@ -1005,6 +1408,34 @@
             ],
             "options": {}
         },
+        { "name": "SecretDecryptableAction", "values": [{ "name": "Decrypt", "description": "Decrypt the secret", "id": 1, "options": {} }], "options": {} },
+        {
+            "name": "SecretDecryptableAddRequestField",
+            "values": [
+                { "name": "ParentID", "description": "", "id": 1, "options": {} },
+                { "name": "ID", "description": "", "id": 2, "options": {} },
+                { "name": "Value", "description": "", "id": 3, "options": {} },
+                { "name": "SecretKeyID", "description": "", "id": 4, "options": {} },
+                { "name": "CreatedAt", "description": "", "id": 5, "options": {} },
+                { "name": "UpdatedAt", "description": "", "id": 6, "options": {} },
+                { "name": "DeletedAt", "description": "", "id": 7, "options": {} }
+            ],
+            "options": {}
+        },
+        {
+            "name": "SecretDecryptableField",
+            "values": [
+                { "name": "ID", "description": "", "id": 1, "options": {} },
+                { "name": "RawValue", "description": "", "id": 2, "options": {} },
+                { "name": "EncryptedValue", "description": "", "id": 3, "options": {} },
+                { "name": "Salt", "description": "", "id": 4, "options": {} },
+                { "name": "CreatedAt", "description": "", "id": 5, "options": {} },
+                { "name": "UpdatedAt", "description": "", "id": 6, "options": {} },
+                { "name": "DeletedAt", "description": "", "id": 7, "options": {} },
+                { "name": "SecretKeyID", "description": "", "id": 8, "options": {} }
+            ],
+            "options": {}
+        },
         {
             "name": "SecretField",
             "values": [
@@ -1020,11 +1451,25 @@
             "options": {}
         },
         {
+            "name": "SecretKeyField",
+            "values": [
+                { "name": "ID", "description": "", "id": 1, "options": {} },
+                { "name": "Type", "description": "", "id": 2, "options": {} },
+                { "name": "PublicKey", "description": "", "id": 3, "options": {} },
+                { "name": "PrivateKeyFormat", "description": "", "id": 4, "options": {} },
+                { "name": "PublicKeyFormat", "description": "", "id": 5, "options": {} },
+                { "name": "CreatedAt", "description": "", "id": 6, "options": {} },
+                { "name": "UpdatedAt", "description": "", "id": 7, "options": {} },
+                { "name": "DeletedAt", "description": "", "id": 8, "options": {} }
+            ],
+            "options": {}
+        },
+        {
             "name": "ServiceName",
             "values": [
                 { "name": "Auth", "description": "", "id": 1, "options": {} },
-                { "name": "Core", "description": "", "id": 2, "options": {} },
-                { "name": "User", "description": "", "id": 3, "options": {} }
+                { "name": "User", "description": "", "id": 2, "options": {} },
+                { "name": "Core", "description": "", "id": 3, "options": {} }
             ],
             "options": {}
         },
@@ -1109,6 +1554,14 @@
             "options": {}
         },
         {
+            "name": "Type",
+            "values": [
+                { "name": "Ed25519", "description": "", "id": 1, "options": {} },
+                { "name": "RSA", "description": "", "id": 2, "options": {} }
+            ],
+            "options": {}
+        },
+        {
             "name": "UserField",
             "values": [
                 { "name": "ID", "description": "", "id": 1, "options": {} },
@@ -1145,11 +1598,19 @@
     ],
     "methods": [
         {
+            "name": "ActionDecrypt",
+            "description": "Decrypt the secret",
+            "argument_type": "$.service[Core].entity[SecretDecryptable].type[StandardEntityRequest]",
+            "return_type": "$.service[Core].entity[SecretDecryptable].type[StandardEntityResponse]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": true },
+            "apis": [{ "path": "/decrypt", "http_method": "POST", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": false } }]
+        },
+        {
             "name": "ActionRun",
             "description": "Run the task",
             "argument_type": "$.service[Core].entity[Task].type[StandardEntityRequest]",
             "return_type": "$.service[Core].entity[Task].type[StandardEntityResponse]",
-            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": true },
             "apis": [{ "path": "/run", "http_method": "POST", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": false } }]
         },
         {
@@ -1157,8 +1618,16 @@
             "description": "Run the task",
             "argument_type": "$.service[Core].entity[TaskRun].type[StandardEntityRequest]",
             "return_type": "$.service[Core].entity[TaskRun].type[StandardEntityResponse]",
-            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": true },
             "apis": [{ "path": "/run", "http_method": "POST", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": false } }]
+        },
+        {
+            "name": "Add",
+            "description": "Adds a new JobApplicant entity",
+            "argument_type": "$.service[Core].entity[JobApplicant].type[AddRequest]",
+            "return_type": "$.service[Core].entity[JobApplicant].type[JobApplicant]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "POST", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
         },
         {
             "name": "Add",
@@ -1178,14 +1647,6 @@
         },
         {
             "name": "Add",
-            "description": "Adds a new User entity",
-            "argument_type": "$.service[User].entity[User].type[AddRequest]",
-            "return_type": "$.service[User].entity[User].type[User]",
-            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
-            "apis": [{ "path": "", "http_method": "POST", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
-        },
-        {
-            "name": "Add",
             "description": "Adds a new TaskRun entity",
             "argument_type": "$.service[Core].entity[TaskRun].type[AddRequest]",
             "return_type": "$.service[Core].entity[TaskRun].type[TaskRun]",
@@ -1194,17 +1655,41 @@
         },
         {
             "name": "Add",
-            "description": "Adds a new Task entity",
-            "argument_type": "$.service[Core].entity[Task].type[AddRequest]",
-            "return_type": "$.service[Core].entity[Task].type[Task]",
+            "description": "Adds a new File entity",
+            "argument_type": "$.service[Core].entity[File].type[AddRequest]",
+            "return_type": "$.service[Core].entity[File].type[File]",
             "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
             "apis": [{ "path": "", "http_method": "POST", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
         },
         {
             "name": "Add",
-            "description": "Adds a new File entity",
-            "argument_type": "$.service[Core].entity[File].type[AddRequest]",
-            "return_type": "$.service[Core].entity[File].type[File]",
+            "description": "Adds a new SecretDecryptable entity",
+            "argument_type": "$.service[Core].entity[SecretDecryptable].type[AddRequest]",
+            "return_type": "$.service[Core].entity[SecretDecryptable].type[SecretDecryptable]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "POST", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
+        },
+        {
+            "name": "Add",
+            "description": "Adds a new SecretKey entity",
+            "argument_type": "$.service[Core].entity[SecretKey].type[AddRequest]",
+            "return_type": "$.service[Core].entity[SecretKey].type[SecretKey]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "POST", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
+        },
+        {
+            "name": "Add",
+            "description": "Adds a new User entity",
+            "argument_type": "$.service[User].entity[User].type[AddRequest]",
+            "return_type": "$.service[User].entity[User].type[User]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "POST", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
+        },
+        {
+            "name": "Add",
+            "description": "Adds a new Task entity",
+            "argument_type": "$.service[Core].entity[Task].type[AddRequest]",
+            "return_type": "$.service[Core].entity[Task].type[Task]",
             "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
             "apis": [{ "path": "", "http_method": "POST", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
         },
@@ -1226,6 +1711,14 @@
         },
         {
             "name": "Get",
+            "description": "Get a SecretDecryptable entity",
+            "argument_type": "$.service[Core].entity[SecretDecryptable].type[GetRequest]",
+            "return_type": "$.service[Core].entity[SecretDecryptable].type[SecretDecryptable]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "Get",
             "description": "Get a Task entity",
             "argument_type": "$.service[Core].entity[Task].type[GetRequest]",
             "return_type": "$.service[Core].entity[Task].type[Task]",
@@ -1234,9 +1727,9 @@
         },
         {
             "name": "Get",
-            "description": "Get a User entity",
-            "argument_type": "$.service[User].entity[User].type[GetRequest]",
-            "return_type": "$.service[User].entity[User].type[User]",
+            "description": "Get a TaskRun entity",
+            "argument_type": "$.service[Core].entity[TaskRun].type[GetRequest]",
+            "return_type": "$.service[Core].entity[TaskRun].type[TaskRun]",
             "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
             "apis": [{ "path": "", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
         },
@@ -1245,6 +1738,30 @@
             "description": "Get a Team entity",
             "argument_type": "$.service[User].entity[Team].type[GetRequest]",
             "return_type": "$.service[User].entity[Team].type[Team]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "Get",
+            "description": "Get a JobApplicant entity",
+            "argument_type": "$.service[Core].entity[JobApplicant].type[GetRequest]",
+            "return_type": "$.service[Core].entity[JobApplicant].type[JobApplicant]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "Get",
+            "description": "Get a SecretKey entity",
+            "argument_type": "$.service[Core].entity[SecretKey].type[GetRequest]",
+            "return_type": "$.service[Core].entity[SecretKey].type[SecretKey]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "Get",
+            "description": "Get a User entity",
+            "argument_type": "$.service[User].entity[User].type[GetRequest]",
+            "return_type": "$.service[User].entity[User].type[User]",
             "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
             "apis": [{ "path": "", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
         },
@@ -1265,12 +1782,20 @@
             "apis": [{ "path": "", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
         },
         {
-            "name": "Get",
-            "description": "Get a TaskRun entity",
-            "argument_type": "$.service[Core].entity[TaskRun].type[GetRequest]",
+            "name": "HookCreatePre",
+            "description": "HookCreatePre hook for entity SecretDecryptable",
+            "argument_type": "$.service[Core].entity[SecretDecryptable].type[SecretDecryptable]",
+            "return_type": "$.service[Core].entity[SecretDecryptable].type[SecretDecryptable]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": true },
+            "apis": null
+        },
+        {
+            "name": "HookCreatePre",
+            "description": "HookCreatePre hook for entity TaskRun",
+            "argument_type": "$.service[Core].entity[TaskRun].type[TaskRun]",
             "return_type": "$.service[Core].entity[TaskRun].type[TaskRun]",
-            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
-            "apis": [{ "path": "", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": true },
+            "apis": null
         },
         {
             "name": "HookCreatePre",
@@ -1282,10 +1807,10 @@
         },
         {
             "name": "HookCreatePre",
-            "description": "HookCreatePre hook for entity TaskRun",
-            "argument_type": "$.service[Core].entity[TaskRun].type[TaskRun]",
-            "return_type": "$.service[Core].entity[TaskRun].type[TaskRun]",
-            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "description": "HookCreatePre hook for entity SecretKey",
+            "argument_type": "$.service[Core].entity[SecretKey].type[SecretKey]",
+            "return_type": "$.service[Core].entity[SecretKey].type[SecretKey]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": true },
             "apis": null
         },
         {
@@ -1297,11 +1822,19 @@
             "apis": null
         },
         {
+            "name": "HookInit",
+            "description": "HookInit hook for entity SecretKey",
+            "argument_type": "$",
+            "return_type": "$",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": true },
+            "apis": null
+        },
+        {
             "name": "HookSavePre",
             "description": "HookSavePre hook for entity Task",
             "argument_type": "$.service[Core].entity[Task].type[Task]",
             "return_type": "$.service[Core].entity[Task].type[Task]",
-            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": true },
             "apis": null
         },
         {
@@ -1314,9 +1847,49 @@
         },
         {
             "name": "List",
+            "description": "List File entities",
+            "argument_type": "$.service[Core].entity[File].type[ListRequest]",
+            "return_type": "$.service[Core].entity[File].type[ListResponse]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "/list", "http_method": "GET", "is_public": false, "options": { "success_status": 200, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "List",
+            "description": "List SecretKey entities",
+            "argument_type": "$.service[Core].entity[SecretKey].type[ListRequest]",
+            "return_type": "$.service[Core].entity[SecretKey].type[ListResponse]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "/list", "http_method": "GET", "is_public": false, "options": { "success_status": 200, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "List",
+            "description": "List TaskRun entities",
+            "argument_type": "$.service[Core].entity[TaskRun].type[ListRequest]",
+            "return_type": "$.service[Core].entity[TaskRun].type[ListResponse]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "/list", "http_method": "GET", "is_public": false, "options": { "success_status": 200, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "List",
+            "description": "List JobApplicant entities",
+            "argument_type": "$.service[Core].entity[JobApplicant].type[ListRequest]",
+            "return_type": "$.service[Core].entity[JobApplicant].type[ListResponse]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "/list", "http_method": "GET", "is_public": false, "options": { "success_status": 200, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "List",
             "description": "List Task entities",
             "argument_type": "$.service[Core].entity[Task].type[ListRequest]",
             "return_type": "$.service[Core].entity[Task].type[ListResponse]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "/list", "http_method": "GET", "is_public": false, "options": { "success_status": 200, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "List",
+            "description": "List SecretDecryptable entities",
+            "argument_type": "$.service[Core].entity[SecretDecryptable].type[ListRequest]",
+            "return_type": "$.service[Core].entity[SecretDecryptable].type[ListResponse]",
             "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
             "apis": [{ "path": "/list", "http_method": "GET", "is_public": false, "options": { "success_status": 200, "use_body_for_request": false, "use_url_params_for_request": true } }]
         },
@@ -1337,44 +1910,12 @@
             "apis": [{ "path": "/list", "http_method": "GET", "is_public": false, "options": { "success_status": 200, "use_body_for_request": false, "use_url_params_for_request": true } }]
         },
         {
-            "name": "List",
-            "description": "List TaskRun entities",
-            "argument_type": "$.service[Core].entity[TaskRun].type[ListRequest]",
-            "return_type": "$.service[Core].entity[TaskRun].type[ListResponse]",
-            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
-            "apis": [{ "path": "/list", "http_method": "GET", "is_public": false, "options": { "success_status": 200, "use_body_for_request": false, "use_url_params_for_request": true } }]
-        },
-        {
-            "name": "List",
-            "description": "List File entities",
-            "argument_type": "$.service[Core].entity[File].type[ListRequest]",
-            "return_type": "$.service[Core].entity[File].type[ListResponse]",
-            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
-            "apis": [{ "path": "/list", "http_method": "GET", "is_public": false, "options": { "success_status": 200, "use_body_for_request": false, "use_url_params_for_request": true } }]
-        },
-        {
             "name": "LoginUser",
             "description": "Logs in a user",
             "argument_type": "$.service[Auth].type[LoginRequest]",
             "return_type": "$.service[Auth].type[AuthenticateResponse]",
             "options": { "type": "Query", "is_direct_http_handler": false, "is_static": true },
             "apis": [{ "path": "/login", "http_method": "POST", "is_public": true, "options": { "success_status": 0, "use_body_for_request": true, "use_url_params_for_request": false } }]
-        },
-        {
-            "name": "QueryByText",
-            "description": "List Secrets entities by free text search",
-            "argument_type": "$.service[Auth].entity[Secret].type[QueryByTextRequest]",
-            "return_type": "$.service[Auth].entity[Secret].type[ListResponse]",
-            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
-            "apis": [{ "path": "/query_by_text", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
-        },
-        {
-            "name": "QueryByText",
-            "description": "List Users entities by free text search",
-            "argument_type": "$.service[User].entity[User].type[QueryByTextRequest]",
-            "return_type": "$.service[User].entity[User].type[ListResponse]",
-            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
-            "apis": [{ "path": "/query_by_text", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
         },
         {
             "name": "QueryByText",
@@ -1394,9 +1935,41 @@
         },
         {
             "name": "QueryByText",
+            "description": "List SecretDecryptables entities by free text search",
+            "argument_type": "$.service[Core].entity[SecretDecryptable].type[QueryByTextRequest]",
+            "return_type": "$.service[Core].entity[SecretDecryptable].type[ListResponse]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "/query_by_text", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "QueryByText",
+            "description": "List Secrets entities by free text search",
+            "argument_type": "$.service[Auth].entity[Secret].type[QueryByTextRequest]",
+            "return_type": "$.service[Auth].entity[Secret].type[ListResponse]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "/query_by_text", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "QueryByText",
             "description": "List Tasks entities by free text search",
             "argument_type": "$.service[Core].entity[Task].type[QueryByTextRequest]",
             "return_type": "$.service[Core].entity[Task].type[ListResponse]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "/query_by_text", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "QueryByText",
+            "description": "List SecretKeies entities by free text search",
+            "argument_type": "$.service[Core].entity[SecretKey].type[QueryByTextRequest]",
+            "return_type": "$.service[Core].entity[SecretKey].type[ListResponse]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "/query_by_text", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
+            "name": "QueryByText",
+            "description": "List Users entities by free text search",
+            "argument_type": "$.service[User].entity[User].type[QueryByTextRequest]",
+            "return_type": "$.service[User].entity[User].type[ListResponse]",
             "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
             "apis": [{ "path": "/query_by_text", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
         },
@@ -1409,6 +1982,14 @@
             "apis": [{ "path": "/query_by_text", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
         },
         {
+            "name": "QueryByText",
+            "description": "List JobApplicants entities by free text search",
+            "argument_type": "$.service[Core].entity[JobApplicant].type[QueryByTextRequest]",
+            "return_type": "$.service[Core].entity[JobApplicant].type[ListResponse]",
+            "options": { "type": "Query", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "/query_by_text", "http_method": "GET", "is_public": false, "options": { "success_status": 0, "use_body_for_request": false, "use_url_params_for_request": true } }]
+        },
+        {
             "name": "RegisterUser",
             "description": "Create a new user",
             "argument_type": "$.service[Auth].type[RegisterUserRequest]",
@@ -1417,28 +1998,12 @@
             "apis": [{ "path": "/register", "http_method": "POST", "is_public": true, "options": { "success_status": 0, "use_body_for_request": true, "use_url_params_for_request": false } }]
         },
         {
-            "name": "Update",
-            "description": "Adds a new TaskRun entity",
-            "argument_type": "$.service[Core].entity[TaskRun].type[UpdateRequest]",
-            "return_type": "$.service[Core].entity[TaskRun].type[UpdateResponse]",
-            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
-            "apis": [{ "path": "", "http_method": "PUT", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
-        },
-        {
-            "name": "Update",
-            "description": "Adds a new Team entity",
-            "argument_type": "$.service[User].entity[Team].type[UpdateRequest]",
-            "return_type": "$.service[User].entity[Team].type[UpdateResponse]",
-            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
-            "apis": [{ "path": "", "http_method": "PUT", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
-        },
-        {
-            "name": "Update",
-            "description": "Adds a new User entity",
-            "argument_type": "$.service[User].entity[User].type[UpdateRequest]",
-            "return_type": "$.service[User].entity[User].type[UpdateResponse]",
-            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
-            "apis": [{ "path": "", "http_method": "PUT", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
+            "name": "SecretDecryptabeAdd",
+            "description": "Create a new secret",
+            "argument_type": "$.service[Core].type[SecretDecryptableAddRequest]",
+            "return_type": "$.service[Core].entity[SecretDecryptable].type[SecretDecryptable]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": true },
+            "apis": [{ "path": "secret/add", "http_method": "POST", "is_public": false, "options": { "success_status": 0, "use_body_for_request": true, "use_url_params_for_request": false } }]
         },
         {
             "name": "Update",
@@ -1453,6 +2018,54 @@
             "description": "Adds a new File entity",
             "argument_type": "$.service[Core].entity[File].type[UpdateRequest]",
             "return_type": "$.service[Core].entity[File].type[UpdateResponse]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "PUT", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
+        },
+        {
+            "name": "Update",
+            "description": "Adds a new JobApplicant entity",
+            "argument_type": "$.service[Core].entity[JobApplicant].type[UpdateRequest]",
+            "return_type": "$.service[Core].entity[JobApplicant].type[UpdateResponse]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "PUT", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
+        },
+        {
+            "name": "Update",
+            "description": "Adds a new SecretKey entity",
+            "argument_type": "$.service[Core].entity[SecretKey].type[UpdateRequest]",
+            "return_type": "$.service[Core].entity[SecretKey].type[UpdateResponse]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "PUT", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
+        },
+        {
+            "name": "Update",
+            "description": "Adds a new Team entity",
+            "argument_type": "$.service[User].entity[Team].type[UpdateRequest]",
+            "return_type": "$.service[User].entity[Team].type[UpdateResponse]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "PUT", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
+        },
+        {
+            "name": "Update",
+            "description": "Adds a new TaskRun entity",
+            "argument_type": "$.service[Core].entity[TaskRun].type[UpdateRequest]",
+            "return_type": "$.service[Core].entity[TaskRun].type[UpdateResponse]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "PUT", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
+        },
+        {
+            "name": "Update",
+            "description": "Adds a new User entity",
+            "argument_type": "$.service[User].entity[User].type[UpdateRequest]",
+            "return_type": "$.service[User].entity[User].type[UpdateResponse]",
+            "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
+            "apis": [{ "path": "", "http_method": "PUT", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
+        },
+        {
+            "name": "Update",
+            "description": "Adds a new SecretDecryptable entity",
+            "argument_type": "$.service[Core].entity[SecretDecryptable].type[UpdateRequest]",
+            "return_type": "$.service[Core].entity[SecretDecryptable].type[UpdateResponse]",
             "options": { "type": "Mutation", "is_direct_http_handler": false, "is_static": false },
             "apis": [{ "path": "", "http_method": "PUT", "is_public": false, "options": { "success_status": 201, "use_body_for_request": true, "use_url_params_for_request": false } }]
         },

@@ -303,3 +303,250 @@ func (meta *TypeCronExpressionDALMeta) UpdateSubTableFields(ctx context.Context,
 
 	return elem, nil
 }
+
+type TypeSecretDecryptableAddRequestMeta struct {
+	types.TypeCommonMeta[svccore_typ.SecretDecryptableAddRequestWithMeta, svccore_typ.SecretDecryptableAddRequestField]
+}
+
+var _TypeSecretDecryptableAddRequestMeta = TypeSecretDecryptableAddRequestMeta{
+	TypeCommonMeta: types.TypeCommonMeta[svccore_typ.SecretDecryptableAddRequestWithMeta, svccore_typ.SecretDecryptableAddRequestField]{
+		Name: naam.New("secret_decryptable_add_request"),
+		Fields: []svccore_typ.SecretDecryptableAddRequestField{
+			svccore_typ.SecretDecryptableAddRequestField_ParentID,
+			svccore_typ.SecretDecryptableAddRequestField_ID,
+			svccore_typ.SecretDecryptableAddRequestField_Value,
+			svccore_typ.SecretDecryptableAddRequestField_SecretKeyID,
+			svccore_typ.SecretDecryptableAddRequestField_CreatedAt,
+			svccore_typ.SecretDecryptableAddRequestField_UpdatedAt,
+			svccore_typ.SecretDecryptableAddRequestField_DeletedAt,
+		},
+	},
+}
+
+func GetTypeSecretDecryptableAddRequestMeta() *TypeSecretDecryptableAddRequestMeta {
+	return &_TypeSecretDecryptableAddRequestMeta
+}
+
+func (meta TypeSecretDecryptableAddRequestMeta) SetMetaFieldValues(ctx context.Context, obj svccore_typ.SecretDecryptableAddRequestWithMeta, now scalars.Timestamp) svccore_typ.SecretDecryptableAddRequestWithMeta {
+
+	if obj.ID.IsEmpty() {
+		obj.ID = scalars.NewID()
+	} else {
+		llog.Warn(ctx, "Entity SecretDecryptableAddRequests already has ID set", "value", obj.ID)
+	}
+	if obj.CreatedAt.IsEmpty() {
+		obj.CreatedAt = now
+	} else {
+		llog.Warn(ctx, "Entity SecretDecryptableAddRequests already has field CreatedAt set", "value", obj.CreatedAt)
+	}
+	obj.UpdatedAt = now
+	return obj
+}
+
+func (meta TypeSecretDecryptableAddRequestMeta) InternalHookSavePre(ctx context.Context, elem svccore_typ.SecretDecryptableAddRequestWithMeta, now scalars.Timestamp) (svccore_typ.SecretDecryptableAddRequestWithMeta, error) {
+	// Set meta field values, if not already set
+
+	// ID
+	if elem.ID.IsEmpty() {
+		elem.ID = scalars.NewID()
+	} else {
+		llog.Warn(ctx, "Entity SecretDecryptableAddRequests already has ID set", "value", elem.ID)
+	}
+
+	// CreatedAt
+	if elem.CreatedAt.IsEmpty() {
+		elem.CreatedAt = now
+	} else {
+		llog.Warn(ctx, "Entity SecretDecryptableAddRequests already has field CreatedAt set", "value", elem.CreatedAt)
+	}
+
+	// UpdatedAt
+	elem.UpdatedAt = now
+
+	// Standardize any timestamp fields.
+	elem = meta.standardizeTimestamps(ctx, elem)
+
+	return elem, nil
+}
+
+func (meta TypeSecretDecryptableAddRequestMeta) standardizeTimestamps(ctx context.Context, elem svccore_typ.SecretDecryptableAddRequestWithMeta) svccore_typ.SecretDecryptableAddRequestWithMeta {
+	// Standardize any timestamp fields.
+
+	elem.CreatedAt.Standardize()
+
+	elem.UpdatedAt.Standardize()
+
+	if elem.DeletedAt != nil {
+		elem.DeletedAt.Standardize()
+	}
+	return elem
+}
+
+func (meta TypeSecretDecryptableAddRequestMeta) SetDefaultFieldValues(obj svccore_typ.SecretDecryptableAddRequestWithMeta) svccore_typ.SecretDecryptableAddRequestWithMeta {
+	return obj
+}
+
+type TypeSecretDecryptableAddRequestDALMeta struct {
+	*TypeSecretDecryptableAddRequestMeta
+	dalutil.TypeCommonDALMeta[svccore_typ.SecretDecryptableAddRequestWithMeta, svccore_typ.SecretDecryptableAddRequestField]
+}
+
+var _TypeSecretDecryptableAddRequestDALMeta = TypeSecretDecryptableAddRequestDALMeta{
+	TypeSecretDecryptableAddRequestMeta: &_TypeSecretDecryptableAddRequestMeta,
+	TypeCommonDALMeta: dalutil.TypeCommonDALMeta[svccore_typ.SecretDecryptableAddRequestWithMeta, svccore_typ.SecretDecryptableAddRequestField]{
+		DatabaseColumnFields: []svccore_typ.SecretDecryptableAddRequestField{
+			svccore_typ.SecretDecryptableAddRequestField_ParentID,
+			svccore_typ.SecretDecryptableAddRequestField_ID,
+			svccore_typ.SecretDecryptableAddRequestField_Value,
+			svccore_typ.SecretDecryptableAddRequestField_SecretKeyID,
+			svccore_typ.SecretDecryptableAddRequestField_CreatedAt,
+			svccore_typ.SecretDecryptableAddRequestField_UpdatedAt,
+			svccore_typ.SecretDecryptableAddRequestField_DeletedAt,
+		},
+		DatabaseSubTableFields: []svccore_typ.SecretDecryptableAddRequestField{},
+		SetInternallyByDALFields: []svccore_typ.SecretDecryptableAddRequestField{
+			svccore_typ.SecretDecryptableAddRequestField_UpdatedAt,
+			svccore_typ.SecretDecryptableAddRequestField_DeletedAt,
+		},
+		ImmutableFields: []svccore_typ.SecretDecryptableAddRequestField{
+			svccore_typ.SecretDecryptableAddRequestField_ParentID,
+			svccore_typ.SecretDecryptableAddRequestField_ID,
+			svccore_typ.SecretDecryptableAddRequestField_CreatedAt,
+		},
+		DatabaseColumnTimestampFields: []svccore_typ.SecretDecryptableAddRequestField{
+			svccore_typ.SecretDecryptableAddRequestField_CreatedAt,
+			svccore_typ.SecretDecryptableAddRequestField_UpdatedAt,
+			svccore_typ.SecretDecryptableAddRequestField_DeletedAt,
+		},
+		UpdatedAtField: svccore_typ.SecretDecryptableAddRequestField_UpdatedAt,
+	},
+}
+
+func GetTypeSecretDecryptableAddRequestDALMeta() *TypeSecretDecryptableAddRequestDALMeta {
+	return &_TypeSecretDecryptableAddRequestDALMeta
+}
+
+func (meta *TypeSecretDecryptableAddRequestDALMeta) GetCommonDALMeta() *dalutil.TypeCommonDALMeta[svccore_typ.SecretDecryptableAddRequestWithMeta, svccore_typ.SecretDecryptableAddRequestField] {
+	return &meta.TypeCommonDALMeta
+}
+
+func (meta TypeSecretDecryptableAddRequestDALMeta) GetDirectDBValues(obj svccore_typ.SecretDecryptableAddRequestWithMeta) []interface{} {
+	// If a nested field (in same DB table) is nil e.g. Foo.Bar, we'll hit a nil pointer panic if accessing the underling values e.g. Foo.Bar.Baz. Hence, replace nil with empty values
+
+	var vals = []interface{}{
+		obj.ParentID,
+		obj.ID,
+		obj.Value,
+		obj.SecretKeyID,
+		obj.CreatedAt,
+		obj.UpdatedAt,
+		obj.DeletedAt,
+	}
+	return vals
+}
+
+func (meta TypeSecretDecryptableAddRequestDALMeta) AddSubTableFieldsToDB(ctx context.Context, conn db.Connection, params db.InsertTypeParams, obj svccore_typ.SecretDecryptableAddRequestWithMeta) (svccore_typ.SecretDecryptableAddRequestWithMeta, error) {
+
+	// Insert 1:1 sub-tables
+
+	// Insert 1:Many sub-tables
+
+	return obj, nil
+}
+
+func (meta TypeSecretDecryptableAddRequestDALMeta) ScanDBNextRow(ctx context.Context, rows *sql.Rows) (svccore_typ.SecretDecryptableAddRequestWithMeta, error) {
+	var elem svccore_typ.SecretDecryptableAddRequestWithMeta
+	// For any pointer (optional) nested field e.g. Foo.Nested.FieldA, create a new instance of struct to prevent nil pointers when Nested is nil.
+
+	err := rows.Scan(
+		&elem.ParentID,
+		&elem.ID,
+		&elem.Value,
+		&elem.SecretKeyID,
+		&elem.CreatedAt,
+		&elem.UpdatedAt,
+		&elem.DeletedAt,
+	)
+	if err != nil {
+		return elem, fmt.Errorf("sql.Row scan error: %w", err)
+	}
+
+	// If a nested pointer field (optional) if same as an empty struct, make it nil
+
+	elem = meta.standardizeTimestamps(ctx, elem)
+	return elem, nil
+}
+
+func (meta TypeSecretDecryptableAddRequestDALMeta) FetchSubTableFields(ctx context.Context, conn db.Connection, params db.ListTypeByIDsParams, elems []svccore_typ.SecretDecryptableAddRequestWithMeta) ([]svccore_typ.SecretDecryptableAddRequestWithMeta, error) {
+	// Unique Primary IDs of the fetched type
+	var ids []scalars.ID
+	for _, elem := range elems {
+		ids = append(ids, elem.ID)
+	}
+
+	// Step 1: Get the Nested (1:1) fields
+
+	// Step 2: Get the Nested (1:Many) fields
+
+	return elems, nil
+}
+
+func (meta TypeSecretDecryptableAddRequestDALMeta) GetChangedFieldsAndValues(old, new svccore_typ.SecretDecryptableAddRequestWithMeta, allowedFields []svccore_typ.SecretDecryptableAddRequestField) ([]svccore_typ.SecretDecryptableAddRequestField, []interface{}) {
+
+	var colsWithValueChange []svccore_typ.SecretDecryptableAddRequestField // columns that actually have a value change so required in update statement
+	var vals []interface{}
+
+	// Get Values (and check if there is a change)
+	if types.IsFieldInFields(svccore_typ.SecretDecryptableAddRequestField_ParentID, allowedFields) {
+		if old.ParentID != new.ParentID {
+			colsWithValueChange = append(colsWithValueChange, svccore_typ.SecretDecryptableAddRequestField_ParentID)
+			vals = append(vals, new.ParentID)
+		}
+	}
+	if types.IsFieldInFields(svccore_typ.SecretDecryptableAddRequestField_ID, allowedFields) {
+		if old.ID != new.ID {
+			colsWithValueChange = append(colsWithValueChange, svccore_typ.SecretDecryptableAddRequestField_ID)
+			vals = append(vals, new.ID)
+		}
+	}
+	if types.IsFieldInFields(svccore_typ.SecretDecryptableAddRequestField_Value, allowedFields) {
+		if old.Value != new.Value {
+			colsWithValueChange = append(colsWithValueChange, svccore_typ.SecretDecryptableAddRequestField_Value)
+			vals = append(vals, new.Value)
+		}
+	}
+	if types.IsFieldInFields(svccore_typ.SecretDecryptableAddRequestField_SecretKeyID, allowedFields) {
+		if old.SecretKeyID != new.SecretKeyID {
+			colsWithValueChange = append(colsWithValueChange, svccore_typ.SecretDecryptableAddRequestField_SecretKeyID)
+			vals = append(vals, new.SecretKeyID)
+		}
+	}
+	if types.IsFieldInFields(svccore_typ.SecretDecryptableAddRequestField_CreatedAt, allowedFields) {
+		if old.CreatedAt != new.CreatedAt {
+			colsWithValueChange = append(colsWithValueChange, svccore_typ.SecretDecryptableAddRequestField_CreatedAt)
+			vals = append(vals, new.CreatedAt)
+		}
+	}
+	if types.IsFieldInFields(svccore_typ.SecretDecryptableAddRequestField_UpdatedAt, allowedFields) {
+		if old.UpdatedAt != new.UpdatedAt {
+			colsWithValueChange = append(colsWithValueChange, svccore_typ.SecretDecryptableAddRequestField_UpdatedAt)
+			vals = append(vals, new.UpdatedAt)
+		}
+	}
+	if types.IsFieldInFields(svccore_typ.SecretDecryptableAddRequestField_DeletedAt, allowedFields) {
+		if old.DeletedAt != new.DeletedAt {
+			colsWithValueChange = append(colsWithValueChange, svccore_typ.SecretDecryptableAddRequestField_DeletedAt)
+			vals = append(vals, new.DeletedAt)
+		}
+	}
+
+	return colsWithValueChange, vals
+}
+
+func (meta *TypeSecretDecryptableAddRequestDALMeta) UpdateSubTableFields(ctx context.Context, conn db.Connection, req dalutil.UpdateTypeRequest[svccore_typ.SecretDecryptableAddRequestWithMeta, svccore_typ.SecretDecryptableAddRequestField], allowedFields []svccore_typ.SecretDecryptableAddRequestField, elem, oldElem svccore_typ.SecretDecryptableAddRequestWithMeta) (svccore_typ.SecretDecryptableAddRequestWithMeta, error) {
+	llog.Debug(ctx, "Updating sub-types", "parentType", "SecretDecryptableAddRequest", "ID", elem.ID)
+
+	// Update Nested (1:1 & 1:Many)
+
+	return elem, nil
+}

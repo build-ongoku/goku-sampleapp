@@ -12,8 +12,13 @@ import (
 	svccore_clientimpl "sampleapp/backend/.goku/generated/service/core/clientimpl"
 	svccore_entfile_mthd "sampleapp/backend/.goku/generated/service/core/entity/file/mthd"
 	svccore_entfile_typ "sampleapp/backend/.goku/generated/service/core/entity/file/typ"
+	svccore_entjobapplicant_mthd "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/mthd"
+	svccore_entsecretdecryptable_mthd "sampleapp/backend/.goku/generated/service/core/entity/secret_decryptable/mthd"
+	svccore_entsecretdecryptable_typ "sampleapp/backend/.goku/generated/service/core/entity/secret_decryptable/typ"
+	svccore_entsecretkey_mthd "sampleapp/backend/.goku/generated/service/core/entity/secret_key/mthd"
 	svccore_enttask_mthd "sampleapp/backend/.goku/generated/service/core/entity/task/mthd"
 	svccore_enttaskrun_mthd "sampleapp/backend/.goku/generated/service/core/entity/task_run/mthd"
+	svccore_typ "sampleapp/backend/.goku/generated/service/core/typ"
 	sttc_svccore_mthd "sampleapp/backend/.goku/static/service/core/mthd"
 )
 
@@ -29,6 +34,27 @@ func NewClient(ctx context.Context, getClientFn app_client.ClientGetterFn) (svcc
 			return nil, fmt.Errorf("Creating new method client for entity [File]: %w", err)
 		}
 		newEntitiesClientReq.FileClient = entClient
+	}
+	{
+		entClient, err := svccore_entjobapplicant_mthd.NewClient(ctx, getClientFn)
+		if err != nil {
+			return nil, fmt.Errorf("Creating new method client for entity [JobApplicant]: %w", err)
+		}
+		newEntitiesClientReq.JobApplicantClient = entClient
+	}
+	{
+		entClient, err := svccore_entsecretdecryptable_mthd.NewClient(ctx, getClientFn)
+		if err != nil {
+			return nil, fmt.Errorf("Creating new method client for entity [SecretDecryptable]: %w", err)
+		}
+		newEntitiesClientReq.SecretDecryptableClient = entClient
+	}
+	{
+		entClient, err := svccore_entsecretkey_mthd.NewClient(ctx, getClientFn)
+		if err != nil {
+			return nil, fmt.Errorf("Creating new method client for entity [SecretKey]: %w", err)
+		}
+		newEntitiesClientReq.SecretKeyClient = entClient
 	}
 	{
 		entClient, err := svccore_enttask_mthd.NewClient(ctx, getClientFn)
@@ -84,6 +110,27 @@ func (c customClient) FileUpload(ctx context.Context, req *http.Request) (svccor
 	}
 
 	llog.Info(ctx, "END FileUpload", "response", resp)
+
+	return resp, err
+}
+
+func (c customClient) SecretDecryptabeAdd(ctx context.Context, req svccore_typ.SecretDecryptableAddRequest) (svccore_entsecretdecryptable_typ.SecretDecryptable, error) {
+
+	var resp svccore_entsecretdecryptable_typ.SecretDecryptable
+
+	var err error
+
+	llog.Info(ctx, "START SecretDecryptabeAdd", "request", req)
+	// Fetch the app client and make it available under the custom client
+	otherC := c.getClientFn(ctx)
+	c.Client = otherC
+
+	resp, err = sttc_svccore_mthd.SecretDecryptabeAdd(ctx, c, req)
+	if err != nil {
+		return resp, err
+	}
+
+	llog.Info(ctx, "END SecretDecryptabeAdd", "response", resp)
 
 	return resp, err
 }

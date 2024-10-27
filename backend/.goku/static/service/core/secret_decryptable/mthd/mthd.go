@@ -17,8 +17,8 @@ import (
 	svccore_entsecretdecryptable_typhelper "sampleapp/backend/.goku/generated/service/core/entity/secret_decryptable/typhelper"
 	svccore_entsecretkey_typ "sampleapp/backend/.goku/generated/service/core/entity/secret_key/typ"
 	svccore_entsecretkey_typhelper "sampleapp/backend/.goku/generated/service/core/entity/secret_key/typhelper"
+	secretlib "sampleapp/backend/.goku/static/lib/secret"
 	secretkeymthd "sampleapp/backend/.goku/static/service/core/secret_key/mthd"
-	"sampleapp/backend/src/lib/secret"
 )
 
 type EntityType = svccore_entsecretdecryptable_typ.SecretDecryptable
@@ -131,12 +131,12 @@ func EncryptValueUsingSecretKey(ctx context.Context, valueToEncrypt string, secr
 	var parsedPublicKey *rsa.PublicKey
 	switch secretKey.PublicKeyFormat {
 	case svccore_entsecretkey_typ.Format_PEM:
-		parsedPublicKey, err = secret.ParsePEMPublicKey(ctx, secretKey.PublicKey)
+		parsedPublicKey, err = secretlib.ParsePEMPublicKey(ctx, secretKey.PublicKey)
 		if err != nil {
 			return "", fmt.Errorf("parsing public key: %w", err)
 		}
 	case svccore_entsecretkey_typ.Format_OpenSSH:
-		parsedPublicKey, err = secret.ParseOpenSSHPublicKey(ctx, secretKey.PublicKey)
+		parsedPublicKey, err = secretlib.ParseOpenSSHPublicKey(ctx, secretKey.PublicKey)
 		if err != nil {
 			return "", fmt.Errorf("parsing public key: %w", err)
 		}
@@ -184,7 +184,7 @@ func DecryptValueUsingSecretKey(ctx context.Context, encryptedValue string, secr
 }
 
 func generateSalt(ctx context.Context) (string, error) {
-	return secret.GenerateSalt(ctx, 32)
+	return secretlib.GenerateSalt(ctx, 32)
 }
 
 func saltValue(ctx context.Context, rawValue, salt string) string {

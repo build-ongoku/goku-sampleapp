@@ -371,6 +371,227 @@ const typeReqs: TypeReq[] = [
             return {}
         },
     },
+    {
+        namespace: {
+            service: 'core',
+            entity: undefined,
+            types: ['secret_decryptable_add_request'],
+            enum: undefined,
+            method: undefined,
+        },
+        fields: [
+            {
+                name: new Name('value'),
+                isRepeated: false,
+                isOptional: false,
+                isMetaField: false,
+                excludeFromForm: undefined,
+                dtype: {
+                    name: new Name('string'),
+                    kind: fieldkind.StringKind,
+                    namespace: undefined,
+                },
+            },
+            {
+                name: new Name('secret_key_id'),
+                isRepeated: false,
+                isOptional: true,
+                isMetaField: false,
+                excludeFromForm: undefined,
+                dtype: {
+                    name: new Name('id'),
+                    kind: fieldkind.IDKind,
+                    namespace: undefined,
+                },
+            },
+        ],
+        getEmptyObjectFunc: (appInfo: App) => {
+            // All nested types should be initialized with their empty instances
+
+            // Return the empty object
+            return {
+                value: undefined,
+                secretKeyID: undefined,
+            }
+        },
+    },
+    {
+        namespace: {
+            service: 'core',
+            entity: undefined,
+            types: ['secret_decryptable_add_request_field_condition'],
+            enum: undefined,
+            method: undefined,
+        },
+        fields: [],
+        getEmptyObjectFunc: (appInfo: App) => {
+            // All nested types should be initialized with their empty instances
+
+            // Return the empty object
+            return {}
+        },
+    },
+    {
+        namespace: {
+            service: 'core',
+            entity: undefined,
+            types: ['secret_decryptable_add_request_filter'],
+            enum: undefined,
+            method: undefined,
+        },
+        fields: [
+            {
+                name: new Name('parent_id'),
+                isRepeated: false,
+                isOptional: true,
+                isMetaField: false,
+                excludeFromForm: undefined,
+                dtype: {
+                    name: new Name('id_condition'),
+                    kind: fieldkind.ConditionKind,
+                    namespace: undefined,
+                },
+            },
+            {
+                name: new Name('id'),
+                isRepeated: false,
+                isOptional: true,
+                isMetaField: false,
+                excludeFromForm: undefined,
+                dtype: {
+                    name: new Name('id_condition'),
+                    kind: fieldkind.ConditionKind,
+                    namespace: undefined,
+                },
+            },
+            {
+                name: new Name('value'),
+                isRepeated: false,
+                isOptional: true,
+                isMetaField: false,
+                excludeFromForm: undefined,
+                dtype: {
+                    name: new Name('string_condition'),
+                    kind: fieldkind.ConditionKind,
+                    namespace: undefined,
+                },
+            },
+            {
+                name: new Name('secret_key_id'),
+                isRepeated: false,
+                isOptional: true,
+                isMetaField: false,
+                excludeFromForm: undefined,
+                dtype: {
+                    name: new Name('id_condition'),
+                    kind: fieldkind.ConditionKind,
+                    namespace: undefined,
+                },
+            },
+            {
+                name: new Name('created_at'),
+                isRepeated: false,
+                isOptional: true,
+                isMetaField: false,
+                excludeFromForm: undefined,
+                dtype: {
+                    name: new Name('timestamp_condition'),
+                    kind: fieldkind.ConditionKind,
+                    namespace: undefined,
+                },
+            },
+            {
+                name: new Name('updated_at'),
+                isRepeated: false,
+                isOptional: true,
+                isMetaField: false,
+                excludeFromForm: undefined,
+                dtype: {
+                    name: new Name('timestamp_condition'),
+                    kind: fieldkind.ConditionKind,
+                    namespace: undefined,
+                },
+            },
+            {
+                name: new Name('deleted_at'),
+                isRepeated: false,
+                isOptional: true,
+                isMetaField: false,
+                excludeFromForm: undefined,
+                dtype: {
+                    name: new Name('timestamp_condition'),
+                    kind: fieldkind.ConditionKind,
+                    namespace: undefined,
+                },
+            },
+            {
+                name: new Name('and'),
+                isRepeated: true,
+                isOptional: true,
+                isMetaField: false,
+                excludeFromForm: undefined,
+                dtype: {
+                    name: new Name('core__secret_decryptable_add_request_filter'),
+                    kind: fieldkind.NestedKind,
+                    namespace: {
+                        service: 'core',
+                        entity: undefined,
+                        types: ['secret_decryptable_add_request_filter'],
+                        enum: undefined,
+                        method: undefined,
+                    },
+                },
+            },
+            {
+                name: new Name('or'),
+                isRepeated: true,
+                isOptional: true,
+                isMetaField: false,
+                excludeFromForm: undefined,
+                dtype: {
+                    name: new Name('core__secret_decryptable_add_request_filter'),
+                    kind: fieldkind.NestedKind,
+                    namespace: {
+                        service: 'core',
+                        entity: undefined,
+                        types: ['secret_decryptable_add_request_filter'],
+                        enum: undefined,
+                        method: undefined,
+                    },
+                },
+            },
+        ],
+        getEmptyObjectFunc: (appInfo: App) => {
+            // All nested types should be initialized with their empty instances
+            const andTypeInfo = appInfo.getTypeInfo({
+                service: 'core',
+                entity: undefined,
+                types: ['secret_decryptable_add_request_filter'],
+                enum: undefined,
+                method: undefined,
+            })
+            const orTypeInfo = appInfo.getTypeInfo({
+                service: 'core',
+                entity: undefined,
+                types: ['secret_decryptable_add_request_filter'],
+                enum: undefined,
+                method: undefined,
+            })
+
+            // Return the empty object
+            return {
+                parentID: undefined,
+                id: undefined,
+                value: undefined,
+                secretKeyID: undefined,
+                createdAt: undefined,
+                updatedAt: undefined,
+                deletedAt: undefined,
+                and: undefined,
+                or: undefined,
+            }
+        },
+    },
 ]
 
 const enumReqs: EnumReq[] = [
@@ -462,18 +683,36 @@ const enumReqs: EnumReq[] = [
         values: [
             {
                 id: 1,
+                value: 'JobApplicant',
+                description: undefined,
+                displayValue: 'Job Applicant',
+            },
+            {
+                id: 2,
                 value: 'File',
                 description: undefined,
                 displayValue: 'File',
             },
             {
-                id: 2,
+                id: 3,
+                value: 'SecretKey',
+                description: undefined,
+                displayValue: 'Secret Key',
+            },
+            {
+                id: 4,
+                value: 'SecretDecryptable',
+                description: undefined,
+                displayValue: 'Secret Decryptable',
+            },
+            {
+                id: 5,
                 value: 'Task',
                 description: undefined,
                 displayValue: 'Task',
             },
             {
-                id: 3,
+                id: 6,
                 value: 'TaskRun',
                 description: undefined,
                 displayValue: 'Task Run',
@@ -494,6 +733,65 @@ const enumReqs: EnumReq[] = [
                 value: 'FileUpload',
                 description: undefined,
                 displayValue: 'File Upload',
+            },
+            {
+                id: 2,
+                value: 'SecretDecryptabeAdd',
+                description: undefined,
+                displayValue: 'Secret Decryptabe Add',
+            },
+        ],
+    },
+    {
+        namespace: {
+            service: 'core',
+            entity: undefined,
+            types: undefined,
+            enum: 'secret_decryptable_add_request_field',
+            method: undefined,
+        },
+        values: [
+            {
+                id: 1,
+                value: 'ParentID',
+                description: undefined,
+                displayValue: 'Parent ID',
+            },
+            {
+                id: 2,
+                value: 'ID',
+                description: undefined,
+                displayValue: 'ID',
+            },
+            {
+                id: 3,
+                value: 'Value',
+                description: undefined,
+                displayValue: 'Value',
+            },
+            {
+                id: 4,
+                value: 'SecretKeyID',
+                description: undefined,
+                displayValue: 'Secret Key ID',
+            },
+            {
+                id: 5,
+                value: 'CreatedAt',
+                description: undefined,
+                displayValue: 'Created At',
+            },
+            {
+                id: 6,
+                value: 'UpdatedAt',
+                description: undefined,
+                displayValue: 'Updated At',
+            },
+            {
+                id: 7,
+                value: 'DeletedAt',
+                description: undefined,
+                displayValue: 'Deleted At',
             },
         ],
     },

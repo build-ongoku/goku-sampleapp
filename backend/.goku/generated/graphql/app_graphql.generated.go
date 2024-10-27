@@ -4,11 +4,15 @@ import (
 	"context"
 
 	"github.com/teejays/gokutil/log"
+	"github.com/teejays/gokutil/scalars"
 
 	app_client "sampleapp/backend/.goku/generated/client"
 	svcauth_entsecret_typ "sampleapp/backend/.goku/generated/service/auth/entity/secret/typ"
 	svcauth_typ "sampleapp/backend/.goku/generated/service/auth/typ"
 	svccore_entfile_typ "sampleapp/backend/.goku/generated/service/core/entity/file/typ"
+	svccore_entjobapplicant_typ "sampleapp/backend/.goku/generated/service/core/entity/job_applicant/typ"
+	svccore_entsecretdecryptable_typ "sampleapp/backend/.goku/generated/service/core/entity/secret_decryptable/typ"
+	svccore_entsecretkey_typ "sampleapp/backend/.goku/generated/service/core/entity/secret_key/typ"
 	svccore_enttask_typ "sampleapp/backend/.goku/generated/service/core/entity/task/typ"
 	svccore_enttaskrun_typ "sampleapp/backend/.goku/generated/service/core/entity/task_run/typ"
 	svccore_typ "sampleapp/backend/.goku/generated/service/core/typ"
@@ -28,12 +32,36 @@ func (r *Core_File_AddRequestResolver) Object() *Core_File_FileInputResolver {
 	return &Core_File_FileInputResolver{FileInput: r.AddRequest.Object}
 }
 
-type User_User_AddRequestResolver struct {
-	svcuser_entuser_typ.AddRequest
+type Core_SecretDecryptable_AddRequestResolver struct {
+	svccore_entsecretdecryptable_typ.AddRequest
 }
 
-func (r *User_User_AddRequestResolver) Object() *User_User_UserInputResolver {
-	return &User_User_UserInputResolver{UserInput: r.AddRequest.Object}
+func (r *Core_SecretDecryptable_AddRequestResolver) Object() *Core_SecretDecryptable_SecretDecryptableInputResolver {
+	return &Core_SecretDecryptable_SecretDecryptableInputResolver{SecretDecryptableInput: r.AddRequest.Object}
+}
+
+type Core_JobApplicant_AddRequestResolver struct {
+	svccore_entjobapplicant_typ.AddRequest
+}
+
+func (r *Core_JobApplicant_AddRequestResolver) Object() *Core_JobApplicant_JobApplicantInputResolver {
+	return &Core_JobApplicant_JobApplicantInputResolver{JobApplicantInput: r.AddRequest.Object}
+}
+
+type Core_Task_AddRequestResolver struct {
+	svccore_enttask_typ.AddRequest
+}
+
+func (r *Core_Task_AddRequestResolver) Object() *Core_Task_TaskInputResolver {
+	return &Core_Task_TaskInputResolver{TaskInput: r.AddRequest.Object}
+}
+
+type Core_SecretKey_AddRequestResolver struct {
+	svccore_entsecretkey_typ.AddRequest
+}
+
+func (r *Core_SecretKey_AddRequestResolver) Object() *Core_SecretKey_SecretKeyInputResolver {
+	return &Core_SecretKey_SecretKeyInputResolver{SecretKeyInput: r.AddRequest.Object}
 }
 
 type Auth_Secret_AddRequestResolver struct {
@@ -44,14 +72,6 @@ func (r *Auth_Secret_AddRequestResolver) Object() *Auth_Secret_SecretInputResolv
 	return &Auth_Secret_SecretInputResolver{SecretInput: r.AddRequest.Object}
 }
 
-type User_Team_AddRequestResolver struct {
-	svcuser_entteam_typ.AddRequest
-}
-
-func (r *User_Team_AddRequestResolver) Object() *User_Team_TeamInputResolver {
-	return &User_Team_TeamInputResolver{TeamInput: r.AddRequest.Object}
-}
-
 type Core_TaskRun_AddRequestResolver struct {
 	svccore_enttaskrun_typ.AddRequest
 }
@@ -60,12 +80,20 @@ func (r *Core_TaskRun_AddRequestResolver) Object() *Core_TaskRun_TaskRunInputRes
 	return &Core_TaskRun_TaskRunInputResolver{TaskRunInput: r.AddRequest.Object}
 }
 
-type Core_Task_AddRequestResolver struct {
-	svccore_enttask_typ.AddRequest
+type User_User_AddRequestResolver struct {
+	svcuser_entuser_typ.AddRequest
 }
 
-func (r *Core_Task_AddRequestResolver) Object() *Core_Task_TaskInputResolver {
-	return &Core_Task_TaskInputResolver{TaskInput: r.AddRequest.Object}
+func (r *User_User_AddRequestResolver) Object() *User_User_UserInputResolver {
+	return &User_User_UserInputResolver{UserInput: r.AddRequest.Object}
+}
+
+type User_Team_AddRequestResolver struct {
+	svcuser_entteam_typ.AddRequest
+}
+
+func (r *User_Team_AddRequestResolver) Object() *User_Team_TeamInputResolver {
+	return &User_Team_TeamInputResolver{TeamInput: r.AddRequest.Object}
 }
 
 type AddressResolver struct {
@@ -227,10 +255,6 @@ func (r *Core_CronExpressionFilterResolver) Or() []*Core_CronExpressionFilterRes
 	return ret
 }
 
-type Core_EntityNameConditionResolver struct {
-	svccore_typ.EntityNameCondition
-}
-
 type EntityNameConditionResolver struct {
 	app_typ.EntityNameCondition
 }
@@ -241,6 +265,10 @@ type Auth_EntityNameConditionResolver struct {
 
 type User_EntityNameConditionResolver struct {
 	svcuser_typ.EntityNameCondition
+}
+
+type Core_EntityNameConditionResolver struct {
+	svccore_typ.EntityNameCondition
 }
 
 type Core_FileResolver struct {
@@ -281,64 +309,87 @@ func (r *Core_File_FileFilterResolver) Or() []*Core_File_FileFilterResolver {
 	return ret
 }
 
+type Core_SecretKey_FormatConditionResolver struct {
+	svccore_entsecretkey_typ.FormatCondition
+}
+
 type GenderConditionResolver struct {
 	app_typ.GenderCondition
-}
-
-type User_User_GetRequestResolver struct {
-	svcuser_entuser_typ.GetRequest
-}
-
-type User_Team_GetRequestResolver struct {
-	svcuser_entteam_typ.GetRequest
-}
-
-type Core_File_GetRequestResolver struct {
-	svccore_entfile_typ.GetRequest
-}
-
-type Core_TaskRun_GetRequestResolver struct {
-	svccore_enttaskrun_typ.GetRequest
 }
 
 type Core_Task_GetRequestResolver struct {
 	svccore_enttask_typ.GetRequest
 }
 
+type User_Team_GetRequestResolver struct {
+	svcuser_entteam_typ.GetRequest
+}
+
 type Auth_Secret_GetRequestResolver struct {
 	svcauth_entsecret_typ.GetRequest
 }
 
-type Auth_Secret_ListRequestResolver struct {
-	svcauth_entsecret_typ.ListRequest
+type Core_File_GetRequestResolver struct {
+	svccore_entfile_typ.GetRequest
 }
 
-func (r *Auth_Secret_ListRequestResolver) Filter() *Auth_Secret_SecretFilterResolver {
-	return &Auth_Secret_SecretFilterResolver{SecretFilter: r.ListRequest.Filter}
+type User_User_GetRequestResolver struct {
+	svcuser_entuser_typ.GetRequest
 }
 
-type User_Team_ListRequestResolver struct {
-	svcuser_entteam_typ.ListRequest
+type Core_TaskRun_GetRequestResolver struct {
+	svccore_enttaskrun_typ.GetRequest
 }
 
-func (r *User_Team_ListRequestResolver) Filter() *User_Team_TeamFilterResolver {
-	return &User_Team_TeamFilterResolver{TeamFilter: r.ListRequest.Filter}
+type Core_JobApplicant_GetRequestResolver struct {
+	svccore_entjobapplicant_typ.GetRequest
 }
 
-type User_User_ListRequestResolver struct {
-	svcuser_entuser_typ.ListRequest
+type Core_SecretDecryptable_GetRequestResolver struct {
+	svccore_entsecretdecryptable_typ.GetRequest
 }
 
-func (r *User_User_ListRequestResolver) Filter() *User_User_UserFilterResolver {
-	return &User_User_UserFilterResolver{UserFilter: r.ListRequest.Filter}
+type Core_SecretKey_GetRequestResolver struct {
+	svccore_entsecretkey_typ.GetRequest
 }
 
-type Core_File_ListRequestResolver struct {
-	svccore_entfile_typ.ListRequest
+type Core_JobApplicantResolver struct {
+	svccore_entjobapplicant_typ.JobApplicant
 }
 
-func (r *Core_File_ListRequestResolver) Filter() *Core_File_FileFilterResolver {
-	return &Core_File_FileFilterResolver{FileFilter: r.ListRequest.Filter}
+type Core_JobApplicant_JobApplicantInputResolver struct {
+	svccore_entjobapplicant_typ.JobApplicantInput
+}
+
+type Core_JobApplicant_JobApplicantFieldConditionResolver struct {
+	svccore_entjobapplicant_typ.JobApplicantFieldCondition
+}
+
+type Core_JobApplicant_JobApplicantFilterResolver struct {
+	svccore_entjobapplicant_typ.JobApplicantFilter
+}
+
+func (r *Core_JobApplicant_JobApplicantFilterResolver) And() []*Core_JobApplicant_JobApplicantFilterResolver {
+	var ret []*Core_JobApplicant_JobApplicantFilterResolver
+	for _, elem := range r.JobApplicantFilter.And {
+		ret = append(ret, &Core_JobApplicant_JobApplicantFilterResolver{JobApplicantFilter: elem})
+	}
+	return ret
+}
+func (r *Core_JobApplicant_JobApplicantFilterResolver) Or() []*Core_JobApplicant_JobApplicantFilterResolver {
+	var ret []*Core_JobApplicant_JobApplicantFilterResolver
+	for _, elem := range r.JobApplicantFilter.Or {
+		ret = append(ret, &Core_JobApplicant_JobApplicantFilterResolver{JobApplicantFilter: elem})
+	}
+	return ret
+}
+
+type Core_SecretDecryptable_ListRequestResolver struct {
+	svccore_entsecretdecryptable_typ.ListRequest
+}
+
+func (r *Core_SecretDecryptable_ListRequestResolver) Filter() *Core_SecretDecryptable_SecretDecryptableFilterResolver {
+	return &Core_SecretDecryptable_SecretDecryptableFilterResolver{SecretDecryptableFilter: r.ListRequest.Filter}
 }
 
 type Core_Task_ListRequestResolver struct {
@@ -349,12 +400,120 @@ func (r *Core_Task_ListRequestResolver) Filter() *Core_Task_TaskFilterResolver {
 	return &Core_Task_TaskFilterResolver{TaskFilter: r.ListRequest.Filter}
 }
 
+type User_Team_ListRequestResolver struct {
+	svcuser_entteam_typ.ListRequest
+}
+
+func (r *User_Team_ListRequestResolver) Filter() *User_Team_TeamFilterResolver {
+	return &User_Team_TeamFilterResolver{TeamFilter: r.ListRequest.Filter}
+}
+
+type Core_JobApplicant_ListRequestResolver struct {
+	svccore_entjobapplicant_typ.ListRequest
+}
+
+func (r *Core_JobApplicant_ListRequestResolver) Filter() *Core_JobApplicant_JobApplicantFilterResolver {
+	return &Core_JobApplicant_JobApplicantFilterResolver{JobApplicantFilter: r.ListRequest.Filter}
+}
+
+type User_User_ListRequestResolver struct {
+	svcuser_entuser_typ.ListRequest
+}
+
+func (r *User_User_ListRequestResolver) Filter() *User_User_UserFilterResolver {
+	return &User_User_UserFilterResolver{UserFilter: r.ListRequest.Filter}
+}
+
+type Core_SecretKey_ListRequestResolver struct {
+	svccore_entsecretkey_typ.ListRequest
+}
+
+func (r *Core_SecretKey_ListRequestResolver) Filter() *Core_SecretKey_SecretKeyFilterResolver {
+	return &Core_SecretKey_SecretKeyFilterResolver{SecretKeyFilter: r.ListRequest.Filter}
+}
+
 type Core_TaskRun_ListRequestResolver struct {
 	svccore_enttaskrun_typ.ListRequest
 }
 
 func (r *Core_TaskRun_ListRequestResolver) Filter() *Core_TaskRun_TaskRunFilterResolver {
 	return &Core_TaskRun_TaskRunFilterResolver{TaskRunFilter: r.ListRequest.Filter}
+}
+
+type Auth_Secret_ListRequestResolver struct {
+	svcauth_entsecret_typ.ListRequest
+}
+
+func (r *Auth_Secret_ListRequestResolver) Filter() *Auth_Secret_SecretFilterResolver {
+	return &Auth_Secret_SecretFilterResolver{SecretFilter: r.ListRequest.Filter}
+}
+
+type Core_File_ListRequestResolver struct {
+	svccore_entfile_typ.ListRequest
+}
+
+func (r *Core_File_ListRequestResolver) Filter() *Core_File_FileFilterResolver {
+	return &Core_File_FileFilterResolver{FileFilter: r.ListRequest.Filter}
+}
+
+type Core_JobApplicant_ListResponseResolver struct {
+	svccore_entjobapplicant_typ.ListResponse
+}
+
+func (r *Core_JobApplicant_ListResponseResolver) Items() []*Core_JobApplicantResolver {
+	var ret []*Core_JobApplicantResolver
+	for _, elem := range r.ListResponse.Items {
+		ret = append(ret, &Core_JobApplicantResolver{JobApplicant: elem})
+	}
+	return ret
+}
+func (r *Core_JobApplicant_ListResponseResolver) Count() int32 {
+	return int32(r.ListResponse.Count)
+}
+
+type User_User_ListResponseResolver struct {
+	svcuser_entuser_typ.ListResponse
+}
+
+func (r *User_User_ListResponseResolver) Items() []*User_UserResolver {
+	var ret []*User_UserResolver
+	for _, elem := range r.ListResponse.Items {
+		ret = append(ret, &User_UserResolver{User: elem})
+	}
+	return ret
+}
+func (r *User_User_ListResponseResolver) Count() int32 {
+	return int32(r.ListResponse.Count)
+}
+
+type Core_File_ListResponseResolver struct {
+	svccore_entfile_typ.ListResponse
+}
+
+func (r *Core_File_ListResponseResolver) Items() []*Core_FileResolver {
+	var ret []*Core_FileResolver
+	for _, elem := range r.ListResponse.Items {
+		ret = append(ret, &Core_FileResolver{File: elem})
+	}
+	return ret
+}
+func (r *Core_File_ListResponseResolver) Count() int32 {
+	return int32(r.ListResponse.Count)
+}
+
+type User_Team_ListResponseResolver struct {
+	svcuser_entteam_typ.ListResponse
+}
+
+func (r *User_Team_ListResponseResolver) Items() []*User_TeamResolver {
+	var ret []*User_TeamResolver
+	for _, elem := range r.ListResponse.Items {
+		ret = append(ret, &User_TeamResolver{Team: elem})
+	}
+	return ret
+}
+func (r *User_Team_ListResponseResolver) Count() int32 {
+	return int32(r.ListResponse.Count)
 }
 
 type Core_TaskRun_ListResponseResolver struct {
@@ -387,51 +546,6 @@ func (r *Core_Task_ListResponseResolver) Count() int32 {
 	return int32(r.ListResponse.Count)
 }
 
-type User_User_ListResponseResolver struct {
-	svcuser_entuser_typ.ListResponse
-}
-
-func (r *User_User_ListResponseResolver) Items() []*User_UserResolver {
-	var ret []*User_UserResolver
-	for _, elem := range r.ListResponse.Items {
-		ret = append(ret, &User_UserResolver{User: elem})
-	}
-	return ret
-}
-func (r *User_User_ListResponseResolver) Count() int32 {
-	return int32(r.ListResponse.Count)
-}
-
-type User_Team_ListResponseResolver struct {
-	svcuser_entteam_typ.ListResponse
-}
-
-func (r *User_Team_ListResponseResolver) Items() []*User_TeamResolver {
-	var ret []*User_TeamResolver
-	for _, elem := range r.ListResponse.Items {
-		ret = append(ret, &User_TeamResolver{Team: elem})
-	}
-	return ret
-}
-func (r *User_Team_ListResponseResolver) Count() int32 {
-	return int32(r.ListResponse.Count)
-}
-
-type Core_File_ListResponseResolver struct {
-	svccore_entfile_typ.ListResponse
-}
-
-func (r *Core_File_ListResponseResolver) Items() []*Core_FileResolver {
-	var ret []*Core_FileResolver
-	for _, elem := range r.ListResponse.Items {
-		ret = append(ret, &Core_FileResolver{File: elem})
-	}
-	return ret
-}
-func (r *Core_File_ListResponseResolver) Count() int32 {
-	return int32(r.ListResponse.Count)
-}
-
 type Auth_Secret_ListResponseResolver struct {
 	svcauth_entsecret_typ.ListResponse
 }
@@ -447,36 +561,62 @@ func (r *Auth_Secret_ListResponseResolver) Count() int32 {
 	return int32(r.ListResponse.Count)
 }
 
+type Core_SecretKey_ListResponseResolver struct {
+	svccore_entsecretkey_typ.ListResponse
+}
+
+func (r *Core_SecretKey_ListResponseResolver) Items() []*Core_SecretKeyResolver {
+	var ret []*Core_SecretKeyResolver
+	for _, elem := range r.ListResponse.Items {
+		ret = append(ret, &Core_SecretKeyResolver{SecretKey: elem})
+	}
+	return ret
+}
+func (r *Core_SecretKey_ListResponseResolver) Count() int32 {
+	return int32(r.ListResponse.Count)
+}
+
+type Core_SecretDecryptable_ListResponseResolver struct {
+	svccore_entsecretdecryptable_typ.ListResponse
+}
+
+func (r *Core_SecretDecryptable_ListResponseResolver) Items() []*Core_SecretDecryptableResolver {
+	var ret []*Core_SecretDecryptableResolver
+	for _, elem := range r.ListResponse.Items {
+		ret = append(ret, &Core_SecretDecryptableResolver{SecretDecryptable: elem})
+	}
+	return ret
+}
+func (r *Core_SecretDecryptable_ListResponseResolver) Count() int32 {
+	return int32(r.ListResponse.Count)
+}
+
 type Auth_LoginRequestResolver struct {
 	svcauth_typ.LoginRequest
 }
 
-type MethodNameConditionResolver struct {
-	app_typ.MethodNameCondition
-}
-
-type Core_File_MethodNameConditionResolver struct {
-	svccore_entfile_typ.MethodNameCondition
-}
-
-type Auth_Secret_MethodNameConditionResolver struct {
-	svcauth_entsecret_typ.MethodNameCondition
+type Core_TaskRun_MethodNameConditionResolver struct {
+	svccore_enttaskrun_typ.MethodNameCondition
 }
 
 type Core_Task_MethodNameConditionResolver struct {
 	svccore_enttask_typ.MethodNameCondition
 }
 
-type Core_MethodNameConditionResolver struct {
-	svccore_typ.MethodNameCondition
+type Auth_Secret_MethodNameConditionResolver struct {
+	svcauth_entsecret_typ.MethodNameCondition
+}
+
+type MethodNameConditionResolver struct {
+	app_typ.MethodNameCondition
 }
 
 type Auth_MethodNameConditionResolver struct {
 	svcauth_typ.MethodNameCondition
 }
 
-type Core_TaskRun_MethodNameConditionResolver struct {
-	svccore_enttaskrun_typ.MethodNameCondition
+type Core_MethodNameConditionResolver struct {
+	svccore_typ.MethodNameCondition
 }
 
 type User_User_MethodNameConditionResolver struct {
@@ -485,6 +625,22 @@ type User_User_MethodNameConditionResolver struct {
 
 type User_Team_MethodNameConditionResolver struct {
 	svcuser_entteam_typ.MethodNameCondition
+}
+
+type Core_File_MethodNameConditionResolver struct {
+	svccore_entfile_typ.MethodNameCondition
+}
+
+type Core_SecretDecryptable_MethodNameConditionResolver struct {
+	svccore_entsecretdecryptable_typ.MethodNameCondition
+}
+
+type Core_SecretKey_MethodNameConditionResolver struct {
+	svccore_entsecretkey_typ.MethodNameCondition
+}
+
+type Core_JobApplicant_MethodNameConditionResolver struct {
+	svccore_entjobapplicant_typ.MethodNameCondition
 }
 
 type PersonNameResolver struct {
@@ -590,28 +746,40 @@ func (r *PhoneNumberFilterResolver) Or() []*PhoneNumberFilterResolver {
 	return ret
 }
 
-type Auth_Secret_QueryByTextRequestResolver struct {
-	svcauth_entsecret_typ.QueryByTextRequest
-}
-
-type Core_File_QueryByTextRequestResolver struct {
-	svccore_entfile_typ.QueryByTextRequest
+type Core_TaskRun_QueryByTextRequestResolver struct {
+	svccore_enttaskrun_typ.QueryByTextRequest
 }
 
 type Core_Task_QueryByTextRequestResolver struct {
 	svccore_enttask_typ.QueryByTextRequest
 }
 
-type Core_TaskRun_QueryByTextRequestResolver struct {
-	svccore_enttaskrun_typ.QueryByTextRequest
+type Auth_Secret_QueryByTextRequestResolver struct {
+	svcauth_entsecret_typ.QueryByTextRequest
+}
+
+type Core_SecretKey_QueryByTextRequestResolver struct {
+	svccore_entsecretkey_typ.QueryByTextRequest
+}
+
+type User_User_QueryByTextRequestResolver struct {
+	svcuser_entuser_typ.QueryByTextRequest
+}
+
+type Core_SecretDecryptable_QueryByTextRequestResolver struct {
+	svccore_entsecretdecryptable_typ.QueryByTextRequest
 }
 
 type User_Team_QueryByTextRequestResolver struct {
 	svcuser_entteam_typ.QueryByTextRequest
 }
 
-type User_User_QueryByTextRequestResolver struct {
-	svcuser_entuser_typ.QueryByTextRequest
+type Core_File_QueryByTextRequestResolver struct {
+	svccore_entfile_typ.QueryByTextRequest
+}
+
+type Core_JobApplicant_QueryByTextRequestResolver struct {
+	svccore_entjobapplicant_typ.QueryByTextRequest
 }
 
 type Auth_RegisterUserRequestResolver struct {
@@ -628,6 +796,96 @@ type Auth_SecretResolver struct {
 
 type Auth_Secret_SecretInputResolver struct {
 	svcauth_entsecret_typ.SecretInput
+}
+
+type Core_SecretDecryptableResolver struct {
+	svccore_entsecretdecryptable_typ.SecretDecryptable
+}
+
+func (r *Core_SecretDecryptableResolver) RawValue() *string {
+	return &r.SecretDecryptable.RawValue
+}
+
+type Core_SecretDecryptable_SecretDecryptableInputResolver struct {
+	svccore_entsecretdecryptable_typ.SecretDecryptableInput
+}
+
+func (r *Core_SecretDecryptable_SecretDecryptableInputResolver) RawValue() *string {
+	return &r.SecretDecryptableInput.RawValue
+}
+
+type Core_SecretDecryptable_SecretDecryptableActionConditionResolver struct {
+	svccore_entsecretdecryptable_typ.SecretDecryptableActionCondition
+}
+
+type Core_SecretDecryptableAddRequestResolver struct {
+	svccore_typ.SecretDecryptableAddRequest
+}
+
+func (r *Core_SecretDecryptableAddRequestResolver) SecretKeyID() *scalars.ID {
+	return &r.SecretDecryptableAddRequest.SecretKeyID
+}
+
+type Core_SecretDecryptableAddRequestWithMetaResolver struct {
+	svccore_typ.SecretDecryptableAddRequestWithMeta
+}
+
+func (r *Core_SecretDecryptableAddRequestWithMetaResolver) SecretKeyID() *scalars.ID {
+	return &r.SecretDecryptableAddRequestWithMeta.SecretKeyID
+}
+
+type Core_SecretDecryptableAddRequestInputResolver struct {
+	svccore_typ.SecretDecryptableAddRequestInput
+}
+
+func (r *Core_SecretDecryptableAddRequestInputResolver) SecretKeyID() *scalars.ID {
+	return &r.SecretDecryptableAddRequestInput.SecretKeyID
+}
+
+type Core_SecretDecryptableAddRequestFieldConditionResolver struct {
+	svccore_typ.SecretDecryptableAddRequestFieldCondition
+}
+
+type Core_SecretDecryptableAddRequestFilterResolver struct {
+	svccore_typ.SecretDecryptableAddRequestFilter
+}
+
+func (r *Core_SecretDecryptableAddRequestFilterResolver) And() []*Core_SecretDecryptableAddRequestFilterResolver {
+	var ret []*Core_SecretDecryptableAddRequestFilterResolver
+	for _, elem := range r.SecretDecryptableAddRequestFilter.And {
+		ret = append(ret, &Core_SecretDecryptableAddRequestFilterResolver{SecretDecryptableAddRequestFilter: elem})
+	}
+	return ret
+}
+func (r *Core_SecretDecryptableAddRequestFilterResolver) Or() []*Core_SecretDecryptableAddRequestFilterResolver {
+	var ret []*Core_SecretDecryptableAddRequestFilterResolver
+	for _, elem := range r.SecretDecryptableAddRequestFilter.Or {
+		ret = append(ret, &Core_SecretDecryptableAddRequestFilterResolver{SecretDecryptableAddRequestFilter: elem})
+	}
+	return ret
+}
+
+type Core_SecretDecryptable_SecretDecryptableFieldConditionResolver struct {
+	svccore_entsecretdecryptable_typ.SecretDecryptableFieldCondition
+}
+
+type Core_SecretDecryptable_SecretDecryptableFilterResolver struct {
+	svccore_entsecretdecryptable_typ.SecretDecryptableFilter
+}
+
+func (r *Core_SecretDecryptable_SecretDecryptableFilterResolver) And() []*Core_SecretDecryptable_SecretDecryptableFilterResolver {
+	var ret []*Core_SecretDecryptable_SecretDecryptableFilterResolver
+	for _, elem := range r.SecretDecryptableFilter.And {
+		ret = append(ret, &Core_SecretDecryptable_SecretDecryptableFilterResolver{SecretDecryptableFilter: elem})
+	}
+	return ret
+}
+func (r *Core_SecretDecryptable_SecretDecryptableFilterResolver) Or() []*Core_SecretDecryptable_SecretDecryptableFilterResolver {
+	var ret []*Core_SecretDecryptable_SecretDecryptableFilterResolver
+	for _, elem := range r.SecretDecryptableFilter.Or {
+		ret = append(ret, &Core_SecretDecryptable_SecretDecryptableFilterResolver{SecretDecryptableFilter: elem})
+	}
+	return ret
 }
 
 type Auth_Secret_SecretFieldConditionResolver struct {
@@ -656,40 +914,84 @@ func (r *Auth_Secret_SecretFilterResolver) Or() []*Auth_Secret_SecretFilterResol
 	return ret
 }
 
+type Core_SecretKeyResolver struct {
+	svccore_entsecretkey_typ.SecretKey
+}
+
+type Core_SecretKey_SecretKeyInputResolver struct {
+	svccore_entsecretkey_typ.SecretKeyInput
+}
+
+type Core_SecretKey_SecretKeyFieldConditionResolver struct {
+	svccore_entsecretkey_typ.SecretKeyFieldCondition
+}
+
+type Core_SecretKey_SecretKeyFilterResolver struct {
+	svccore_entsecretkey_typ.SecretKeyFilter
+}
+
+func (r *Core_SecretKey_SecretKeyFilterResolver) Type() *Core_SecretKey_TypeConditionResolver {
+	return &Core_SecretKey_TypeConditionResolver{TypeCondition: *r.SecretKeyFilter.Type}
+}
+func (r *Core_SecretKey_SecretKeyFilterResolver) PrivateKeyFormat() *Core_SecretKey_FormatConditionResolver {
+	return &Core_SecretKey_FormatConditionResolver{FormatCondition: *r.SecretKeyFilter.PrivateKeyFormat}
+}
+func (r *Core_SecretKey_SecretKeyFilterResolver) PublicKeyFormat() *Core_SecretKey_FormatConditionResolver {
+	return &Core_SecretKey_FormatConditionResolver{FormatCondition: *r.SecretKeyFilter.PublicKeyFormat}
+}
+func (r *Core_SecretKey_SecretKeyFilterResolver) And() []*Core_SecretKey_SecretKeyFilterResolver {
+	var ret []*Core_SecretKey_SecretKeyFilterResolver
+	for _, elem := range r.SecretKeyFilter.And {
+		ret = append(ret, &Core_SecretKey_SecretKeyFilterResolver{SecretKeyFilter: elem})
+	}
+	return ret
+}
+func (r *Core_SecretKey_SecretKeyFilterResolver) Or() []*Core_SecretKey_SecretKeyFilterResolver {
+	var ret []*Core_SecretKey_SecretKeyFilterResolver
+	for _, elem := range r.SecretKeyFilter.Or {
+		ret = append(ret, &Core_SecretKey_SecretKeyFilterResolver{SecretKeyFilter: elem})
+	}
+	return ret
+}
+
 type ServiceNameConditionResolver struct {
 	app_typ.ServiceNameCondition
 }
 
-type Auth_Secret_StandardEntityRequestResolver struct {
-	svcauth_entsecret_typ.StandardEntityRequest
+type Core_JobApplicant_StandardEntityRequestResolver struct {
+	svccore_entjobapplicant_typ.StandardEntityRequest
 }
 
 type Core_TaskRun_StandardEntityRequestResolver struct {
 	svccore_enttaskrun_typ.StandardEntityRequest
 }
 
-type Core_Task_StandardEntityRequestResolver struct {
-	svccore_enttask_typ.StandardEntityRequest
-}
-
-type User_User_StandardEntityRequestResolver struct {
-	svcuser_entuser_typ.StandardEntityRequest
-}
-
-type Core_File_StandardEntityRequestResolver struct {
-	svccore_entfile_typ.StandardEntityRequest
+type Core_SecretKey_StandardEntityRequestResolver struct {
+	svccore_entsecretkey_typ.StandardEntityRequest
 }
 
 type User_Team_StandardEntityRequestResolver struct {
 	svcuser_entteam_typ.StandardEntityRequest
 }
 
-type Core_Task_StandardEntityResponseResolver struct {
-	svccore_enttask_typ.StandardEntityResponse
+type Core_SecretDecryptable_StandardEntityRequestResolver struct {
+	svccore_entsecretdecryptable_typ.StandardEntityRequest
 }
 
-func (r *Core_Task_StandardEntityResponseResolver) Object() *Core_TaskResolver {
-	return &Core_TaskResolver{Task: r.StandardEntityResponse.Object}
+type Core_File_StandardEntityRequestResolver struct {
+	svccore_entfile_typ.StandardEntityRequest
+}
+
+type Core_Task_StandardEntityRequestResolver struct {
+	svccore_enttask_typ.StandardEntityRequest
+}
+
+type Auth_Secret_StandardEntityRequestResolver struct {
+	svcauth_entsecret_typ.StandardEntityRequest
+}
+
+type User_User_StandardEntityRequestResolver struct {
+	svcuser_entuser_typ.StandardEntityRequest
 }
 
 type Core_TaskRun_StandardEntityResponseResolver struct {
@@ -700,12 +1002,36 @@ func (r *Core_TaskRun_StandardEntityResponseResolver) Object() *Core_TaskRunReso
 	return &Core_TaskRunResolver{TaskRun: r.StandardEntityResponse.Object}
 }
 
-type User_User_StandardEntityResponseResolver struct {
-	svcuser_entuser_typ.StandardEntityResponse
+type Auth_Secret_StandardEntityResponseResolver struct {
+	svcauth_entsecret_typ.StandardEntityResponse
 }
 
-func (r *User_User_StandardEntityResponseResolver) Object() *User_UserResolver {
-	return &User_UserResolver{User: r.StandardEntityResponse.Object}
+func (r *Auth_Secret_StandardEntityResponseResolver) Object() *Auth_SecretResolver {
+	return &Auth_SecretResolver{Secret: r.StandardEntityResponse.Object}
+}
+
+type Core_SecretDecryptable_StandardEntityResponseResolver struct {
+	svccore_entsecretdecryptable_typ.StandardEntityResponse
+}
+
+func (r *Core_SecretDecryptable_StandardEntityResponseResolver) Object() *Core_SecretDecryptableResolver {
+	return &Core_SecretDecryptableResolver{SecretDecryptable: r.StandardEntityResponse.Object}
+}
+
+type Core_SecretKey_StandardEntityResponseResolver struct {
+	svccore_entsecretkey_typ.StandardEntityResponse
+}
+
+func (r *Core_SecretKey_StandardEntityResponseResolver) Object() *Core_SecretKeyResolver {
+	return &Core_SecretKeyResolver{SecretKey: r.StandardEntityResponse.Object}
+}
+
+type Core_Task_StandardEntityResponseResolver struct {
+	svccore_enttask_typ.StandardEntityResponse
+}
+
+func (r *Core_Task_StandardEntityResponseResolver) Object() *Core_TaskResolver {
+	return &Core_TaskResolver{Task: r.StandardEntityResponse.Object}
 }
 
 type Core_File_StandardEntityResponseResolver struct {
@@ -716,20 +1042,28 @@ func (r *Core_File_StandardEntityResponseResolver) Object() *Core_FileResolver {
 	return &Core_FileResolver{File: r.StandardEntityResponse.Object}
 }
 
-type Auth_Secret_StandardEntityResponseResolver struct {
-	svcauth_entsecret_typ.StandardEntityResponse
-}
-
-func (r *Auth_Secret_StandardEntityResponseResolver) Object() *Auth_SecretResolver {
-	return &Auth_SecretResolver{Secret: r.StandardEntityResponse.Object}
-}
-
 type User_Team_StandardEntityResponseResolver struct {
 	svcuser_entteam_typ.StandardEntityResponse
 }
 
 func (r *User_Team_StandardEntityResponseResolver) Object() *User_TeamResolver {
 	return &User_TeamResolver{Team: r.StandardEntityResponse.Object}
+}
+
+type User_User_StandardEntityResponseResolver struct {
+	svcuser_entuser_typ.StandardEntityResponse
+}
+
+func (r *User_User_StandardEntityResponseResolver) Object() *User_UserResolver {
+	return &User_UserResolver{User: r.StandardEntityResponse.Object}
+}
+
+type Core_JobApplicant_StandardEntityResponseResolver struct {
+	svccore_entjobapplicant_typ.StandardEntityResponse
+}
+
+func (r *Core_JobApplicant_StandardEntityResponseResolver) Object() *Core_JobApplicantResolver {
+	return &Core_JobApplicantResolver{JobApplicant: r.StandardEntityResponse.Object}
 }
 
 type Core_TaskRun_StatusConditionResolver struct {
@@ -858,12 +1192,16 @@ type Auth_Secret_TypeConditionResolver struct {
 	svcauth_entsecret_typ.TypeCondition
 }
 
-type User_Team_UpdateRequestResolver struct {
-	svcuser_entteam_typ.UpdateRequest
+type Core_SecretKey_TypeConditionResolver struct {
+	svccore_entsecretkey_typ.TypeCondition
 }
 
-func (r *User_Team_UpdateRequestResolver) Object() *User_TeamResolver {
-	return &User_TeamResolver{Team: r.UpdateRequest.Object}
+type Core_SecretKey_UpdateRequestResolver struct {
+	svccore_entsecretkey_typ.UpdateRequest
+}
+
+func (r *Core_SecretKey_UpdateRequestResolver) Object() *Core_SecretKeyResolver {
+	return &Core_SecretKeyResolver{SecretKey: r.UpdateRequest.Object}
 }
 
 type Core_File_UpdateRequestResolver struct {
@@ -874,12 +1212,20 @@ func (r *Core_File_UpdateRequestResolver) Object() *Core_FileResolver {
 	return &Core_FileResolver{File: r.UpdateRequest.Object}
 }
 
-type Auth_Secret_UpdateRequestResolver struct {
-	svcauth_entsecret_typ.UpdateRequest
+type Core_TaskRun_UpdateRequestResolver struct {
+	svccore_enttaskrun_typ.UpdateRequest
 }
 
-func (r *Auth_Secret_UpdateRequestResolver) Object() *Auth_SecretResolver {
-	return &Auth_SecretResolver{Secret: r.UpdateRequest.Object}
+func (r *Core_TaskRun_UpdateRequestResolver) Object() *Core_TaskRunResolver {
+	return &Core_TaskRunResolver{TaskRun: r.UpdateRequest.Object}
+}
+
+type User_Team_UpdateRequestResolver struct {
+	svcuser_entteam_typ.UpdateRequest
+}
+
+func (r *User_Team_UpdateRequestResolver) Object() *User_TeamResolver {
+	return &User_TeamResolver{Team: r.UpdateRequest.Object}
 }
 
 type Core_Task_UpdateRequestResolver struct {
@@ -890,12 +1236,12 @@ func (r *Core_Task_UpdateRequestResolver) Object() *Core_TaskResolver {
 	return &Core_TaskResolver{Task: r.UpdateRequest.Object}
 }
 
-type Core_TaskRun_UpdateRequestResolver struct {
-	svccore_enttaskrun_typ.UpdateRequest
+type Core_SecretDecryptable_UpdateRequestResolver struct {
+	svccore_entsecretdecryptable_typ.UpdateRequest
 }
 
-func (r *Core_TaskRun_UpdateRequestResolver) Object() *Core_TaskRunResolver {
-	return &Core_TaskRunResolver{TaskRun: r.UpdateRequest.Object}
+func (r *Core_SecretDecryptable_UpdateRequestResolver) Object() *Core_SecretDecryptableResolver {
+	return &Core_SecretDecryptableResolver{SecretDecryptable: r.UpdateRequest.Object}
 }
 
 type User_User_UpdateRequestResolver struct {
@@ -904,6 +1250,22 @@ type User_User_UpdateRequestResolver struct {
 
 func (r *User_User_UpdateRequestResolver) Object() *User_UserResolver {
 	return &User_UserResolver{User: r.UpdateRequest.Object}
+}
+
+type Core_JobApplicant_UpdateRequestResolver struct {
+	svccore_entjobapplicant_typ.UpdateRequest
+}
+
+func (r *Core_JobApplicant_UpdateRequestResolver) Object() *Core_JobApplicantResolver {
+	return &Core_JobApplicantResolver{JobApplicant: r.UpdateRequest.Object}
+}
+
+type Auth_Secret_UpdateRequestResolver struct {
+	svcauth_entsecret_typ.UpdateRequest
+}
+
+func (r *Auth_Secret_UpdateRequestResolver) Object() *Auth_SecretResolver {
+	return &Auth_SecretResolver{Secret: r.UpdateRequest.Object}
 }
 
 type Core_File_UpdateResponseResolver struct {
@@ -922,20 +1284,20 @@ func (r *User_Team_UpdateResponseResolver) Object() *User_TeamResolver {
 	return &User_TeamResolver{Team: r.UpdateResponse.Object}
 }
 
+type Core_JobApplicant_UpdateResponseResolver struct {
+	svccore_entjobapplicant_typ.UpdateResponse
+}
+
+func (r *Core_JobApplicant_UpdateResponseResolver) Object() *Core_JobApplicantResolver {
+	return &Core_JobApplicantResolver{JobApplicant: r.UpdateResponse.Object}
+}
+
 type Core_Task_UpdateResponseResolver struct {
 	svccore_enttask_typ.UpdateResponse
 }
 
 func (r *Core_Task_UpdateResponseResolver) Object() *Core_TaskResolver {
 	return &Core_TaskResolver{Task: r.UpdateResponse.Object}
-}
-
-type Core_TaskRun_UpdateResponseResolver struct {
-	svccore_enttaskrun_typ.UpdateResponse
-}
-
-func (r *Core_TaskRun_UpdateResponseResolver) Object() *Core_TaskRunResolver {
-	return &Core_TaskRunResolver{TaskRun: r.UpdateResponse.Object}
 }
 
 type User_User_UpdateResponseResolver struct {
@@ -946,12 +1308,36 @@ func (r *User_User_UpdateResponseResolver) Object() *User_UserResolver {
 	return &User_UserResolver{User: r.UpdateResponse.Object}
 }
 
+type Core_SecretKey_UpdateResponseResolver struct {
+	svccore_entsecretkey_typ.UpdateResponse
+}
+
+func (r *Core_SecretKey_UpdateResponseResolver) Object() *Core_SecretKeyResolver {
+	return &Core_SecretKeyResolver{SecretKey: r.UpdateResponse.Object}
+}
+
+type Core_SecretDecryptable_UpdateResponseResolver struct {
+	svccore_entsecretdecryptable_typ.UpdateResponse
+}
+
+func (r *Core_SecretDecryptable_UpdateResponseResolver) Object() *Core_SecretDecryptableResolver {
+	return &Core_SecretDecryptableResolver{SecretDecryptable: r.UpdateResponse.Object}
+}
+
 type Auth_Secret_UpdateResponseResolver struct {
 	svcauth_entsecret_typ.UpdateResponse
 }
 
 func (r *Auth_Secret_UpdateResponseResolver) Object() *Auth_SecretResolver {
 	return &Auth_SecretResolver{Secret: r.UpdateResponse.Object}
+}
+
+type Core_TaskRun_UpdateResponseResolver struct {
+	svccore_enttaskrun_typ.UpdateResponse
+}
+
+func (r *Core_TaskRun_UpdateResponseResolver) Object() *Core_TaskRunResolver {
+	return &Core_TaskRunResolver{TaskRun: r.UpdateResponse.Object}
 }
 
 type User_UserResolver struct {
@@ -1051,6 +1437,29 @@ func (r *QueryResolver) Auth_AuthenticateToken(ctx context.Context, args Auth_Au
 	return &ret, nil
 }
 
+type Core_SecretDecryptable_GetArgs struct {
+	Req *Core_SecretDecryptable_GetRequestResolver
+}
+
+func (r *QueryResolver) Core_SecretDecryptable_Get(ctx context.Context, args Core_SecretDecryptable_GetArgs) (*Core_SecretDecryptableResolver, error) {
+	var ret Core_SecretDecryptableResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Get...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretDecryptable().Get(ctx, args.Req.GetRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.SecretDecryptable = resp
+
+	return &ret, nil
+}
+
 type Core_Task_GetArgs struct {
 	Req *Core_Task_GetRequestResolver
 }
@@ -1074,12 +1483,12 @@ func (r *QueryResolver) Core_Task_Get(ctx context.Context, args Core_Task_GetArg
 	return &ret, nil
 }
 
-type User_User_GetArgs struct {
-	Req *User_User_GetRequestResolver
+type Core_TaskRun_GetArgs struct {
+	Req *Core_TaskRun_GetRequestResolver
 }
 
-func (r *QueryResolver) User_User_Get(ctx context.Context, args User_User_GetArgs) (*User_UserResolver, error) {
-	var ret User_UserResolver
+func (r *QueryResolver) Core_TaskRun_Get(ctx context.Context, args Core_TaskRun_GetArgs) (*Core_TaskRunResolver, error) {
+	var ret Core_TaskRunResolver
 	var err error
 
 	llog.Info(ctx, "Resolving query for Get...")
@@ -1087,12 +1496,12 @@ func (r *QueryResolver) User_User_Get(ctx context.Context, args User_User_GetArg
 	// Get the method's server for this service
 	c := r.getClientFn(ctx)
 
-	resp, err := c.User().User().Get(ctx, args.Req.GetRequest)
+	resp, err := c.Core().TaskRun().Get(ctx, args.Req.GetRequest)
 	if err != nil {
 		return nil, err
 	}
 
-	ret.User = resp
+	ret.TaskRun = resp
 
 	return &ret, nil
 }
@@ -1116,6 +1525,75 @@ func (r *QueryResolver) User_Team_Get(ctx context.Context, args User_Team_GetArg
 	}
 
 	ret.Team = resp
+
+	return &ret, nil
+}
+
+type Core_JobApplicant_GetArgs struct {
+	Req *Core_JobApplicant_GetRequestResolver
+}
+
+func (r *QueryResolver) Core_JobApplicant_Get(ctx context.Context, args Core_JobApplicant_GetArgs) (*Core_JobApplicantResolver, error) {
+	var ret Core_JobApplicantResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Get...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().JobApplicant().Get(ctx, args.Req.GetRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.JobApplicant = resp
+
+	return &ret, nil
+}
+
+type Core_SecretKey_GetArgs struct {
+	Req *Core_SecretKey_GetRequestResolver
+}
+
+func (r *QueryResolver) Core_SecretKey_Get(ctx context.Context, args Core_SecretKey_GetArgs) (*Core_SecretKeyResolver, error) {
+	var ret Core_SecretKeyResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Get...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretKey().Get(ctx, args.Req.GetRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.SecretKey = resp
+
+	return &ret, nil
+}
+
+type User_User_GetArgs struct {
+	Req *User_User_GetRequestResolver
+}
+
+func (r *QueryResolver) User_User_Get(ctx context.Context, args User_User_GetArgs) (*User_UserResolver, error) {
+	var ret User_UserResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Get...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.User().User().Get(ctx, args.Req.GetRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.User = resp
 
 	return &ret, nil
 }
@@ -1166,29 +1644,6 @@ func (r *QueryResolver) Auth_Secret_Get(ctx context.Context, args Auth_Secret_Ge
 	return &ret, nil
 }
 
-type Core_TaskRun_GetArgs struct {
-	Req *Core_TaskRun_GetRequestResolver
-}
-
-func (r *QueryResolver) Core_TaskRun_Get(ctx context.Context, args Core_TaskRun_GetArgs) (*Core_TaskRunResolver, error) {
-	var ret Core_TaskRunResolver
-	var err error
-
-	llog.Info(ctx, "Resolving query for Get...")
-
-	// Get the method's server for this service
-	c := r.getClientFn(ctx)
-
-	resp, err := c.Core().TaskRun().Get(ctx, args.Req.GetRequest)
-	if err != nil {
-		return nil, err
-	}
-
-	ret.TaskRun = resp
-
-	return &ret, nil
-}
-
 type User_User_ListArgs struct {
 	Req *User_User_ListRequestResolver
 }
@@ -1212,6 +1667,98 @@ func (r *QueryResolver) User_User_List(ctx context.Context, args User_User_ListA
 	return &ret, nil
 }
 
+type Core_File_ListArgs struct {
+	Req *Core_File_ListRequestResolver
+}
+
+func (r *QueryResolver) Core_File_List(ctx context.Context, args Core_File_ListArgs) (*Core_File_ListResponseResolver, error) {
+	var ret Core_File_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for List...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().File().List(ctx, args.Req.ListRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
+type Core_SecretKey_ListArgs struct {
+	Req *Core_SecretKey_ListRequestResolver
+}
+
+func (r *QueryResolver) Core_SecretKey_List(ctx context.Context, args Core_SecretKey_ListArgs) (*Core_SecretKey_ListResponseResolver, error) {
+	var ret Core_SecretKey_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for List...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretKey().List(ctx, args.Req.ListRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
+type Core_TaskRun_ListArgs struct {
+	Req *Core_TaskRun_ListRequestResolver
+}
+
+func (r *QueryResolver) Core_TaskRun_List(ctx context.Context, args Core_TaskRun_ListArgs) (*Core_TaskRun_ListResponseResolver, error) {
+	var ret Core_TaskRun_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for List...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().TaskRun().List(ctx, args.Req.ListRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
+type Core_JobApplicant_ListArgs struct {
+	Req *Core_JobApplicant_ListRequestResolver
+}
+
+func (r *QueryResolver) Core_JobApplicant_List(ctx context.Context, args Core_JobApplicant_ListArgs) (*Core_JobApplicant_ListResponseResolver, error) {
+	var ret Core_JobApplicant_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for List...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().JobApplicant().List(ctx, args.Req.ListRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
 type Core_Task_ListArgs struct {
 	Req *Core_Task_ListRequestResolver
 }
@@ -1226,6 +1773,29 @@ func (r *QueryResolver) Core_Task_List(ctx context.Context, args Core_Task_ListA
 	c := r.getClientFn(ctx)
 
 	resp, err := c.Core().Task().List(ctx, args.Req.ListRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
+type Core_SecretDecryptable_ListArgs struct {
+	Req *Core_SecretDecryptable_ListRequestResolver
+}
+
+func (r *QueryResolver) Core_SecretDecryptable_List(ctx context.Context, args Core_SecretDecryptable_ListArgs) (*Core_SecretDecryptable_ListResponseResolver, error) {
+	var ret Core_SecretDecryptable_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for List...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretDecryptable().List(ctx, args.Req.ListRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -1281,52 +1851,6 @@ func (r *QueryResolver) Auth_Secret_List(ctx context.Context, args Auth_Secret_L
 	return &ret, nil
 }
 
-type Core_TaskRun_ListArgs struct {
-	Req *Core_TaskRun_ListRequestResolver
-}
-
-func (r *QueryResolver) Core_TaskRun_List(ctx context.Context, args Core_TaskRun_ListArgs) (*Core_TaskRun_ListResponseResolver, error) {
-	var ret Core_TaskRun_ListResponseResolver
-	var err error
-
-	llog.Info(ctx, "Resolving query for List...")
-
-	// Get the method's server for this service
-	c := r.getClientFn(ctx)
-
-	resp, err := c.Core().TaskRun().List(ctx, args.Req.ListRequest)
-	if err != nil {
-		return nil, err
-	}
-
-	ret.ListResponse = resp
-
-	return &ret, nil
-}
-
-type Core_File_ListArgs struct {
-	Req *Core_File_ListRequestResolver
-}
-
-func (r *QueryResolver) Core_File_List(ctx context.Context, args Core_File_ListArgs) (*Core_File_ListResponseResolver, error) {
-	var ret Core_File_ListResponseResolver
-	var err error
-
-	llog.Info(ctx, "Resolving query for List...")
-
-	// Get the method's server for this service
-	c := r.getClientFn(ctx)
-
-	resp, err := c.Core().File().List(ctx, args.Req.ListRequest)
-	if err != nil {
-		return nil, err
-	}
-
-	ret.ListResponse = resp
-
-	return &ret, nil
-}
-
 type Auth_LoginUserArgs struct {
 	Req *Auth_LoginRequestResolver
 }
@@ -1346,52 +1870,6 @@ func (r *QueryResolver) Auth_LoginUser(ctx context.Context, args Auth_LoginUserA
 	}
 
 	ret.AuthenticateResponse = resp
-
-	return &ret, nil
-}
-
-type Auth_Secret_QueryByTextArgs struct {
-	Req *Auth_Secret_QueryByTextRequestResolver
-}
-
-func (r *QueryResolver) Auth_Secret_QueryByText(ctx context.Context, args Auth_Secret_QueryByTextArgs) (*Auth_Secret_ListResponseResolver, error) {
-	var ret Auth_Secret_ListResponseResolver
-	var err error
-
-	llog.Info(ctx, "Resolving query for QueryByText...")
-
-	// Get the method's server for this service
-	c := r.getClientFn(ctx)
-
-	resp, err := c.Auth().Secret().QueryByText(ctx, args.Req.QueryByTextRequest)
-	if err != nil {
-		return nil, err
-	}
-
-	ret.ListResponse = resp
-
-	return &ret, nil
-}
-
-type User_User_QueryByTextArgs struct {
-	Req *User_User_QueryByTextRequestResolver
-}
-
-func (r *QueryResolver) User_User_QueryByText(ctx context.Context, args User_User_QueryByTextArgs) (*User_User_ListResponseResolver, error) {
-	var ret User_User_ListResponseResolver
-	var err error
-
-	llog.Info(ctx, "Resolving query for QueryByText...")
-
-	// Get the method's server for this service
-	c := r.getClientFn(ctx)
-
-	resp, err := c.User().User().QueryByText(ctx, args.Req.QueryByTextRequest)
-	if err != nil {
-		return nil, err
-	}
-
-	ret.ListResponse = resp
 
 	return &ret, nil
 }
@@ -1442,6 +1920,52 @@ func (r *QueryResolver) Core_TaskRun_QueryByText(ctx context.Context, args Core_
 	return &ret, nil
 }
 
+type Core_SecretDecryptable_QueryByTextArgs struct {
+	Req *Core_SecretDecryptable_QueryByTextRequestResolver
+}
+
+func (r *QueryResolver) Core_SecretDecryptable_QueryByText(ctx context.Context, args Core_SecretDecryptable_QueryByTextArgs) (*Core_SecretDecryptable_ListResponseResolver, error) {
+	var ret Core_SecretDecryptable_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for QueryByText...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretDecryptable().QueryByText(ctx, args.Req.QueryByTextRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
+type Auth_Secret_QueryByTextArgs struct {
+	Req *Auth_Secret_QueryByTextRequestResolver
+}
+
+func (r *QueryResolver) Auth_Secret_QueryByText(ctx context.Context, args Auth_Secret_QueryByTextArgs) (*Auth_Secret_ListResponseResolver, error) {
+	var ret Auth_Secret_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for QueryByText...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Auth().Secret().QueryByText(ctx, args.Req.QueryByTextRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
 type Core_Task_QueryByTextArgs struct {
 	Req *Core_Task_QueryByTextRequestResolver
 }
@@ -1456,6 +1980,52 @@ func (r *QueryResolver) Core_Task_QueryByText(ctx context.Context, args Core_Tas
 	c := r.getClientFn(ctx)
 
 	resp, err := c.Core().Task().QueryByText(ctx, args.Req.QueryByTextRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
+type Core_SecretKey_QueryByTextArgs struct {
+	Req *Core_SecretKey_QueryByTextRequestResolver
+}
+
+func (r *QueryResolver) Core_SecretKey_QueryByText(ctx context.Context, args Core_SecretKey_QueryByTextArgs) (*Core_SecretKey_ListResponseResolver, error) {
+	var ret Core_SecretKey_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for QueryByText...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretKey().QueryByText(ctx, args.Req.QueryByTextRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
+type User_User_QueryByTextArgs struct {
+	Req *User_User_QueryByTextRequestResolver
+}
+
+func (r *QueryResolver) User_User_QueryByText(ctx context.Context, args User_User_QueryByTextArgs) (*User_User_ListResponseResolver, error) {
+	var ret User_User_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for QueryByText...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.User().User().QueryByText(ctx, args.Req.QueryByTextRequest)
 	if err != nil {
 		return nil, err
 	}
@@ -1488,8 +2058,54 @@ func (r *QueryResolver) User_Team_QueryByText(ctx context.Context, args User_Tea
 	return &ret, nil
 }
 
+type Core_JobApplicant_QueryByTextArgs struct {
+	Req *Core_JobApplicant_QueryByTextRequestResolver
+}
+
+func (r *QueryResolver) Core_JobApplicant_QueryByText(ctx context.Context, args Core_JobApplicant_QueryByTextArgs) (*Core_JobApplicant_ListResponseResolver, error) {
+	var ret Core_JobApplicant_ListResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for QueryByText...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().JobApplicant().QueryByText(ctx, args.Req.QueryByTextRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.ListResponse = resp
+
+	return &ret, nil
+}
+
 type MutationResolver struct {
 	getClientFn app_client.ClientGetterFn
+}
+
+type Core_SecretDecryptable_ActionDecryptArgs struct {
+	Req *Core_SecretDecryptable_StandardEntityRequestResolver
+}
+
+func (r *MutationResolver) Core_SecretDecryptable_ActionDecrypt(ctx context.Context, args Core_SecretDecryptable_ActionDecryptArgs) (*Core_SecretDecryptable_StandardEntityResponseResolver, error) {
+	var ret Core_SecretDecryptable_StandardEntityResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for ActionDecrypt...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretDecryptable().ActionDecrypt(ctx, args.Req.StandardEntityRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.StandardEntityResponse = resp
+
+	return &ret, nil
 }
 
 type Core_Task_ActionRunArgs struct {
@@ -1534,6 +2150,29 @@ func (r *MutationResolver) Core_TaskRun_ActionRun(ctx context.Context, args Core
 	}
 
 	ret.StandardEntityResponse = resp
+
+	return &ret, nil
+}
+
+type Core_JobApplicant_AddArgs struct {
+	Req *Core_JobApplicant_AddRequestResolver
+}
+
+func (r *MutationResolver) Core_JobApplicant_Add(ctx context.Context, args Core_JobApplicant_AddArgs) (*Core_JobApplicantResolver, error) {
+	var ret Core_JobApplicantResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Add...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().JobApplicant().Add(ctx, args.Req.AddRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.JobApplicant = resp
 
 	return &ret, nil
 }
@@ -1584,29 +2223,6 @@ func (r *MutationResolver) Auth_Secret_Add(ctx context.Context, args Auth_Secret
 	return &ret, nil
 }
 
-type User_User_AddArgs struct {
-	Req *User_User_AddRequestResolver
-}
-
-func (r *MutationResolver) User_User_Add(ctx context.Context, args User_User_AddArgs) (*User_UserResolver, error) {
-	var ret User_UserResolver
-	var err error
-
-	llog.Info(ctx, "Resolving query for Add...")
-
-	// Get the method's server for this service
-	c := r.getClientFn(ctx)
-
-	resp, err := c.User().User().Add(ctx, args.Req.AddRequest)
-	if err != nil {
-		return nil, err
-	}
-
-	ret.User = resp
-
-	return &ret, nil
-}
-
 type Core_TaskRun_AddArgs struct {
 	Req *Core_TaskRun_AddRequestResolver
 }
@@ -1626,29 +2242,6 @@ func (r *MutationResolver) Core_TaskRun_Add(ctx context.Context, args Core_TaskR
 	}
 
 	ret.TaskRun = resp
-
-	return &ret, nil
-}
-
-type Core_Task_AddArgs struct {
-	Req *Core_Task_AddRequestResolver
-}
-
-func (r *MutationResolver) Core_Task_Add(ctx context.Context, args Core_Task_AddArgs) (*Core_TaskResolver, error) {
-	var ret Core_TaskResolver
-	var err error
-
-	llog.Info(ctx, "Resolving query for Add...")
-
-	// Get the method's server for this service
-	c := r.getClientFn(ctx)
-
-	resp, err := c.Core().Task().Add(ctx, args.Req.AddRequest)
-	if err != nil {
-		return nil, err
-	}
-
-	ret.Task = resp
 
 	return &ret, nil
 }
@@ -1676,12 +2269,104 @@ func (r *MutationResolver) Core_File_Add(ctx context.Context, args Core_File_Add
 	return &ret, nil
 }
 
-type Core_File_HookCreatePreArgs struct {
-	Req *Core_FileResolver
+type Core_SecretDecryptable_AddArgs struct {
+	Req *Core_SecretDecryptable_AddRequestResolver
 }
 
-func (r *MutationResolver) Core_File_HookCreatePre(ctx context.Context, args Core_File_HookCreatePreArgs) (*Core_FileResolver, error) {
-	var ret Core_FileResolver
+func (r *MutationResolver) Core_SecretDecryptable_Add(ctx context.Context, args Core_SecretDecryptable_AddArgs) (*Core_SecretDecryptableResolver, error) {
+	var ret Core_SecretDecryptableResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Add...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretDecryptable().Add(ctx, args.Req.AddRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.SecretDecryptable = resp
+
+	return &ret, nil
+}
+
+type Core_SecretKey_AddArgs struct {
+	Req *Core_SecretKey_AddRequestResolver
+}
+
+func (r *MutationResolver) Core_SecretKey_Add(ctx context.Context, args Core_SecretKey_AddArgs) (*Core_SecretKeyResolver, error) {
+	var ret Core_SecretKeyResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Add...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretKey().Add(ctx, args.Req.AddRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.SecretKey = resp
+
+	return &ret, nil
+}
+
+type User_User_AddArgs struct {
+	Req *User_User_AddRequestResolver
+}
+
+func (r *MutationResolver) User_User_Add(ctx context.Context, args User_User_AddArgs) (*User_UserResolver, error) {
+	var ret User_UserResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Add...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.User().User().Add(ctx, args.Req.AddRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.User = resp
+
+	return &ret, nil
+}
+
+type Core_Task_AddArgs struct {
+	Req *Core_Task_AddRequestResolver
+}
+
+func (r *MutationResolver) Core_Task_Add(ctx context.Context, args Core_Task_AddArgs) (*Core_TaskResolver, error) {
+	var ret Core_TaskResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Add...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().Task().Add(ctx, args.Req.AddRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.Task = resp
+
+	return &ret, nil
+}
+
+type Core_SecretDecryptable_HookCreatePreArgs struct {
+	Req *Core_SecretDecryptableResolver
+}
+
+func (r *MutationResolver) Core_SecretDecryptable_HookCreatePre(ctx context.Context, args Core_SecretDecryptable_HookCreatePreArgs) (*Core_SecretDecryptableResolver, error) {
+	var ret Core_SecretDecryptableResolver
 	var err error
 
 	llog.Info(ctx, "Resolving query for HookCreatePre...")
@@ -1689,12 +2374,12 @@ func (r *MutationResolver) Core_File_HookCreatePre(ctx context.Context, args Cor
 	// Get the method's server for this service
 	c := r.getClientFn(ctx)
 
-	resp, err := c.Core().File().HookCreatePre(ctx, args.Req.File)
+	resp, err := c.Core().SecretDecryptable().HookCreatePre(ctx, args.Req.SecretDecryptable)
 	if err != nil {
 		return nil, err
 	}
 
-	ret.File = resp
+	ret.SecretDecryptable = resp
 
 	return &ret, nil
 }
@@ -1718,6 +2403,52 @@ func (r *MutationResolver) Core_TaskRun_HookCreatePre(ctx context.Context, args 
 	}
 
 	ret.TaskRun = resp
+
+	return &ret, nil
+}
+
+type Core_File_HookCreatePreArgs struct {
+	Req *Core_FileResolver
+}
+
+func (r *MutationResolver) Core_File_HookCreatePre(ctx context.Context, args Core_File_HookCreatePreArgs) (*Core_FileResolver, error) {
+	var ret Core_FileResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for HookCreatePre...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().File().HookCreatePre(ctx, args.Req.File)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.File = resp
+
+	return &ret, nil
+}
+
+type Core_SecretKey_HookCreatePreArgs struct {
+	Req *Core_SecretKeyResolver
+}
+
+func (r *MutationResolver) Core_SecretKey_HookCreatePre(ctx context.Context, args Core_SecretKey_HookCreatePreArgs) (*Core_SecretKeyResolver, error) {
+	var ret Core_SecretKeyResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for HookCreatePre...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretKey().HookCreatePre(ctx, args.Req.SecretKey)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.SecretKey = resp
 
 	return &ret, nil
 }
@@ -1768,71 +2499,25 @@ func (r *MutationResolver) Auth_RegisterUser(ctx context.Context, args Auth_Regi
 	return &ret, nil
 }
 
-type Core_TaskRun_UpdateArgs struct {
-	Req *Core_TaskRun_UpdateRequestResolver
+type Core_SecretDecryptabeAddArgs struct {
+	Req *Core_SecretDecryptableAddRequestResolver
 }
 
-func (r *MutationResolver) Core_TaskRun_Update(ctx context.Context, args Core_TaskRun_UpdateArgs) (*Core_TaskRun_UpdateResponseResolver, error) {
-	var ret Core_TaskRun_UpdateResponseResolver
+func (r *MutationResolver) Core_SecretDecryptabeAdd(ctx context.Context, args Core_SecretDecryptabeAddArgs) (*Core_SecretDecryptableResolver, error) {
+	var ret Core_SecretDecryptableResolver
 	var err error
 
-	llog.Info(ctx, "Resolving query for Update...")
+	llog.Info(ctx, "Resolving query for SecretDecryptabeAdd...")
 
 	// Get the method's server for this service
 	c := r.getClientFn(ctx)
 
-	resp, err := c.Core().TaskRun().Update(ctx, args.Req.UpdateRequest)
+	resp, err := c.Core().SecretDecryptabeAdd(ctx, args.Req.SecretDecryptableAddRequest)
 	if err != nil {
 		return nil, err
 	}
 
-	ret.UpdateResponse = resp
-
-	return &ret, nil
-}
-
-type User_Team_UpdateArgs struct {
-	Req *User_Team_UpdateRequestResolver
-}
-
-func (r *MutationResolver) User_Team_Update(ctx context.Context, args User_Team_UpdateArgs) (*User_Team_UpdateResponseResolver, error) {
-	var ret User_Team_UpdateResponseResolver
-	var err error
-
-	llog.Info(ctx, "Resolving query for Update...")
-
-	// Get the method's server for this service
-	c := r.getClientFn(ctx)
-
-	resp, err := c.User().Team().Update(ctx, args.Req.UpdateRequest)
-	if err != nil {
-		return nil, err
-	}
-
-	ret.UpdateResponse = resp
-
-	return &ret, nil
-}
-
-type User_User_UpdateArgs struct {
-	Req *User_User_UpdateRequestResolver
-}
-
-func (r *MutationResolver) User_User_Update(ctx context.Context, args User_User_UpdateArgs) (*User_User_UpdateResponseResolver, error) {
-	var ret User_User_UpdateResponseResolver
-	var err error
-
-	llog.Info(ctx, "Resolving query for Update...")
-
-	// Get the method's server for this service
-	c := r.getClientFn(ctx)
-
-	resp, err := c.User().User().Update(ctx, args.Req.UpdateRequest)
-	if err != nil {
-		return nil, err
-	}
-
-	ret.UpdateResponse = resp
+	ret.SecretDecryptable = resp
 
 	return &ret, nil
 }
@@ -1874,6 +2559,144 @@ func (r *MutationResolver) Core_File_Update(ctx context.Context, args Core_File_
 	c := r.getClientFn(ctx)
 
 	resp, err := c.Core().File().Update(ctx, args.Req.UpdateRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.UpdateResponse = resp
+
+	return &ret, nil
+}
+
+type Core_JobApplicant_UpdateArgs struct {
+	Req *Core_JobApplicant_UpdateRequestResolver
+}
+
+func (r *MutationResolver) Core_JobApplicant_Update(ctx context.Context, args Core_JobApplicant_UpdateArgs) (*Core_JobApplicant_UpdateResponseResolver, error) {
+	var ret Core_JobApplicant_UpdateResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Update...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().JobApplicant().Update(ctx, args.Req.UpdateRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.UpdateResponse = resp
+
+	return &ret, nil
+}
+
+type Core_SecretKey_UpdateArgs struct {
+	Req *Core_SecretKey_UpdateRequestResolver
+}
+
+func (r *MutationResolver) Core_SecretKey_Update(ctx context.Context, args Core_SecretKey_UpdateArgs) (*Core_SecretKey_UpdateResponseResolver, error) {
+	var ret Core_SecretKey_UpdateResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Update...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretKey().Update(ctx, args.Req.UpdateRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.UpdateResponse = resp
+
+	return &ret, nil
+}
+
+type User_Team_UpdateArgs struct {
+	Req *User_Team_UpdateRequestResolver
+}
+
+func (r *MutationResolver) User_Team_Update(ctx context.Context, args User_Team_UpdateArgs) (*User_Team_UpdateResponseResolver, error) {
+	var ret User_Team_UpdateResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Update...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.User().Team().Update(ctx, args.Req.UpdateRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.UpdateResponse = resp
+
+	return &ret, nil
+}
+
+type Core_TaskRun_UpdateArgs struct {
+	Req *Core_TaskRun_UpdateRequestResolver
+}
+
+func (r *MutationResolver) Core_TaskRun_Update(ctx context.Context, args Core_TaskRun_UpdateArgs) (*Core_TaskRun_UpdateResponseResolver, error) {
+	var ret Core_TaskRun_UpdateResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Update...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().TaskRun().Update(ctx, args.Req.UpdateRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.UpdateResponse = resp
+
+	return &ret, nil
+}
+
+type User_User_UpdateArgs struct {
+	Req *User_User_UpdateRequestResolver
+}
+
+func (r *MutationResolver) User_User_Update(ctx context.Context, args User_User_UpdateArgs) (*User_User_UpdateResponseResolver, error) {
+	var ret User_User_UpdateResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Update...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.User().User().Update(ctx, args.Req.UpdateRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.UpdateResponse = resp
+
+	return &ret, nil
+}
+
+type Core_SecretDecryptable_UpdateArgs struct {
+	Req *Core_SecretDecryptable_UpdateRequestResolver
+}
+
+func (r *MutationResolver) Core_SecretDecryptable_Update(ctx context.Context, args Core_SecretDecryptable_UpdateArgs) (*Core_SecretDecryptable_UpdateResponseResolver, error) {
+	var ret Core_SecretDecryptable_UpdateResponseResolver
+	var err error
+
+	llog.Info(ctx, "Resolving query for Update...")
+
+	// Get the method's server for this service
+	c := r.getClientFn(ctx)
+
+	resp, err := c.Core().SecretDecryptable().Update(ctx, args.Req.UpdateRequest)
 	if err != nil {
 		return nil, err
 	}
