@@ -13,6 +13,9 @@
 # Dev / Debug
 .dev
 
+# Binaries
+bin
+
 # START: Comment these out if you want to include generated files in Git
 
 # -Root
