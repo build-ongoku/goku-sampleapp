@@ -21,6 +21,7 @@ require (
 	github.com/teejays/gokutil/naam v0.0.0-20241219214509-3945608e1653
 	github.com/teejays/gokutil/panics v0.0.0-20241219214509-3945608e1653
 	github.com/teejays/gokutil/scalars v0.0.0-20241219214509-3945608e1653
+	github.com/teejays/gokutil/strcase v0.0.0-20241219203531-c26c5bf2586a
 	github.com/teejays/gokutil/types v0.0.0-20241219214509-3945608e1653
 	golang.org/x/crypto v0.31.0
 )
@@ -49,7 +50,6 @@ require (
 	github.com/teejays/gokutil/clog v0.0.0-20241219203531-c26c5bf2586a // indirect
 	github.com/teejays/gokutil/httputil v0.0.0-20241219203531-c26c5bf2586a // indirect
 	github.com/teejays/gokutil/sclog v0.0.0-20241219203531-c26c5bf2586a // indirect
-	github.com/teejays/gokutil/strcase v0.0.0-20241219203531-c26c5bf2586a // indirect
 	github.com/teejays/gokutil/validate v0.0.0-20241219203531-c26c5bf2586a // indirect
 	github.com/wk8/go-ordered-map/v2 v2.1.8 // indirect
 	golang.org/x/net v0.33.0 // indirect
