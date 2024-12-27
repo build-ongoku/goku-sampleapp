@@ -237,7 +237,93 @@
                     }
                 ]
             },
-            { "name": "Main", "options": {}, "source": "user", "entities": null, "methods": null, "types": null },
+            {
+                "name": "Default",
+                "options": {},
+                "source": "user",
+                "entities": [
+                    {
+                        "name": "Client",
+                        "description": "A client is a company that is looking for funding. This is used for testing different fields.",
+                        "options": {},
+                        "fields": [
+                            { "name": "CompanyAddress", "options": {}, "datatype": { "app": "Sampleapp", "service": "", "entity": "", "types": ["Address"], "enum": "", "method": "" } },
+                            { "name": "CompanyDescription", "options": {}, "datatype": "String" },
+                            { "name": "DateFounded", "options": {}, "datatype": "Date" },
+                            { "name": "Employees", "options": {}, "datatype": "Number" },
+                            { "name": "FundingRequested", "options": {}, "datatype": "Money" },
+                            { "name": "FundingRound", "options": {}, "datatype": { "app": "Sampleapp", "service": "Default", "entity": "Client", "enum": "FundingRound", "method": "" } },
+                            { "name": "Name", "options": {}, "datatype": "String" }
+                        ],
+                        "types": null,
+                        "enums": [
+                            {
+                                "name": "FundingRound",
+                                "description": "The funding round that the company is currently in.",
+                                "values": [
+                                    { "name": "PreSeed", "id": 1, "options": { "displayValue": "" } },
+                                    { "name": "Seed", "id": 2, "options": { "displayValue": "" } },
+                                    { "name": "SeriesA", "id": 3, "options": { "displayValue": "" } },
+                                    { "name": "SeriesB", "id": 4, "options": { "displayValue": "" } },
+                                    { "name": "SeriesC", "id": 5, "options": { "displayValue": "" } }
+                                ],
+                                "options": {}
+                            }
+                        ],
+                        "methods": null
+                    },
+                    {
+                        "name": "JobApplicant",
+                        "description": "A job applicant is a person who has applied for a job. This is used for testing file uploads.",
+                        "options": {},
+                        "fields": [
+                            { "name": "Name", "options": {}, "datatype": "String" },
+                            { "name": "Resume", "options": {}, "datatype": "File" },
+                            { "name": "User", "options": {}, "datatype": { "app": "Sampleapp", "service": "User", "entity": "User", "enum": "", "method": "" } }
+                        ],
+                        "types": null,
+                        "methods": null
+                    }
+                ],
+                "methods": null,
+                "types": null
+            },
+            {
+                "name": "Pinger",
+                "options": {},
+                "source": "user",
+                "entities": null,
+                "methods": [
+                    {
+                        "name": "Ping",
+                        "description": "Send a ping request to the service. Used for testing purposes.",
+                        "options": { "type": "Query" },
+                        "request_dtype": "String",
+                        "response_type": { "app": "Sampleapp", "service": "Pinger", "entity": "", "types": ["PingResponse"], "enum": "", "method": "" },
+                        "apis": [{ "options": {}, "path": "/ping", "http_method": "GET" }]
+                    }
+                ],
+                "types": [{ "name": "PingResponse", "description": "Response object for the ping method.", "fields": [{ "name": "Resp", "options": {}, "datatype": "String" }], "options": {} }]
+            },
+            {
+                "name": "Pluralizer",
+                "options": {},
+                "source": "user",
+                "entities": null,
+                "methods": [
+                    {
+                        "name": "Pluralize",
+                        "description": "Pluralize the string. Takes in a string and makes the best guess at the plural form of that string.",
+                        "options": { "type": "Query" },
+                        "request_dtype": "String",
+                        "response_type": { "app": "Sampleapp", "service": "Pluralizer", "entity": "", "types": ["PluralizeResponse"], "enum": "", "method": "" },
+                        "apis": [{ "options": {}, "path": "/pluralize", "http_method": "GET" }]
+                    }
+                ],
+                "types": [
+                    { "name": "PluralizeResponse", "description": "Response object for the pluralize method.", "fields": [{ "name": "Plural", "options": {}, "datatype": "String" }], "options": {} }
+                ]
+            },
             {
                 "name": "User",
                 "options": {},
