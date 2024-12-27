@@ -2,7 +2,7 @@
 app_name: Sampleapp
 description: 
 # STOP: Do not change the following settings.
-goku_version_at_create: v2024.12.27.120029
+goku_version_at_create: v2024.12.27.144118
 
 # CAUTION: Be careful when changing the following settings.
 # - go_module_name: If you change the module name, you must also change the module name in the go.mod file,
