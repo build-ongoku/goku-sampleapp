@@ -1,0 +1,977 @@
+{
+    "app": {
+        "name": "Sampleapp",
+        "services": [
+            {
+                "name": "Auth",
+                "options": {},
+                "source": "mod",
+                "entities": [
+                    {
+                        "name": "Secret",
+                        "description": "A secret is a credential that is used to authenticate a user.",
+                        "options": {},
+                        "associations": [
+                            { "relationship": "child_of", "type": "one", "entity": { "app": "Sampleapp", "service": "User", "entity": "User" }, "name": "User", "other_association_name": "" }
+                        ],
+                        "fields": [
+                            { "name": "ExpiresAt", "options": { "is_optional": true }, "datatype": "Timestamp" },
+                            { "name": "Secret", "options": {}, "datatype": "String" },
+                            { "name": "Type", "options": {}, "datatype": { "app": "Sampleapp", "service": "Auth", "entity": "Secret", "enum": "Type", "method": "" } }
+                        ],
+                        "types": null,
+                        "enums": [
+                            {
+                                "name": "Type",
+                                "description": "The type of secret.",
+                                "values": [
+                                    { "name": "GithubToken", "id": 2, "options": { "displayValue": "" } },
+                                    { "name": "Password", "id": 1, "options": { "displayValue": "" } }
+                                ],
+                                "options": {}
+                            }
+                        ],
+                        "methods": null
+                    }
+                ],
+                "methods": [
+                    {
+                        "name": "AuthenticateToken",
+                        "description": "Determine if a token is valid/authenticated.",
+                        "options": { "type": "Query", "is_static": true },
+                        "request_dtype": { "app": "Sampleapp", "service": "Auth", "entity": "", "types": ["AuthenticateTokenRequest"], "enum": "", "method": "" },
+                        "response_type": { "app": "Sampleapp", "service": "Auth", "entity": "", "types": ["AuthenticateResponse"], "enum": "", "method": "" },
+                        "apis": [{ "options": { "is_public": true }, "path": "/authenticate_token", "http_method": "POST" }]
+                    },
+                    {
+                        "name": "LoginUser",
+                        "description": "Login a user given the credentials, and receive an autenticated token in return.",
+                        "options": { "type": "Query", "is_static": true },
+                        "request_dtype": { "app": "Sampleapp", "service": "Auth", "entity": "", "types": ["LoginRequest"], "enum": "", "method": "" },
+                        "response_type": { "app": "Sampleapp", "service": "Auth", "entity": "", "types": ["AuthenticateResponse"], "enum": "", "method": "" },
+                        "apis": [{ "options": { "is_public": true }, "path": "/login", "http_method": "POST" }]
+                    },
+                    {
+                        "name": "RegisterUser",
+                        "description": "Register a new user.",
+                        "options": { "type": "Mutation", "is_static": true },
+                        "request_dtype": { "app": "Sampleapp", "service": "Auth", "entity": "", "types": ["RegisterUserRequest"], "enum": "", "method": "" },
+                        "response_type": { "app": "Sampleapp", "service": "Auth", "entity": "", "types": ["AuthenticateResponse"], "enum": "", "method": "" },
+                        "apis": [{ "options": { "is_public": true }, "path": "/register", "http_method": "POST" }]
+                    }
+                ],
+                "types": [
+                    {
+                        "name": "AuthenticateResponse",
+                        "description": "Response object for authentication.",
+                        "fields": [{ "name": "Token", "options": {}, "datatype": "String" }],
+                        "options": { "is_response_type": true }
+                    },
+                    {
+                        "name": "AuthenticateTokenRequest",
+                        "description": "Request object to authenticate a token.",
+                        "fields": [{ "name": "Token", "options": {}, "datatype": "String" }],
+                        "options": { "is_request_type": true }
+                    },
+                    {
+                        "name": "LoginRequest",
+                        "description": "Request object to login a user.",
+                        "fields": [
+                            { "name": "Email", "options": {}, "datatype": "Email" },
+                            { "name": "Password", "options": {}, "datatype": "String" }
+                        ],
+                        "options": { "is_request_type": true }
+                    },
+                    {
+                        "name": "RegisterUserRequest",
+                        "description": "Request object to register a new user.",
+                        "fields": [
+                            { "name": "Email", "options": {}, "datatype": "Email" },
+                            { "name": "Name", "options": {}, "datatype": { "app": "Sampleapp", "service": "", "entity": "", "types": ["PersonName"], "enum": "", "method": "" } },
+                            { "name": "Password", "options": {}, "datatype": "String" }
+                        ],
+                        "options": { "is_request_type": true }
+                    }
+                ]
+            },
+            {
+                "name": "Core",
+                "options": {},
+                "source": "mod",
+                "entities": [
+                    {
+                        "name": "File",
+                        "description": "A file entity is a reference to a file that has been uploaded to the system.",
+                        "options": {},
+                        "hooks": [{ "type": "create_pre", "is_static": true, "method_namespace": { "app": "", "service": "", "entity": "", "enum": "", "method": "" } }],
+                        "fields": [
+                            { "name": "FileHash", "options": { "is_set_internally": true }, "datatype": "String" },
+                            { "name": "FileName", "options": {}, "datatype": "String" },
+                            { "name": "MimeType", "options": { "is_set_internally": true }, "datatype": "String" },
+                            { "name": "SizeBytes", "options": { "is_set_internally": true }, "datatype": "Number" },
+                            { "name": "StorageClient", "options": {}, "datatype": { "app": "Sampleapp", "service": "Core", "entity": "File", "enum": "StorageClient", "method": "" } },
+                            { "name": "StorageClientIdentifier", "options": {}, "datatype": "String" }
+                        ],
+                        "types": null,
+                        "enums": [
+                            {
+                                "name": "StorageClient",
+                                "description": "The storage client that the file is stored in.",
+                                "values": [
+                                    { "name": "CloudAmazonS3", "id": 3, "options": { "displayValue": "" } },
+                                    { "name": "Database", "id": 2, "options": { "displayValue": "" } },
+                                    { "name": "LocalFile", "id": 1, "options": { "displayValue": "" } }
+                                ],
+                                "options": {}
+                            }
+                        ],
+                        "methods": null
+                    },
+                    {
+                        "name": "SecretDecryptable",
+                        "description": "A secret that we can decrypt and recover. The values are encrypted and stored in the database.",
+                        "options": {},
+                        "associations": [
+                            {
+                                "relationship": "child_of",
+                                "type": "one",
+                                "entity": { "app": "Sampleapp", "service": "Core", "entity": "SecretKey" },
+                                "name": "SecretKey",
+                                "other_association_name": "Secrets"
+                            }
+                        ],
+                        "actions": [
+                            { "name": "Decrypt", "description": "Decrypt the secret", "is_static": true, "method_namespace": { "app": "", "service": "", "entity": "", "enum": "", "method": "" } }
+                        ],
+                        "hooks": [{ "type": "create_pre", "is_static": true, "method_namespace": { "app": "", "service": "", "entity": "", "enum": "", "method": "" } }],
+                        "fields": [
+                            { "name": "EncryptedValue", "options": { "is_set_internally": true }, "datatype": "String" },
+                            { "name": "RawValue", "options": { "is_transient_input": true }, "datatype": "String" },
+                            { "name": "Salt", "options": { "is_set_internally": true }, "datatype": "String" }
+                        ],
+                        "types": null,
+                        "methods": null
+                    },
+                    {
+                        "name": "SecretKey",
+                        "description": "A secret key entity is a reference to a secret key that can be used to encrypt/decrypt secrets.",
+                        "options": {},
+                        "associations": [
+                            {
+                                "relationship": "parent_of",
+                                "type": "many",
+                                "entity": { "app": "Sampleapp", "service": "Core", "entity": "SecretDecryptable" },
+                                "name": "Secrets",
+                                "other_association_name": "SecretKey"
+                            }
+                        ],
+                        "hooks": [
+                            { "type": "init", "is_static": true, "method_namespace": { "app": "", "service": "", "entity": "", "enum": "", "method": "" } },
+                            { "type": "create_pre", "is_static": true, "method_namespace": { "app": "", "service": "", "entity": "", "enum": "", "method": "" } }
+                        ],
+                        "fields": [
+                            {
+                                "name": "PrivateKeyFormat",
+                                "options": { "is_set_internally": true },
+                                "datatype": { "app": "Sampleapp", "service": "Core", "entity": "SecretKey", "enum": "Format", "method": "" }
+                            },
+                            { "name": "PublicKey", "options": { "is_set_internally": true }, "datatype": "String" },
+                            {
+                                "name": "PublicKeyFormat",
+                                "options": { "is_set_internally": true },
+                                "datatype": { "app": "Sampleapp", "service": "Core", "entity": "SecretKey", "enum": "Format", "method": "" }
+                            },
+                            { "name": "Type", "options": {}, "datatype": { "app": "Sampleapp", "service": "Core", "entity": "SecretKey", "enum": "Type", "method": "" } }
+                        ],
+                        "types": null,
+                        "enums": [
+                            {
+                                "name": "Format",
+                                "description": "The format of the key.",
+                                "values": [
+                                    { "name": "OpenSSH", "id": 2, "options": { "displayValue": "" } },
+                                    { "name": "PEM", "id": 1, "options": { "displayValue": "" } }
+                                ],
+                                "options": {}
+                            },
+                            {
+                                "name": "Type",
+                                "description": "The type of secret key.",
+                                "values": [
+                                    { "name": "Ed25519", "id": 1, "options": { "displayValue": "" } },
+                                    { "name": "RSA", "id": 2, "options": { "displayValue": "" } }
+                                ],
+                                "options": {}
+                            }
+                        ],
+                        "methods": null
+                    }
+                ],
+                "methods": [
+                    {
+                        "name": "FileUpload",
+                        "description": "Upload a new file to the system. The file will be stored in the specified storage client. The uploaded file ID can then be used to reference the file in other entities.",
+                        "options": { "type": "Mutation", "is_direct_http_handler": true, "is_static": true },
+                        "response_type": { "app": "Sampleapp", "service": "Core", "entity": "File", "types": ["File"], "enum": "", "method": "" },
+                        "apis": [{ "options": {}, "path": "file/upload", "http_method": "POST" }]
+                    },
+                    {
+                        "name": "SecretDecryptabeAdd",
+                        "description": "Add a new secret value. The value will be encrypted and stored in the database.",
+                        "options": { "type": "Mutation", "is_static": true },
+                        "request_dtype": { "app": "Sampleapp", "service": "Core", "entity": "", "types": ["SecretDecryptableAddRequest"], "enum": "", "method": "" },
+                        "response_type": { "app": "Sampleapp", "service": "Core", "entity": "SecretDecryptable", "types": ["SecretDecryptable"], "enum": "", "method": "" },
+                        "apis": [{ "options": {}, "path": "secret/add", "http_method": "POST" }]
+                    }
+                ],
+                "types": [
+                    {
+                        "name": "SecretDecryptableAddRequest",
+                        "description": "Request object to add a new secret.",
+                        "fields": [
+                            { "name": "SecretKeyID", "options": { "is_optional": true }, "datatype": "ID" },
+                            { "name": "Value", "options": {}, "datatype": "String" }
+                        ],
+                        "options": {}
+                    }
+                ]
+            },
+            {
+                "name": "Default",
+                "options": {},
+                "source": "user",
+                "entities": [
+                    {
+                        "name": "Client",
+                        "description": "A client is a company that is looking for funding. This is used for testing different fields.",
+                        "options": {},
+                        "fields": [
+                            { "name": "CompanyAddress", "options": {}, "datatype": { "app": "Sampleapp", "service": "", "entity": "", "types": ["Address"], "enum": "", "method": "" } },
+                            { "name": "CompanyDescription", "options": {}, "datatype": "String" },
+                            { "name": "DateFounded", "options": {}, "datatype": "Date" },
+                            { "name": "Employees", "options": {}, "datatype": "Number" },
+                            { "name": "FundingRequested", "options": {}, "datatype": "Money" },
+                            { "name": "FundingRound", "options": {}, "datatype": { "app": "Sampleapp", "service": "Default", "entity": "Client", "enum": "FundingRound", "method": "" } },
+                            { "name": "Name", "options": {}, "datatype": "String" }
+                        ],
+                        "types": null,
+                        "enums": [
+                            {
+                                "name": "FundingRound",
+                                "description": "The funding round that the company is currently in.",
+                                "values": [
+                                    { "name": "PreSeed", "id": 1, "options": { "displayValue": "" } },
+                                    { "name": "Seed", "id": 2, "options": { "displayValue": "" } },
+                                    { "name": "SeriesA", "id": 3, "options": { "displayValue": "" } },
+                                    { "name": "SeriesB", "id": 4, "options": { "displayValue": "" } },
+                                    { "name": "SeriesC", "id": 5, "options": { "displayValue": "" } }
+                                ],
+                                "options": {}
+                            }
+                        ],
+                        "methods": null
+                    },
+                    {
+                        "name": "JobApplicant",
+                        "description": "A job applicant is a person who has applied for a job. This is used for testing file uploads.",
+                        "options": {},
+                        "fields": [
+                            { "name": "Name", "options": {}, "datatype": "String" },
+                            { "name": "Resume", "options": {}, "datatype": "File" },
+                            { "name": "User", "options": {}, "datatype": { "app": "Sampleapp", "service": "User", "entity": "User", "enum": "", "method": "" } }
+                        ],
+                        "types": null,
+                        "methods": null
+                    }
+                ],
+                "methods": null,
+                "types": null
+            },
+            {
+                "name": "Pinger",
+                "options": {},
+                "source": "user",
+                "entities": null,
+                "methods": [
+                    {
+                        "name": "Ping",
+                        "description": "Send a ping request to the service. Used for testing purposes.",
+                        "options": { "type": "Query" },
+                        "request_dtype": "String",
+                        "response_type": { "app": "Sampleapp", "service": "Pinger", "entity": "", "types": ["PingResponse"], "enum": "", "method": "" },
+                        "apis": [{ "options": {}, "path": "/ping", "http_method": "GET" }]
+                    }
+                ],
+                "types": [{ "name": "PingResponse", "description": "Response object for the ping method.", "fields": [{ "name": "Resp", "options": {}, "datatype": "String" }], "options": {} }]
+            },
+            {
+                "name": "Pluralizer",
+                "options": {},
+                "source": "user",
+                "entities": null,
+                "methods": [
+                    {
+                        "name": "Pluralize",
+                        "description": "Pluralize the string. Takes in a string and makes the best guess at the plural form of that string.",
+                        "options": { "type": "Query" },
+                        "request_dtype": "String",
+                        "response_type": { "app": "Sampleapp", "service": "Pluralizer", "entity": "", "types": ["PluralizeResponse"], "enum": "", "method": "" },
+                        "apis": [{ "options": {}, "path": "/pluralize", "http_method": "GET" }]
+                    }
+                ],
+                "types": [
+                    { "name": "PluralizeResponse", "description": "Response object for the pluralize method.", "fields": [{ "name": "Plural", "options": {}, "datatype": "String" }], "options": {} }
+                ]
+            },
+            {
+                "name": "User",
+                "options": {},
+                "source": "mod",
+                "entities": [
+                    {
+                        "name": "Device",
+                        "description": "A device associated with a user.",
+                        "options": {},
+                        "associations": [
+                            { "relationship": "child_of", "type": "many", "entity": { "app": "Sampleapp", "service": "User", "entity": "User" }, "name": "Users", "other_association_name": "Devices" }
+                        ],
+                        "fields": [
+                            { "name": "Brand", "options": {}, "datatype": { "app": "Sampleapp", "service": "User", "entity": "Device", "enum": "Brand", "method": "" } },
+                            { "name": "Model", "options": {}, "datatype": { "app": "Sampleapp", "service": "User", "entity": "Device", "enum": "Model", "method": "" } },
+                            { "name": "OperatingSystem", "options": {}, "datatype": { "app": "Sampleapp", "service": "User", "entity": "Device", "enum": "OperatingSystem", "method": "" } },
+                            { "name": "OperatingSystemVersion", "options": {}, "datatype": "String" },
+                            { "name": "Timezone", "options": {}, "datatype": { "app": "Sampleapp", "service": "", "entity": "", "enum": "Timezone", "method": "" } },
+                            { "name": "Token", "options": {}, "datatype": "String" },
+                            { "name": "UniqueID", "options": {}, "datatype": "String" }
+                        ],
+                        "types": null,
+                        "enums": [
+                            {
+                                "name": "Brand",
+                                "description": "The brand of the device.",
+                                "values": [
+                                    { "name": "Apple", "id": 1, "options": { "displayValue": "" } },
+                                    { "name": "Google", "id": 2, "options": { "displayValue": "" } },
+                                    { "name": "Other", "id": 99, "options": { "displayValue": "" } },
+                                    { "name": "Samsung", "id": 3, "options": { "displayValue": "" } }
+                                ],
+                                "options": {}
+                            },
+                            {
+                                "name": "Model",
+                                "description": "The model of the device.",
+                                "values": [
+                                    { "name": "Android", "id": 3, "options": { "displayValue": "" } },
+                                    { "name": "IPad", "id": 2, "options": { "displayValue": "" } },
+                                    { "name": "IPhone", "id": 1, "options": { "displayValue": "" } },
+                                    { "name": "Other", "id": 99, "options": { "displayValue": "" } }
+                                ],
+                                "options": {}
+                            },
+                            {
+                                "name": "OperatingSystem",
+                                "description": "The operating system of the device.",
+                                "values": [
+                                    { "name": "Android", "id": 2, "options": { "displayValue": "" } },
+                                    { "name": "IOs", "id": 1, "options": { "displayValue": "" } },
+                                    { "name": "Other", "id": 99, "options": { "displayValue": "" } }
+                                ],
+                                "options": {}
+                            }
+                        ],
+                        "methods": null
+                    },
+                    {
+                        "name": "Group",
+                        "description": "A group of users.",
+                        "options": {},
+                        "associations": [
+                            { "relationship": "parent_of", "type": "many", "entity": { "app": "Sampleapp", "service": "User", "entity": "User" }, "name": "Users", "other_association_name": "Groups" }
+                        ],
+                        "fields": [{ "name": "Name", "options": {}, "datatype": "String" }],
+                        "types": null,
+                        "methods": null
+                    },
+                    {
+                        "name": "User",
+                        "description": "A user represents an entity (person or a machine) that can access the system.",
+                        "options": {},
+                        "associations": [
+                            { "relationship": "child_of", "type": "many", "entity": { "app": "Sampleapp", "service": "User", "entity": "Group" }, "name": "Groups", "other_association_name": "Users" },
+                            {
+                                "relationship": "parent_of",
+                                "type": "many",
+                                "entity": { "app": "Sampleapp", "service": "User", "entity": "Device" },
+                                "name": "Devices",
+                                "other_association_name": "Users"
+                            }
+                        ],
+                        "hooks": [{ "type": "init", "is_static": true, "method_namespace": { "app": "", "service": "", "entity": "", "enum": "", "method": "" } }],
+                        "fields": [
+                            {
+                                "name": "Addresses",
+                                "options": { "is_optional": true },
+                                "is_repeated": true,
+                                "datatype": { "app": "Sampleapp", "service": "", "entity": "", "types": ["Address"], "enum": "", "method": "" }
+                            },
+                            { "name": "Email", "options": {}, "datatype": "Email" },
+                            { "name": "Name", "options": {}, "datatype": { "app": "Sampleapp", "service": "", "entity": "", "types": ["PersonName"], "enum": "", "method": "" } }
+                        ],
+                        "types": null,
+                        "methods": null
+                    }
+                ],
+                "methods": null,
+                "types": null
+            }
+        ],
+        "types": [
+            {
+                "name": "Address",
+                "description": "An object representing a phsyical address.",
+                "fields": [
+                    { "name": "City", "options": {}, "datatype": "String" },
+                    { "name": "Country", "options": {}, "datatype": { "app": "Sampleapp", "service": "", "entity": "", "enum": "Country", "method": "" } },
+                    { "name": "Line1", "options": {}, "datatype": "String" },
+                    { "name": "Line2", "options": { "is_optional": true }, "datatype": "String" },
+                    { "name": "PostalCode", "options": {}, "datatype": "String" },
+                    { "name": "State", "options": {}, "datatype": { "app": "Sampleapp", "service": "", "entity": "", "enum": "USAState", "method": "" } }
+                ],
+                "options": {}
+            },
+            {
+                "name": "Contact",
+                "description": "An object representing a person's contact information.",
+                "fields": [
+                    { "name": "Address", "options": {}, "datatype": { "app": "Sampleapp", "service": "", "entity": "", "types": ["Address"], "enum": "", "method": "" } },
+                    { "name": "Email", "options": {}, "datatype": "Email" },
+                    { "name": "Name", "options": {}, "datatype": { "app": "Sampleapp", "service": "", "entity": "", "types": ["PersonName"], "enum": "", "method": "" } }
+                ],
+                "options": {}
+            },
+            {
+                "name": "PersonName",
+                "description": "An object representing a person's name.",
+                "fields": [
+                    { "name": "FirstName", "options": {}, "datatype": "String" },
+                    { "name": "LastName", "options": {}, "datatype": "String" },
+                    { "name": "MiddleInitial", "options": { "is_optional": true }, "datatype": "String" }
+                ],
+                "options": {}
+            },
+            {
+                "name": "PhoneNumber",
+                "description": "An object representing a phone number.",
+                "fields": [
+                    { "name": "CountryCode", "options": {}, "datatype": "Number" },
+                    { "name": "Extension", "options": { "is_optional": true }, "datatype": "String" },
+                    { "name": "Number", "options": {}, "datatype": "String" }
+                ],
+                "options": {}
+            }
+        ],
+        "enums": [
+            {
+                "name": "Country",
+                "description": "All the countries in the world.",
+                "values": [
+                    { "name": "Afghanistan", "id": 1, "options": { "displayValue": "" } },
+                    { "name": "Albania", "id": 2, "options": { "displayValue": "" } },
+                    { "name": "Algeria", "id": 3, "options": { "displayValue": "" } },
+                    { "name": "Andorra", "id": 4, "options": { "displayValue": "" } },
+                    { "name": "Angola", "id": 5, "options": { "displayValue": "" } },
+                    { "name": "AntiguaAndBarbuda", "id": 6, "options": { "displayValue": "" } },
+                    { "name": "Argentina", "id": 7, "options": { "displayValue": "" } },
+                    { "name": "Armenia", "id": 8, "options": { "displayValue": "" } },
+                    { "name": "Australia", "id": 9, "options": { "displayValue": "" } },
+                    { "name": "Austria", "id": 10, "options": { "displayValue": "" } },
+                    { "name": "Azerbaijan", "id": 11, "options": { "displayValue": "" } },
+                    { "name": "Bahamas", "id": 12, "options": { "displayValue": "" } },
+                    { "name": "Bahrain", "id": 13, "options": { "displayValue": "" } },
+                    { "name": "Bangladesh", "id": 14, "options": { "displayValue": "" } },
+                    { "name": "Barbados", "id": 15, "options": { "displayValue": "" } },
+                    { "name": "Belarus", "id": 16, "options": { "displayValue": "" } },
+                    { "name": "Belgium", "id": 17, "options": { "displayValue": "" } },
+                    { "name": "Belize", "id": 18, "options": { "displayValue": "" } },
+                    { "name": "Benin", "id": 19, "options": { "displayValue": "" } },
+                    { "name": "Bhutan", "id": 20, "options": { "displayValue": "" } },
+                    { "name": "Bolivia", "id": 21, "options": { "displayValue": "" } },
+                    { "name": "BosniaAndHerzegovina", "id": 22, "options": { "displayValue": "" } },
+                    { "name": "Botswana", "id": 23, "options": { "displayValue": "" } },
+                    { "name": "Brazil", "id": 24, "options": { "displayValue": "" } },
+                    { "name": "Brunei", "id": 25, "options": { "displayValue": "" } },
+                    { "name": "Bulgaria", "id": 26, "options": { "displayValue": "" } },
+                    { "name": "BurkinaFaso", "id": 27, "options": { "displayValue": "" } },
+                    { "name": "Burundi", "id": 28, "options": { "displayValue": "" } },
+                    { "name": "CaboVerde", "id": 29, "options": { "displayValue": "" } },
+                    { "name": "Cambodia", "id": 30, "options": { "displayValue": "" } },
+                    { "name": "Cameroon", "id": 31, "options": { "displayValue": "" } },
+                    { "name": "Canada", "id": 32, "options": { "displayValue": "" } },
+                    { "name": "CentralAfricanRepublic", "id": 33, "options": { "displayValue": "" } },
+                    { "name": "Chad", "id": 34, "options": { "displayValue": "" } },
+                    { "name": "Chile", "id": 35, "options": { "displayValue": "" } },
+                    { "name": "China", "id": 36, "options": { "displayValue": "" } },
+                    { "name": "Colombia", "id": 37, "options": { "displayValue": "" } },
+                    { "name": "Comoros", "id": 38, "options": { "displayValue": "" } },
+                    { "name": "Congo", "id": 40, "options": { "displayValue": "" } },
+                    { "name": "CostaRica", "id": 41, "options": { "displayValue": "" } },
+                    { "name": "Croatia", "id": 43, "options": { "displayValue": "" } },
+                    { "name": "Cuba", "id": 44, "options": { "displayValue": "" } },
+                    { "name": "Cyprus", "id": 45, "options": { "displayValue": "" } },
+                    { "name": "Czechia", "id": 46, "options": { "displayValue": "" } },
+                    { "name": "DemocraticRepublicOfCongo", "id": 39, "options": { "displayValue": "" } },
+                    { "name": "Denmark", "id": 47, "options": { "displayValue": "" } },
+                    { "name": "Djibouti", "id": 48, "options": { "displayValue": "" } },
+                    { "name": "Dominica", "id": 49, "options": { "displayValue": "" } },
+                    { "name": "DominicanRepublic", "id": 50, "options": { "displayValue": "" } },
+                    { "name": "Ecuador", "id": 51, "options": { "displayValue": "" } },
+                    { "name": "Egypt", "id": 52, "options": { "displayValue": "" } },
+                    { "name": "ElSalvador", "id": 53, "options": { "displayValue": "" } },
+                    { "name": "EquatorialGuinea", "id": 54, "options": { "displayValue": "" } },
+                    { "name": "Eritrea", "id": 55, "options": { "displayValue": "" } },
+                    { "name": "Estonia", "id": 56, "options": { "displayValue": "" } },
+                    { "name": "Eswatini", "id": 57, "options": { "displayValue": "" } },
+                    { "name": "Ethiopia", "id": 58, "options": { "displayValue": "" } },
+                    { "name": "Fiji", "id": 59, "options": { "displayValue": "" } },
+                    { "name": "Finland", "id": 60, "options": { "displayValue": "" } },
+                    { "name": "France", "id": 61, "options": { "displayValue": "" } },
+                    { "name": "Gabon", "id": 62, "options": { "displayValue": "" } },
+                    { "name": "Gambia", "id": 63, "options": { "displayValue": "" } },
+                    { "name": "Georgia", "id": 64, "options": { "displayValue": "" } },
+                    { "name": "Germany", "id": 65, "options": { "displayValue": "" } },
+                    { "name": "Ghana", "id": 66, "options": { "displayValue": "" } },
+                    { "name": "Greece", "id": 67, "options": { "displayValue": "" } },
+                    { "name": "Grenada", "id": 68, "options": { "displayValue": "" } },
+                    { "name": "Guatemala", "id": 69, "options": { "displayValue": "" } },
+                    { "name": "Guinea", "id": 70, "options": { "displayValue": "" } },
+                    { "name": "GuineaBissau", "id": 71, "options": { "displayValue": "" } },
+                    { "name": "Guyana", "id": 72, "options": { "displayValue": "" } },
+                    { "name": "Haiti", "id": 73, "options": { "displayValue": "" } },
+                    { "name": "Honduras", "id": 74, "options": { "displayValue": "" } },
+                    { "name": "Hungary", "id": 75, "options": { "displayValue": "" } },
+                    { "name": "Iceland", "id": 76, "options": { "displayValue": "" } },
+                    { "name": "India", "id": 77, "options": { "displayValue": "" } },
+                    { "name": "Indonesia", "id": 78, "options": { "displayValue": "" } },
+                    { "name": "Iran", "id": 79, "options": { "displayValue": "" } },
+                    { "name": "Iraq", "id": 80, "options": { "displayValue": "" } },
+                    { "name": "Ireland", "id": 81, "options": { "displayValue": "" } },
+                    { "name": "Israel", "id": 82, "options": { "displayValue": "" } },
+                    { "name": "Italy", "id": 83, "options": { "displayValue": "" } },
+                    { "name": "IvoryCoast", "id": 42, "options": { "displayValue": "" } },
+                    { "name": "Jamaica", "id": 84, "options": { "displayValue": "" } },
+                    { "name": "Japan", "id": 85, "options": { "displayValue": "" } },
+                    { "name": "Jordan", "id": 86, "options": { "displayValue": "" } },
+                    { "name": "Kazakhstan", "id": 87, "options": { "displayValue": "" } },
+                    { "name": "Kenya", "id": 88, "options": { "displayValue": "" } },
+                    { "name": "Kiribati", "id": 89, "options": { "displayValue": "" } },
+                    { "name": "Kosovo", "id": 92, "options": { "displayValue": "" } },
+                    { "name": "Kuwait", "id": 93, "options": { "displayValue": "" } },
+                    { "name": "Kyrgyzstan", "id": 94, "options": { "displayValue": "" } },
+                    { "name": "Laos", "id": 95, "options": { "displayValue": "" } },
+                    { "name": "Latvia", "id": 96, "options": { "displayValue": "" } },
+                    { "name": "Lebanon", "id": 97, "options": { "displayValue": "" } },
+                    { "name": "Lesotho", "id": 98, "options": { "displayValue": "" } },
+                    { "name": "Liberia", "id": 99, "options": { "displayValue": "" } },
+                    { "name": "Libya", "id": 100, "options": { "displayValue": "" } },
+                    { "name": "Liechtenstein", "id": 101, "options": { "displayValue": "" } },
+                    { "name": "Lithuania", "id": 102, "options": { "displayValue": "" } },
+                    { "name": "Luxembourg", "id": 103, "options": { "displayValue": "" } },
+                    { "name": "Madagascar", "id": 104, "options": { "displayValue": "" } },
+                    { "name": "Malawi", "id": 105, "options": { "displayValue": "" } },
+                    { "name": "Malaysia", "id": 106, "options": { "displayValue": "" } },
+                    { "name": "Maldives", "id": 107, "options": { "displayValue": "" } },
+                    { "name": "Mali", "id": 108, "options": { "displayValue": "" } },
+                    { "name": "Malta", "id": 109, "options": { "displayValue": "" } },
+                    { "name": "MarshallIslands", "id": 110, "options": { "displayValue": "" } },
+                    { "name": "Mauritania", "id": 111, "options": { "displayValue": "" } },
+                    { "name": "Mauritius", "id": 112, "options": { "displayValue": "" } },
+                    { "name": "Mexico", "id": 113, "options": { "displayValue": "" } },
+                    { "name": "Micronesia", "id": 114, "options": { "displayValue": "" } },
+                    { "name": "Moldova", "id": 115, "options": { "displayValue": "" } },
+                    { "name": "Monaco", "id": 116, "options": { "displayValue": "" } },
+                    { "name": "Mongolia", "id": 117, "options": { "displayValue": "" } },
+                    { "name": "Montenegro", "id": 118, "options": { "displayValue": "" } },
+                    { "name": "Morocco", "id": 119, "options": { "displayValue": "" } },
+                    { "name": "Mozambique", "id": 120, "options": { "displayValue": "" } },
+                    { "name": "Myanmar", "id": 121, "options": { "displayValue": "" } },
+                    { "name": "Namibia", "id": 122, "options": { "displayValue": "" } },
+                    { "name": "Nauru", "id": 123, "options": { "displayValue": "" } },
+                    { "name": "Nepal", "id": 124, "options": { "displayValue": "" } },
+                    { "name": "Netherlands", "id": 125, "options": { "displayValue": "" } },
+                    { "name": "NewZealand", "id": 126, "options": { "displayValue": "" } },
+                    { "name": "Nicaragua", "id": 127, "options": { "displayValue": "" } },
+                    { "name": "Niger", "id": 128, "options": { "displayValue": "" } },
+                    { "name": "Nigeria", "id": 129, "options": { "displayValue": "" } },
+                    { "name": "NorthKorea", "id": 90, "options": { "displayValue": "" } },
+                    { "name": "NorthMacedonia", "id": 130, "options": { "displayValue": "" } },
+                    { "name": "Norway", "id": 131, "options": { "displayValue": "" } },
+                    { "name": "Oman", "id": 132, "options": { "displayValue": "" } },
+                    { "name": "Pakistan", "id": 133, "options": { "displayValue": "" } },
+                    { "name": "Palau", "id": 134, "options": { "displayValue": "" } },
+                    { "name": "Palestine", "id": 135, "options": { "displayValue": "" } },
+                    { "name": "Panama", "id": 136, "options": { "displayValue": "" } },
+                    { "name": "PapuaNewGuinea", "id": 137, "options": { "displayValue": "" } },
+                    { "name": "Paraguay", "id": 138, "options": { "displayValue": "" } },
+                    { "name": "Peru", "id": 139, "options": { "displayValue": "" } },
+                    { "name": "Philippines", "id": 140, "options": { "displayValue": "" } },
+                    { "name": "Poland", "id": 141, "options": { "displayValue": "" } },
+                    { "name": "Portugal", "id": 142, "options": { "displayValue": "" } },
+                    { "name": "Qatar", "id": 143, "options": { "displayValue": "" } },
+                    { "name": "Romania", "id": 144, "options": { "displayValue": "" } },
+                    { "name": "Russia", "id": 145, "options": { "displayValue": "" } },
+                    { "name": "Rwanda", "id": 146, "options": { "displayValue": "" } },
+                    { "name": "SaintKittsAndNevis", "id": 147, "options": { "displayValue": "" } },
+                    { "name": "SaintLucia", "id": 148, "options": { "displayValue": "" } },
+                    { "name": "SaintVincentAndTheGrenadines", "id": 149, "options": { "displayValue": "" } },
+                    { "name": "Samoa", "id": 150, "options": { "displayValue": "" } },
+                    { "name": "SanMarino", "id": 151, "options": { "displayValue": "" } },
+                    { "name": "SaoTomeAndPrincipe", "id": 152, "options": { "displayValue": "" } },
+                    { "name": "SaudiArabia", "id": 153, "options": { "displayValue": "" } },
+                    { "name": "Senegal", "id": 154, "options": { "displayValue": "" } },
+                    { "name": "Serbia", "id": 155, "options": { "displayValue": "" } },
+                    { "name": "Seychelles", "id": 156, "options": { "displayValue": "" } },
+                    { "name": "SierraLeone", "id": 157, "options": { "displayValue": "" } },
+                    { "name": "Singapore", "id": 158, "options": { "displayValue": "" } },
+                    { "name": "Slovakia", "id": 159, "options": { "displayValue": "" } },
+                    { "name": "Slovenia", "id": 160, "options": { "displayValue": "" } },
+                    { "name": "SolomonIslands", "id": 161, "options": { "displayValue": "" } },
+                    { "name": "Somalia", "id": 162, "options": { "displayValue": "" } },
+                    { "name": "SouthAfrica", "id": 163, "options": { "displayValue": "" } },
+                    { "name": "SouthKorea", "id": 91, "options": { "displayValue": "" } },
+                    { "name": "SouthSudan", "id": 164, "options": { "displayValue": "" } },
+                    { "name": "Spain", "id": 165, "options": { "displayValue": "" } },
+                    { "name": "SriLanka", "id": 166, "options": { "displayValue": "" } },
+                    { "name": "Sudan", "id": 167, "options": { "displayValue": "" } },
+                    { "name": "Suriname", "id": 168, "options": { "displayValue": "" } },
+                    { "name": "Sweden", "id": 169, "options": { "displayValue": "" } },
+                    { "name": "Switzerland", "id": 170, "options": { "displayValue": "" } },
+                    { "name": "Syria", "id": 171, "options": { "displayValue": "" } },
+                    { "name": "Taiwan", "id": 172, "options": { "displayValue": "" } },
+                    { "name": "Tajikistan", "id": 173, "options": { "displayValue": "" } },
+                    { "name": "Tanzania", "id": 174, "options": { "displayValue": "" } },
+                    { "name": "Thailand", "id": 175, "options": { "displayValue": "" } },
+                    { "name": "TimorLeste", "id": 176, "options": { "displayValue": "" } },
+                    { "name": "Togo", "id": 177, "options": { "displayValue": "" } },
+                    { "name": "Tonga", "id": 178, "options": { "displayValue": "" } },
+                    { "name": "TrinidadAndTobago", "id": 179, "options": { "displayValue": "" } },
+                    { "name": "Tunisia", "id": 180, "options": { "displayValue": "" } },
+                    { "name": "Turkey", "id": 181, "options": { "displayValue": "" } },
+                    { "name": "Turkmenistan", "id": 182, "options": { "displayValue": "" } },
+                    { "name": "Tuvalu", "id": 183, "options": { "displayValue": "" } },
+                    { "name": "Uganda", "id": 184, "options": { "displayValue": "" } },
+                    { "name": "Ukraine", "id": 185, "options": { "displayValue": "" } },
+                    { "name": "UnitedArabEmirates", "id": 186, "options": { "displayValue": "" } },
+                    { "name": "UnitedKingdom", "id": 187, "options": { "displayValue": "" } },
+                    { "name": "UnitedStatesOfAmerica", "id": 188, "options": { "displayValue": "" } },
+                    { "name": "Uruguay", "id": 189, "options": { "displayValue": "" } },
+                    { "name": "Uzbekistan", "id": 190, "options": { "displayValue": "" } },
+                    { "name": "Vanuatu", "id": 191, "options": { "displayValue": "" } },
+                    { "name": "VaticanCity", "id": 192, "options": { "displayValue": "" } },
+                    { "name": "Venezuela", "id": 193, "options": { "displayValue": "" } },
+                    { "name": "Vietnam", "id": 194, "options": { "displayValue": "" } },
+                    { "name": "Yemen", "id": 195, "options": { "displayValue": "" } },
+                    { "name": "Zambia", "id": 196, "options": { "displayValue": "" } },
+                    { "name": "Zimbabwe", "id": 197, "options": { "displayValue": "" } }
+                ],
+                "options": {}
+            },
+            {
+                "name": "CountryTelephoneCode",
+                "description": "All the telephone country countries in the world.",
+                "values": [
+                    { "name": "Afghanistan", "id": 1, "options": { "displayValue": "Afghanistan (+93)" } },
+                    { "name": "Albania", "id": 2, "options": { "displayValue": "Albania (+355)" } },
+                    { "name": "Algeria", "id": 3, "options": { "displayValue": "Algeria (+213)" } },
+                    { "name": "Andorra", "id": 4, "options": { "displayValue": "Andorra (+376)" } },
+                    { "name": "Angola", "id": 5, "options": { "displayValue": "Angola (+244)" } },
+                    { "name": "AntiguaAndBarbuda", "id": 6, "options": { "displayValue": "Antigua and Barbuda (+1-268)" } },
+                    { "name": "Argentina", "id": 7, "options": { "displayValue": "Argentina (+54)" } },
+                    { "name": "Armenia", "id": 8, "options": { "displayValue": "Armenia (+374)" } },
+                    { "name": "Australia", "id": 9, "options": { "displayValue": "Australia (+61)" } },
+                    { "name": "Austria", "id": 10, "options": { "displayValue": "Austria (+43)" } },
+                    { "name": "Azerbaijan", "id": 11, "options": { "displayValue": "Azerbaijan (+994)" } },
+                    { "name": "Bahamas", "id": 12, "options": { "displayValue": "Bahamas (+1-242)" } },
+                    { "name": "Bahrain", "id": 13, "options": { "displayValue": "Bahrain (+973)" } },
+                    { "name": "Bangladesh", "id": 14, "options": { "displayValue": "Bangladesh (+880)" } },
+                    { "name": "Barbados", "id": 15, "options": { "displayValue": "Barbados (+1-246)" } },
+                    { "name": "Belarus", "id": 16, "options": { "displayValue": "Belarus (+375)" } },
+                    { "name": "Belgium", "id": 17, "options": { "displayValue": "Belgium (+32)" } },
+                    { "name": "Belize", "id": 18, "options": { "displayValue": "Belize (+501)" } },
+                    { "name": "Benin", "id": 19, "options": { "displayValue": "Benin (+229)" } },
+                    { "name": "Bhutan", "id": 20, "options": { "displayValue": "Bhutan (+975)" } },
+                    { "name": "Bolivia", "id": 21, "options": { "displayValue": "Bolivia (+591)" } },
+                    { "name": "BosniaAndHerzegovina", "id": 22, "options": { "displayValue": "Bosnia and Herzegovina (+387)" } },
+                    { "name": "Botswana", "id": 23, "options": { "displayValue": "Botswana (+267)" } },
+                    { "name": "Brazil", "id": 24, "options": { "displayValue": "Brazil (+55)" } },
+                    { "name": "Brunei", "id": 25, "options": { "displayValue": "Brunei (+673)" } },
+                    { "name": "Bulgaria", "id": 26, "options": { "displayValue": "Bulgaria (+359)" } },
+                    { "name": "BurkinaFaso", "id": 27, "options": { "displayValue": "Burkina Faso (+226)" } },
+                    { "name": "Burundi", "id": 28, "options": { "displayValue": "Burundi (+257)" } },
+                    { "name": "CaboVerde", "id": 29, "options": { "displayValue": "Cabo Verde (+238)" } },
+                    { "name": "Cambodia", "id": 30, "options": { "displayValue": "Cambodia (+855)" } },
+                    { "name": "Cameroon", "id": 31, "options": { "displayValue": "Cameroon (+237)" } },
+                    { "name": "Canada", "id": 32, "options": { "displayValue": "Canada (+1)" } },
+                    { "name": "CentralAfricanRepublic", "id": 33, "options": { "displayValue": "Central African Republic (+236)" } },
+                    { "name": "Chad", "id": 34, "options": { "displayValue": "Chad (+235)" } },
+                    { "name": "Chile", "id": 35, "options": { "displayValue": "Chile (+56)" } },
+                    { "name": "China", "id": 36, "options": { "displayValue": "China (+86)" } },
+                    { "name": "Colombia", "id": 37, "options": { "displayValue": "Colombia (+57)" } },
+                    { "name": "Comoros", "id": 38, "options": { "displayValue": "Comoros (+269)" } },
+                    { "name": "Congo", "id": 40, "options": { "displayValue": "Congo (+242)" } },
+                    { "name": "CostaRica", "id": 41, "options": { "displayValue": "Costa Rica (+506)" } },
+                    { "name": "Croatia", "id": 43, "options": { "displayValue": "Croatia (+385)" } },
+                    { "name": "Cuba", "id": 44, "options": { "displayValue": "Cuba (+53)" } },
+                    { "name": "Cyprus", "id": 45, "options": { "displayValue": "Cyprus (+357)" } },
+                    { "name": "Czechia", "id": 46, "options": { "displayValue": "Czechia (+420)" } },
+                    { "name": "DemocraticRepublicOfCongo", "id": 39, "options": { "displayValue": "Democratic Republic of Congo (+243)" } },
+                    { "name": "Denmark", "id": 47, "options": { "displayValue": "Denmark (+45)" } },
+                    { "name": "Djibouti", "id": 48, "options": { "displayValue": "Djibouti (+253)" } },
+                    { "name": "Dominica", "id": 49, "options": { "displayValue": "Dominica (+1-767)" } },
+                    { "name": "DominicanRepublic", "id": 50, "options": { "displayValue": "Dominican Republic (+1-809)" } },
+                    { "name": "Ecuador", "id": 51, "options": { "displayValue": "Ecuador (+593)" } },
+                    { "name": "Egypt", "id": 52, "options": { "displayValue": "Egypt (+20)" } },
+                    { "name": "ElSalvador", "id": 53, "options": { "displayValue": "El Salvador (+503)" } },
+                    { "name": "EquatorialGuinea", "id": 54, "options": { "displayValue": "Equatorial Guinea (+240)" } },
+                    { "name": "Eritrea", "id": 55, "options": { "displayValue": "Eritrea (+291)" } },
+                    { "name": "Estonia", "id": 56, "options": { "displayValue": "Estonia (+372)" } },
+                    { "name": "Eswatini", "id": 57, "options": { "displayValue": "Eswatini (+268)" } },
+                    { "name": "Ethiopia", "id": 58, "options": { "displayValue": "Ethiopia (+251)" } },
+                    { "name": "Fiji", "id": 59, "options": { "displayValue": "Fiji (+679)" } },
+                    { "name": "Finland", "id": 60, "options": { "displayValue": "Finland (+358)" } },
+                    { "name": "France", "id": 61, "options": { "displayValue": "France (+33)" } },
+                    { "name": "Gabon", "id": 62, "options": { "displayValue": "Gabon (+241)" } },
+                    { "name": "Gambia", "id": 63, "options": { "displayValue": "Gambia (+220)" } },
+                    { "name": "Georgia", "id": 64, "options": { "displayValue": "Georgia (+995)" } },
+                    { "name": "Germany", "id": 65, "options": { "displayValue": "Germany (+49)" } },
+                    { "name": "Ghana", "id": 66, "options": { "displayValue": "Ghana (+233)" } },
+                    { "name": "Greece", "id": 67, "options": { "displayValue": "Greece (+30)" } },
+                    { "name": "Grenada", "id": 68, "options": { "displayValue": "Grenada (+1-473)" } },
+                    { "name": "Guatemala", "id": 69, "options": { "displayValue": "Guatemala (+502)" } },
+                    { "name": "Guinea", "id": 70, "options": { "displayValue": "Guinea (+224)" } },
+                    { "name": "GuineaBissau", "id": 71, "options": { "displayValue": "Guinea-Bissau (+245)" } },
+                    { "name": "Guyana", "id": 72, "options": { "displayValue": "Guyana (+592)" } },
+                    { "name": "Haiti", "id": 73, "options": { "displayValue": "Haiti (+509)" } },
+                    { "name": "Honduras", "id": 74, "options": { "displayValue": "Honduras (+504)" } },
+                    { "name": "Hungary", "id": 75, "options": { "displayValue": "Hungary (+36)" } },
+                    { "name": "Iceland", "id": 76, "options": { "displayValue": "Iceland (+354)" } },
+                    { "name": "India", "id": 77, "options": { "displayValue": "India (+91)" } },
+                    { "name": "Indonesia", "id": 78, "options": { "displayValue": "Indonesia (+62)" } },
+                    { "name": "Iran", "id": 79, "options": { "displayValue": "Iran (+98)" } },
+                    { "name": "Iraq", "id": 80, "options": { "displayValue": "Iraq (+964)" } },
+                    { "name": "Ireland", "id": 81, "options": { "displayValue": "Ireland (+353)" } },
+                    { "name": "Israel", "id": 82, "options": { "displayValue": "Israel (+972)" } },
+                    { "name": "Italy", "id": 83, "options": { "displayValue": "Italy (+39)" } },
+                    { "name": "IvoryCoast", "id": 42, "options": { "displayValue": "Côte d’Ivoire (+225)" } },
+                    { "name": "Jamaica", "id": 84, "options": { "displayValue": "Jamaica (+1-876)" } },
+                    { "name": "Japan", "id": 85, "options": { "displayValue": "Japan (+81)" } },
+                    { "name": "Jordan", "id": 86, "options": { "displayValue": "Jordan (+962)" } },
+                    { "name": "Kazakhstan", "id": 87, "options": { "displayValue": "Kazakhstan (+7)" } },
+                    { "name": "Kenya", "id": 88, "options": { "displayValue": "Kenya (+254)" } },
+                    { "name": "Kiribati", "id": 89, "options": { "displayValue": "Kiribati (+686)" } },
+                    { "name": "Kosovo", "id": 92, "options": { "displayValue": "Kosovo (+383)" } },
+                    { "name": "Kuwait", "id": 93, "options": { "displayValue": "Kuwait (+965)" } },
+                    { "name": "Kyrgyzstan", "id": 94, "options": { "displayValue": "Kyrgyzstan (+996)" } },
+                    { "name": "Laos", "id": 95, "options": { "displayValue": "Laos (+856)" } },
+                    { "name": "Latvia", "id": 96, "options": { "displayValue": "Latvia (+371)" } },
+                    { "name": "Lebanon", "id": 97, "options": { "displayValue": "Lebanon (+961)" } },
+                    { "name": "Lesotho", "id": 98, "options": { "displayValue": "Lesotho (+266)" } },
+                    { "name": "Liberia", "id": 99, "options": { "displayValue": "Liberia (+231)" } },
+                    { "name": "Libya", "id": 100, "options": { "displayValue": "Libya (+218)" } },
+                    { "name": "Liechtenstein", "id": 101, "options": { "displayValue": "Liechtenstein (+423)" } },
+                    { "name": "Lithuania", "id": 102, "options": { "displayValue": "Lithuania (+370)" } },
+                    { "name": "Luxembourg", "id": 103, "options": { "displayValue": "Luxembourg (+352)" } },
+                    { "name": "Madagascar", "id": 104, "options": { "displayValue": "Madagascar (+261)" } },
+                    { "name": "Malawi", "id": 105, "options": { "displayValue": "Malawi (+265)" } },
+                    { "name": "Malaysia", "id": 106, "options": { "displayValue": "Malaysia (+60)" } },
+                    { "name": "Maldives", "id": 107, "options": { "displayValue": "Maldives (+960)" } },
+                    { "name": "Mali", "id": 108, "options": { "displayValue": "Mali (+223)" } },
+                    { "name": "Malta", "id": 109, "options": { "displayValue": "Malta (+356)" } },
+                    { "name": "MarshallIslands", "id": 110, "options": { "displayValue": "Marshall Islands (+692)" } },
+                    { "name": "Mauritania", "id": 111, "options": { "displayValue": "Mauritania (+222)" } },
+                    { "name": "Mauritius", "id": 112, "options": { "displayValue": "Mauritius (+230)" } },
+                    { "name": "Mexico", "id": 113, "options": { "displayValue": "Mexico (+52)" } },
+                    { "name": "Micronesia", "id": 114, "options": { "displayValue": "Micronesia (+691)" } },
+                    { "name": "Moldova", "id": 115, "options": { "displayValue": "Moldova (+373)" } },
+                    { "name": "Monaco", "id": 116, "options": { "displayValue": "Monaco (+377)" } },
+                    { "name": "Mongolia", "id": 117, "options": { "displayValue": "Mongolia (+976)" } },
+                    { "name": "Montenegro", "id": 118, "options": { "displayValue": "Montenegro (+382)" } },
+                    { "name": "Morocco", "id": 119, "options": { "displayValue": "Morocco (+212)" } },
+                    { "name": "Mozambique", "id": 120, "options": { "displayValue": "Mozambique (+258)" } },
+                    { "name": "Myanmar", "id": 121, "options": { "displayValue": "Myanmar (+95)" } },
+                    { "name": "Namibia", "id": 122, "options": { "displayValue": "Namibia (+264)" } },
+                    { "name": "Nauru", "id": 123, "options": { "displayValue": "Nauru (+674)" } },
+                    { "name": "Nepal", "id": 124, "options": { "displayValue": "Nepal (+977)" } },
+                    { "name": "Netherlands", "id": 125, "options": { "displayValue": "Netherlands (+31)" } },
+                    { "name": "NewZealand", "id": 126, "options": { "displayValue": "New Zealand (+64)" } },
+                    { "name": "Nicaragua", "id": 127, "options": { "displayValue": "Nicaragua (+505)" } },
+                    { "name": "Niger", "id": 128, "options": { "displayValue": "Niger (+227)" } },
+                    { "name": "Nigeria", "id": 129, "options": { "displayValue": "Nigeria (+234)" } },
+                    { "name": "NorthKorea", "id": 90, "options": { "displayValue": "North Korea (+850)" } },
+                    { "name": "NorthMacedonia", "id": 130, "options": { "displayValue": "North Macedonia (+389)" } },
+                    { "name": "Norway", "id": 131, "options": { "displayValue": "Norway (+47)" } },
+                    { "name": "Oman", "id": 132, "options": { "displayValue": "Oman (+968)" } },
+                    { "name": "Pakistan", "id": 133, "options": { "displayValue": "Pakistan (+92)" } },
+                    { "name": "Palau", "id": 134, "options": { "displayValue": "Palau (+680)" } },
+                    { "name": "Palestine", "id": 135, "options": { "displayValue": "Palestine (+970)" } },
+                    { "name": "Panama", "id": 136, "options": { "displayValue": "Panama (+507)" } },
+                    { "name": "PapuaNewGuinea", "id": 137, "options": { "displayValue": "Papua New Guinea (+675)" } },
+                    { "name": "Paraguay", "id": 138, "options": { "displayValue": "Paraguay (+595)" } },
+                    { "name": "Peru", "id": 139, "options": { "displayValue": "Peru (+51)" } },
+                    { "name": "Philippines", "id": 140, "options": { "displayValue": "Philippines (+63)" } },
+                    { "name": "Poland", "id": 141, "options": { "displayValue": "Poland (+48)" } },
+                    { "name": "Portugal", "id": 142, "options": { "displayValue": "Portugal (+351)" } },
+                    { "name": "Qatar", "id": 143, "options": { "displayValue": "Qatar (+974)" } },
+                    { "name": "Romania", "id": 144, "options": { "displayValue": "Romania (+40)" } },
+                    { "name": "Russia", "id": 145, "options": { "displayValue": "Russia (+7)" } },
+                    { "name": "Rwanda", "id": 146, "options": { "displayValue": "Rwanda (+250)" } },
+                    { "name": "SaintKittsAndNevis", "id": 147, "options": { "displayValue": "Saint Kitts and Nevis (+1-869)" } },
+                    { "name": "SaintLucia", "id": 148, "options": { "displayValue": "Saint Lucia (+1-758)" } },
+                    { "name": "SaintVincentAndTheGrenadines", "id": 149, "options": { "displayValue": "Saint Vincent and the Grenadines (+1-784)" } },
+                    { "name": "Samoa", "id": 150, "options": { "displayValue": "Samoa (+685)" } },
+                    { "name": "SanMarino", "id": 151, "options": { "displayValue": "San Marino (+378)" } },
+                    { "name": "SaoTomeAndPrincipe", "id": 152, "options": { "displayValue": "Sao Tome and Principe (+239)" } },
+                    { "name": "SaudiArabia", "id": 153, "options": { "displayValue": "Saudi Arabia (+966)" } },
+                    { "name": "Senegal", "id": 154, "options": { "displayValue": "Senegal (+221)" } },
+                    { "name": "Serbia", "id": 155, "options": { "displayValue": "Serbia (+381)" } },
+                    { "name": "Seychelles", "id": 156, "options": { "displayValue": "Seychelles (+248)" } },
+                    { "name": "SierraLeone", "id": 157, "options": { "displayValue": "Sierra Leone (+232)" } },
+                    { "name": "Singapore", "id": 158, "options": { "displayValue": "Singapore (+65)" } },
+                    { "name": "Slovakia", "id": 159, "options": { "displayValue": "Slovakia (+421)" } },
+                    { "name": "Slovenia", "id": 160, "options": { "displayValue": "Slovenia (+386)" } },
+                    { "name": "SolomonIslands", "id": 161, "options": { "displayValue": "Solomon Islands (+677)" } },
+                    { "name": "Somalia", "id": 162, "options": { "displayValue": "Somalia (+252)" } },
+                    { "name": "SouthAfrica", "id": 163, "options": { "displayValue": "South Africa (+27)" } },
+                    { "name": "SouthKorea", "id": 91, "options": { "displayValue": "South Korea (+82)" } },
+                    { "name": "SouthSudan", "id": 164, "options": { "displayValue": "South Sudan (+211)" } },
+                    { "name": "Spain", "id": 165, "options": { "displayValue": "Spain (+34)" } },
+                    { "name": "SriLanka", "id": 166, "options": { "displayValue": "Sri Lanka (+94)" } },
+                    { "name": "Sudan", "id": 167, "options": { "displayValue": "Sudan (+249)" } },
+                    { "name": "Suriname", "id": 168, "options": { "displayValue": "Suriname (+597)" } },
+                    { "name": "Sweden", "id": 169, "options": { "displayValue": "Sweden (+46)" } },
+                    { "name": "Switzerland", "id": 170, "options": { "displayValue": "Switzerland (+41)" } },
+                    { "name": "Syria", "id": 171, "options": { "displayValue": "Syria (+963)" } },
+                    { "name": "Taiwan", "id": 172, "options": { "displayValue": "Taiwan (+886)" } },
+                    { "name": "Tajikistan", "id": 173, "options": { "displayValue": "Tajikistan (+992)" } },
+                    { "name": "Tanzania", "id": 174, "options": { "displayValue": "Tanzania (+255)" } },
+                    { "name": "Thailand", "id": 175, "options": { "displayValue": "Thailand (+66)" } },
+                    { "name": "TimorLeste", "id": 176, "options": { "displayValue": "Timor-Leste (+670)" } },
+                    { "name": "Togo", "id": 177, "options": { "displayValue": "Togo (+228)" } },
+                    { "name": "Tonga", "id": 178, "options": { "displayValue": "Tonga (+676)" } },
+                    { "name": "TrinidadAndTobago", "id": 179, "options": { "displayValue": "Trinidad and Tobago (+1-868)" } },
+                    { "name": "Tunisia", "id": 180, "options": { "displayValue": "Tunisia (+216)" } },
+                    { "name": "Turkey", "id": 181, "options": { "displayValue": "Turkey (+90)" } },
+                    { "name": "Turkmenistan", "id": 182, "options": { "displayValue": "Turkmenistan (+993)" } },
+                    { "name": "Tuvalu", "id": 183, "options": { "displayValue": "Tuvalu (+688)" } },
+                    { "name": "Uganda", "id": 184, "options": { "displayValue": "Uganda (+256)" } },
+                    { "name": "Ukraine", "id": 185, "options": { "displayValue": "Ukraine (+380)" } },
+                    { "name": "UnitedArabEmirates", "id": 186, "options": { "displayValue": "United Arab Emirates (+971)" } },
+                    { "name": "UnitedKingdom", "id": 187, "options": { "displayValue": "United Kingdom (+44)" } },
+                    { "name": "UnitedStatesOfAmerica", "id": 188, "options": { "displayValue": "United States of America (+1)" } },
+                    { "name": "Uruguay", "id": 189, "options": { "displayValue": "Uruguay (+598)" } },
+                    { "name": "Uzbekistan", "id": 190, "options": { "displayValue": "Uzbekistan (+998)" } },
+                    { "name": "Vanuatu", "id": 191, "options": { "displayValue": "Vanuatu (+678)" } },
+                    { "name": "VaticanCity", "id": 192, "options": { "displayValue": "Vatican City (+379)" } },
+                    { "name": "Venezuela", "id": 193, "options": { "displayValue": "Venezuela (+58)" } },
+                    { "name": "Vietnam", "id": 194, "options": { "displayValue": "Vietnam (+84)" } },
+                    { "name": "Yemen", "id": 195, "options": { "displayValue": "Yemen (+967)" } },
+                    { "name": "Zambia", "id": 196, "options": { "displayValue": "Zambia (+260)" } },
+                    { "name": "Zimbabwe", "id": 197, "options": { "displayValue": "Zimbabwe (+263)" } }
+                ],
+                "options": {}
+            },
+            {
+                "name": "Gender",
+                "description": "All the possible gender values that can be used in the system.",
+                "values": [
+                    { "name": "Female", "id": 2, "options": { "displayValue": "" } },
+                    { "name": "Male", "id": 1, "options": { "displayValue": "" } },
+                    { "name": "Other", "id": 3, "options": { "displayValue": "" } }
+                ],
+                "options": {}
+            },
+            {
+                "name": "Timezone",
+                "description": "All the possible timezones that can be used in the system.",
+                "values": [
+                    { "name": "Berlin", "id": 8, "options": { "displayValue": "Europe/Berlin" } },
+                    { "name": "Central", "id": 3, "options": { "displayValue": "US/Central" } },
+                    { "name": "Eastern", "id": 2, "options": { "displayValue": "US/Eastern" } },
+                    { "name": "Kolkata", "id": 11, "options": { "displayValue": "Asia/Kolkata" } },
+                    { "name": "London", "id": 6, "options": { "displayValue": "Europe/London" } },
+                    { "name": "Mountain", "id": 4, "options": { "displayValue": "US/Mountain" } },
+                    { "name": "Pacific", "id": 5, "options": { "displayValue": "US/Pacific" } },
+                    { "name": "Paris", "id": 7, "options": { "displayValue": "Europe/Paris" } },
+                    { "name": "Shanghai", "id": 10, "options": { "displayValue": "Asia/Shanghai" } },
+                    { "name": "Sydney", "id": 12, "options": { "displayValue": "Australia/Sydney" } },
+                    { "name": "Tokyo", "id": 9, "options": { "displayValue": "Asia/Tokyo" } },
+                    { "name": "Utc", "id": 1, "options": { "displayValue": "UTC" } }
+                ],
+                "options": {}
+            },
+            {
+                "name": "USAState",
+                "description": "All the states in the US, including territories.",
+                "values": [
+                    { "name": "Alabama", "id": 1, "options": { "displayValue": "" } },
+                    { "name": "Alaska", "id": 2, "options": { "displayValue": "" } },
+                    { "name": "AmericanSamoa", "id": 3, "options": { "displayValue": "" } },
+                    { "name": "Arizona", "id": 4, "options": { "displayValue": "" } },
+                    { "name": "Arkansas", "id": 5, "options": { "displayValue": "" } },
+                    { "name": "California", "id": 6, "options": { "displayValue": "" } },
+                    { "name": "Colorado", "id": 7, "options": { "displayValue": "" } },
+                    { "name": "Connecticut", "id": 8, "options": { "displayValue": "" } },
+                    { "name": "Delaware", "id": 9, "options": { "displayValue": "" } },
+                    { "name": "DistrictOfColumbia", "id": 10, "options": { "displayValue": "" } },
+                    { "name": "Florida", "id": 11, "options": { "displayValue": "" } },
+                    { "name": "Georgia", "id": 12, "options": { "displayValue": "" } },
+                    { "name": "Guam", "id": 13, "options": { "displayValue": "" } },
+                    { "name": "Hawaii", "id": 14, "options": { "displayValue": "" } },
+                    { "name": "Idaho", "id": 15, "options": { "displayValue": "" } },
+                    { "name": "Illinois", "id": 16, "options": { "displayValue": "" } },
+                    { "name": "Indiana", "id": 17, "options": { "displayValue": "" } },
+                    { "name": "Iowa", "id": 18, "options": { "displayValue": "" } },
+                    { "name": "Kansas", "id": 19, "options": { "displayValue": "" } },
+                    { "name": "Kentucky", "id": 20, "options": { "displayValue": "" } },
+                    { "name": "Louisiana", "id": 21, "options": { "displayValue": "" } },
+                    { "name": "Maine", "id": 22, "options": { "displayValue": "" } },
+                    { "name": "Maryland", "id": 23, "options": { "displayValue": "" } },
+                    { "name": "Massachusetts", "id": 24, "options": { "displayValue": "" } },
+                    { "name": "Michigan", "id": 25, "options": { "displayValue": "" } },
+                    { "name": "Minnesota", "id": 26, "options": { "displayValue": "" } },
+                    { "name": "Mississippi", "id": 27, "options": { "displayValue": "" } },
+                    { "name": "Missouri", "id": 28, "options": { "displayValue": "" } },
+                    { "name": "Montana", "id": 29, "options": { "displayValue": "" } },
+                    { "name": "Nebraska", "id": 30, "options": { "displayValue": "" } },
+                    { "name": "Nevada", "id": 31, "options": { "displayValue": "" } },
+                    { "name": "NewHampshire", "id": 32, "options": { "displayValue": "" } },
+                    { "name": "NewJersey", "id": 33, "options": { "displayValue": "" } },
+                    { "name": "NewMexico", "id": 34, "options": { "displayValue": "" } },
+                    { "name": "NewYork", "id": 35, "options": { "displayValue": "" } },
+                    { "name": "NorthCarolina", "id": 36, "options": { "displayValue": "" } },
+                    { "name": "NorthDakota", "id": 37, "options": { "displayValue": "" } },
+                    { "name": "NorthernMarianaIslands", "id": 38, "options": { "displayValue": "" } },
+                    { "name": "Ohio", "id": 39, "options": { "displayValue": "" } },
+                    { "name": "Oklahoma", "id": 40, "options": { "displayValue": "" } },
+                    { "name": "Oregon", "id": 41, "options": { "displayValue": "" } },
+                    { "name": "Pennsylvania", "id": 42, "options": { "displayValue": "" } },
+                    { "name": "PuertoRico", "id": 43, "options": { "displayValue": "" } },
+                    { "name": "RhodeIsland", "id": 44, "options": { "displayValue": "" } },
+                    { "name": "SouthCarolina", "id": 45, "options": { "displayValue": "" } },
+                    { "name": "SouthDakota", "id": 46, "options": { "displayValue": "" } },
+                    { "name": "Tennessee", "id": 47, "options": { "displayValue": "" } },
+                    { "name": "Texas", "id": 48, "options": { "displayValue": "" } },
+                    { "name": "Utah", "id": 49, "options": { "displayValue": "" } },
+                    { "name": "Vermont", "id": 50, "options": { "displayValue": "" } },
+                    { "name": "VirginIslands", "id": 51, "options": { "displayValue": "" } },
+                    { "name": "Virginia", "id": 52, "options": { "displayValue": "" } },
+                    { "name": "Washington", "id": 53, "options": { "displayValue": "" } },
+                    { "name": "WestVirginia", "id": 54, "options": { "displayValue": "" } },
+                    { "name": "Wisconsin", "id": 55, "options": { "displayValue": "" } },
+                    { "name": "Wyoming", "id": 56, "options": { "displayValue": "" } }
+                ],
+                "options": {}
+            }
+        ],
+        "options": {}
+    }
+}

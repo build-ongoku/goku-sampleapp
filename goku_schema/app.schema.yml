@@ -1,0 +1,58 @@
+app:
+  services:
+    - name: pinger
+      types:
+        - name: PingResponse
+          description: Response object for the ping method.
+          fields:
+            - resp: string
+      methods:
+        - name: ping
+          description: Send a ping request to the service. Used for testing purposes.
+          options:
+            type: Query
+          request_dtype: string
+          response_type: $.service[pinger].type[PingResponse]
+
+    - name: pluralizer
+      types:
+        - name: PluralizeResponse
+          description: Response object for the pluralize method.
+          fields:
+            - plural: string
+      methods:
+        - name: pluralize
+          description: Pluralize the string. Takes in a string and makes the best guess at the plural form of that string.
+          options:
+            type: Query
+          request_dtype: string
+          response_type: $.service[pluralizer].type[PluralizeResponse]
+
+    - name: default
+      entities:
+        - name: JobApplicant
+          description: A job applicant is a person who has applied for a job. This is used for testing file uploads.
+          fields:
+            - name: string
+            - User: $.service[user].entity[User]
+            - Resume: File
+
+        - name: Client
+          description: A client is a company that is looking for funding. This is used for testing different fields.
+          fields:
+            - name: string
+            - company_description: string
+            - employees: number
+            - company_address: $.type[Address]
+            - funding_round: $.service[default].entity[Client].enum[FundingRound]
+            - funding_requested: money
+            - date_founded: date
+          enums:
+            - name: FundingRound
+              description: The funding round that the company is currently in.
+              values:
+                - PreSeed: 1
+                - Seed: 2
+                - SeriesA: 3
+                - SeriesB: 4
+                - SeriesC: 5
