@@ -8,22 +8,22 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/lib/pq v1.10.9
 	github.com/teamwork/reload v1.4.2
-	github.com/teejays/gokutil/client/db v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/client/file v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/ctxutil v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/dalutil v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/env v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/errutil v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/filter v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/gopi v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/jwt/v2 v2.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/log v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/naam v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/ogconfig v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/panics v0.0.0-20250319033809-32c6c25d40c6
-	github.com/teejays/gokutil/scalars v0.0.0-20250319033809-32c6c25d40c6
+	github.com/teejays/gokutil/client/db v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/client/file v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/ctxutil v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/dalutil v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/env v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/errutil v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/filter v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/gopi v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/jwt/v2 v2.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/log v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/naam v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/ogconfig v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/panics v0.0.0-20250319042528-f8f2756531a1
+	github.com/teejays/gokutil/scalars v0.0.0-20250319042528-f8f2756531a1
 	github.com/teejays/gokutil/strcase v0.0.0-20250319033749-5966c8a010b4
-	github.com/teejays/gokutil/types v0.0.0-20250319033809-32c6c25d40c6
+	github.com/teejays/gokutil/types v0.0.0-20250319042528-f8f2756531a1
 	golang.org/x/crypto v0.36.0
 )
 
