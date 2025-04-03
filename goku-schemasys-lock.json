@@ -118,7 +118,7 @@
                         "options": { "type": "Query", "is_static": true },
                         "request_dtype": { "app": "sampleapp", "service": "auth", "entity": "", "types": ["validate_password_reset_token_request"], "enum": "", "method": "" },
                         "response_dtype": { "app": "sampleapp", "service": "", "entity": "", "types": ["message_response"], "enum": "", "method": "" },
-                        "apis": [{ "options": { "is_public": true }, "http_method": "POST", "path": "/validate_password_reset_token" }]
+                        "apis": [{ "options": { "is_public": true }, "http_method": "GET", "path": "/validate_password_reset_token" }]
                     }
                 ],
                 "types": [
