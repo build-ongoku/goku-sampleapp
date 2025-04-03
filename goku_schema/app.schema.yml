@@ -32,11 +32,14 @@ app:
     - name: default
       entities:
         - name: JobApplicant
+          options:
+            add_key_field: true
           description: A job applicant is a person who has applied for a job. This is used for testing file uploads.
           fields:
             - name: string
             - User: $.service[user].entity[User]
             - Resume: File
+            - some_numbers: number repeated
 
         - name: Client
           description: A client is a company that is looking for funding. This is used for testing different fields.
@@ -58,4 +61,4 @@ app:
                 - SeriesB: 4
                 - SeriesC: 5
           hooks:
-            - type: fetch_pre
+            - type: read_pre

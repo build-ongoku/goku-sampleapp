@@ -7,7 +7,7 @@ import (
 	svcdefault_entclient_typ "sampleapp/backend/.goku/generated/service/default/entity/client/typ"
 )
 
-func HookFetchPre(ctx context.Context, c app_client.Client, req svcdefault_entclient_typ.Client) (svcdefault_entclient_typ.Client, error) {
+func HookReadPre(ctx context.Context, c app_client.Client, req svcdefault_entclient_typ.Client) (svcdefault_entclient_typ.Client, error) {
 
 	return req, nil
 }
